@@ -1,9 +1,6 @@
-
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
-// Changement d'importation pour utiliser un chemin relatif
-import Logo from '../assets/logo.png';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -41,9 +38,9 @@ const Navbar = () => {
           transition={{ duration: 0.5 }}
         >
           <img 
-            src="/lovable-uploads/724c9a3c-46ac-4cdf-b270-73bc0e5401aa.png" 
-            alt="Logo" 
-            className="h-10 w-auto object-contain"
+            src="/lovable-uploads/01f63d3b-985e-46d0-aae1-4b6fa5a45e2d.png" 
+            alt="Graphic & Motion Logo" 
+            className="h-12 w-auto object-contain"
           />
         </motion.a>
         
