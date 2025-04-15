@@ -1,22 +1,6 @@
 {
   "projects": [
     {
-      "id": 1,
-      "title": "Logo Entreprise Tech",
-      "category": "logo",
-      "image": "/path/to/logo-project.jpg",
-      "link": "#",
-      "description": "Design de logo pour une startup technologique"
-    },
-    {
-      "id": 2,
-      "title": "Site Web E-commerce",
-      "category": "web", 
-      "image": "/path/to/ecommerce-site.jpg",
-      "link": "#",
-      "description": "Site web responsive pour une boutique en ligne"
-    },
-    {
       "id": 3,
       "title": "Ecoleaf - Green Paper",
       "category": "logo",
