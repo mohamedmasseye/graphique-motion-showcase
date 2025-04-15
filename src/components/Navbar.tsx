@@ -1,7 +1,7 @@
-
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
+import Logo from '/logo.png';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -38,9 +38,14 @@ const Navbar = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
+          <img 
+            src={Logo} 
+            alt="Graphique & Motion Logo" 
+            className="h-10 mr-2"
+          />
           <span className="text-design-accent">GRAPHIQUE</span>
           <span className="text-white">&</span>
-          <span className="text-design-tertiary">MOTION</span>
+          <span className="text-design-secondary">MOTION</span>
         </motion.a>
         
         <div className="hidden md:flex items-center space-x-8">
@@ -68,7 +73,6 @@ const Navbar = () => {
         </div>
       </div>
       
-      {/* Mobile menu */}
       {isOpen && (
         <motion.div 
           className="md:hidden bg-black/95 backdrop-blur-md absolute top-full left-0 w-full py-4"

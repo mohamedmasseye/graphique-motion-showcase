@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -66,8 +65,8 @@ export default {
 				design: {
 					dark: '#1A1F2C',
 					light: '#F1F0FB',
-					accent: '#8B5CF6',
-					secondary: '#D946EF',
+					accent: '#F97316',
+					secondary: '#009688',
 					tertiary: '#F97316'
 				}
 			},

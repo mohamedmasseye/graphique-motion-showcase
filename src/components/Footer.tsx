@@ -1,20 +1,24 @@
 
 import React from 'react';
+import Logo from '/logo.png';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
   
   return (
     <footer className="py-12 bg-black relative overflow-hidden">
-      <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
-      
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row justify-between items-center">
-          <div className="mb-6 md:mb-0">
+          <div className="mb-6 md:mb-0 flex items-center">
+            <img 
+              src={Logo} 
+              alt="Graphique & Motion Logo" 
+              className="h-12 mr-4"
+            />
             <div className="text-2xl font-bold text-white flex items-center">
               <span className="text-design-accent">GRAPHIQUE</span>
               <span className="text-white">&</span>
-              <span className="text-design-tertiary">MOTION</span>
+              <span className="text-design-secondary">MOTION</span>
             </div>
           </div>
           
