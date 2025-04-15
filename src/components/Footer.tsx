@@ -15,11 +15,6 @@ const Footer = () => {
               alt="Graphique & Motion Logo" 
               className="h-12 mr-4"
             />
-            <div className="text-2xl font-bold text-white flex items-center">
-              <span className="text-design-accent">GRAPHIQUE</span>
-              <span className="text-white">&</span>
-              <span className="text-design-secondary">MOTION</span>
-            </div>
           </div>
           
           <div className="text-center md:text-right">
@@ -37,3 +32,4 @@ const Footer = () => {
 };
 
 export default Footer;
+

@@ -33,7 +33,7 @@ const Navbar = () => {
       <div className="container mx-auto px-4 flex justify-between items-center">
         <motion.a 
           href="#" 
-          className="text-2xl font-bold text-white flex items-center"
+          className="flex items-center"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -43,9 +43,6 @@ const Navbar = () => {
             alt="Graphique & Motion Logo" 
             className="h-10 mr-2"
           />
-          <span className="text-design-accent">GRAPHIQUE</span>
-          <span className="text-white">&</span>
-          <span className="text-design-secondary">MOTION</span>
         </motion.a>
         
         <div className="hidden md:flex items-center space-x-8">
