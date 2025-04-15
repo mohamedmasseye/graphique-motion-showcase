@@ -1,7 +1,9 @@
+
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
-import HeaderLogo from '/lovable-uploads/c5ecaf9e-a25c-48a1-ba61-71ecc5e6c738.png';
+// Utilisation d'une URL d'image placeholder depuis Unsplash au lieu du chemin qui pose problème
+import HeaderLogo from 'https://images.unsplash.com/photo-1488590528505-98d2b5aba04b';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
