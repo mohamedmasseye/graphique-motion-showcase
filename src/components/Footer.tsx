@@ -13,7 +13,7 @@ const Footer = () => {
             <img 
               src={Logo} 
               alt="Graphique & Motion Logo" 
-              className="h-12 w-auto object-contain"
+              className="h-20 w-auto object-contain" // Augmenté de h-12 à h-20
             />
           </div>
           
