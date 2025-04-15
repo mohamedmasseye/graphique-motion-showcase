@@ -10,8 +10,8 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="mb-6 md:mb-0 flex items-center">
             <img 
-              src="/lovable-uploads/71d36db5-bb9d-4336-8965-1ace529d6ed6.png" 
-              alt="Graphique & Motion Logo" 
+              src="/lovable-uploads/de699b4d-f281-49b8-b42d-18ceb13b6677.png" 
+              alt="Notion Logo" 
               className="h-12 w-auto object-contain"
             />
           </div>
