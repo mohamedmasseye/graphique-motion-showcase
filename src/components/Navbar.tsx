@@ -38,9 +38,9 @@ const Navbar = () => {
           transition={{ duration: 0.5 }}
         >
           <img 
-            src="/lovable-uploads/01f63d3b-985e-46d0-aae1-4b6fa5a45e2d.png" 
-            alt="Graphic & Motion Logo" 
-            className="h-12 w-auto object-contain"
+            src="/lovable-uploads/71d36db5-bb9d-4336-8965-1ace529d6ed6.png" 
+            alt="Graphique & Motion Logo" 
+            className="h-16 w-auto object-contain"
           />
         </motion.a>
         
