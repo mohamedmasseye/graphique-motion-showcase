@@ -1,4 +1,3 @@
-
 {
   "projects": [
     {
@@ -64,6 +63,62 @@
       "image": "/lovable-uploads/dd32486a-e1ef-4dbb-845b-da9719cf1c72.png",
       "link": "#",
       "description": "Logo pour une entreprise de services commerciaux"
+    },
+    {
+      "id": 9,
+      "title": "Loulou Deco & Design",
+      "category": "print",
+      "image": "/lovable-uploads/9d0d54f3-5813-4505-8319-36145c272c82.png",
+      "link": "#",
+      "description": "Carte de visite pour une entreprise d'ameublement et décoration"
+    },
+    {
+      "id": 10,
+      "title": "Mètre Carré BTP",
+      "category": "print",
+      "image": "/lovable-uploads/b96d4a7e-c3eb-47df-9b0d-fe5de048da6e.png",
+      "link": "#",
+      "description": "Carte de visite pour une entreprise immobilière"
+    },
+    {
+      "id": 11,
+      "title": "Baol Chicken",
+      "category": "print",
+      "image": "/lovable-uploads/e415331a-e168-467c-9c51-7ed37bdce148.png",
+      "link": "#",
+      "description": "Carte de visite pour un commerce de poulets"
+    },
+    {
+      "id": 12,
+      "title": "Car For All",
+      "category": "print",
+      "image": "/lovable-uploads/5a2345f0-0643-43e3-8755-11a81f8b849e.png",
+      "link": "#",
+      "description": "Carte de visite pour une entreprise de location de véhicules"
+    },
+    {
+      "id": 13,
+      "title": "Diobass Construction",
+      "category": "print",
+      "image": "/lovable-uploads/ab9fd61c-b318-4ca2-8489-578d05af2400.png",
+      "link": "#",
+      "description": "Carte de visite pour une entreprise de construction"
+    },
+    {
+      "id": 14,
+      "title": "Ministère de l'Economie Numérique",
+      "category": "print",
+      "image": "/lovable-uploads/fdcf3848-5356-457c-bfad-5bcfd059608f.png",
+      "link": "#",
+      "description": "Carte de visite officielle pour un directeur d'administration"
+    },
+    {
+      "id": 15,
+      "title": "Salma Couture",
+      "category": "print",
+      "image": "/lovable-uploads/bae2148c-6358-4f1a-b3cb-a6065a2c2735.png",
+      "link": "#",
+      "description": "Carte de visite pour une boutique de couture"
     }
   ]
 }
