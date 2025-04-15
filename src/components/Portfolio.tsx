@@ -49,7 +49,8 @@ const Portfolio = () => {
     { id: 'logo', name: 'Logos' },
     { id: 'web', name: 'Web' },
     { id: 'print', name: 'Print' },
-    { id: 'video', name: 'Vidéo' }
+    { id: 'video', name: 'Vidéo' },
+    { id: 'event', name: 'Événements' }
   ];
   
   return (
@@ -113,6 +114,7 @@ const Portfolio = () => {
                     {project.category === 'web' && 'Design Web'}
                     {project.category === 'print' && 'Design Imprimé'}
                     {project.category === 'video' && 'Motion Design'}
+                    {project.category === 'event' && 'Design Événementiel'}
                   </p>
                   <a 
                     href={project.link}
