@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
@@ -41,7 +42,7 @@ const Navbar = () => {
           <img 
             src={Logo} 
             alt="Graphique & Motion Logo" 
-            className="h-16 w-auto object-contain"
+            className="h-10 w-auto object-contain"
           />
         </motion.a>
         
