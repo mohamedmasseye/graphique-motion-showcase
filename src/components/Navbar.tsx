@@ -41,7 +41,7 @@ const Navbar = () => {
           <img 
             src={Logo} 
             alt="Graphique & Motion Logo" 
-            className="h-10 mr-2"
+            className="h-10 w-auto object-contain"
           />
         </motion.a>
         

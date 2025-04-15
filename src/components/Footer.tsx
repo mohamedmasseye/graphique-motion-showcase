@@ -13,7 +13,7 @@ const Footer = () => {
             <img 
               src={Logo} 
               alt="Graphique & Motion Logo" 
-              className="h-12 mr-4"
+              className="h-12 w-auto object-contain"
             />
           </div>
           
@@ -32,4 +32,3 @@ const Footer = () => {
 };
 
 export default Footer;
-
