@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
+import ThemeToggle from './ThemeToggle';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -28,7 +29,7 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'py-3 bg-black/80 backdrop-blur-md' : 'py-5 bg-transparent'}`}>
+    <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'py-3 bg-white/80 dark:bg-black/80 backdrop-blur-md' : 'py-5 bg-transparent'}`}>
       <div className="container mx-auto px-4 flex justify-between items-center">
         <motion.a 
           href="#" 
@@ -38,9 +39,14 @@ const Navbar = () => {
           transition={{ duration: 0.5 }}
         >
           <img 
-            src="/lovable-uploads/01f63d3b-985e-46d0-aae1-4b6fa5a45e2d.png" 
-            alt="Graphic & Motion Logo" 
-            className="h-12 w-auto object-contain"
+            src="/lovable-uploads/45b52ce7-2ad6-4964-93ec-65a156db653d.png"
+            className="h-12 w-auto object-contain hidden dark:block"
+            alt="Graphic & Motion Logo Dark"
+          />
+          <img 
+            src="/lovable-uploads/766a3e77-2c67-4867-89cd-816890c628c2.png"
+            className="h-12 w-auto object-contain block dark:hidden"
+            alt="Graphic & Motion Logo Light"
           />
         </motion.a>
         
@@ -49,7 +55,7 @@ const Navbar = () => {
             <motion.a
               key={link.name}
               href={link.href}
-              className="text-white hover:text-design-accent transition-colors duration-300"
+              className="text-gray-800 dark:text-white hover:text-design-accent transition-colors duration-300"
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -57,6 +63,7 @@ const Navbar = () => {
               {link.name}
             </motion.a>
           ))}
+          <ThemeToggle />
         </div>
         
         <div className="md:hidden">

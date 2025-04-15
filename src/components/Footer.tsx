@@ -5,22 +5,27 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
   
   return (
-    <footer className="py-12 bg-black relative overflow-hidden">
+    <footer className="py-12 bg-gray-100 dark:bg-black relative overflow-hidden">
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="mb-6 md:mb-0 flex items-center">
             <img 
-              src="/lovable-uploads/01f63d3b-985e-46d0-aae1-4b6fa5a45e2d.png" 
-              alt="Graphic & Motion Logo" 
-              className="h-12 w-auto object-contain"
+              src="/lovable-uploads/45b52ce7-2ad6-4964-93ec-65a156db653d.png"
+              alt="Graphic & Motion Logo Dark"
+              className="h-12 w-auto object-contain hidden dark:block"
+            />
+            <img 
+              src="/lovable-uploads/766a3e77-2c67-4867-89cd-816890c628c2.png"
+              alt="Graphic & Motion Logo Light"
+              className="h-12 w-auto object-contain block dark:hidden"
             />
           </div>
           
           <div className="text-center md:text-right">
-            <p className="text-gray-400 text-sm">
+            <p className="text-gray-600 dark:text-gray-400 text-sm">
               &copy; {currentYear} GRAPHIQUE&MOTION. Tous droits réservés.
             </p>
-            <p className="text-gray-500 text-xs mt-2">
+            <p className="text-gray-500 dark:text-gray-500 text-xs mt-2">
               Conçu avec passion par Mohamed Masseye DIOP
             </p>
           </div>
