@@ -1,6 +1,6 @@
 
 import React from 'react';
-import Logo from '/logo.png';
+import FooterLogo from '/lovable-uploads/7f5a4594-c41e-415d-b56a-bc0d8b2d2c23.png';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -11,9 +11,9 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="mb-6 md:mb-0 flex items-center">
             <img 
-              src={Logo} 
+              src={FooterLogo} 
               alt="Graphique & Motion Logo" 
-              className="h-20 w-auto object-contain" // Augmenté de h-12 à h-20
+              className="h-20 w-auto object-contain"
             />
           </div>
           
