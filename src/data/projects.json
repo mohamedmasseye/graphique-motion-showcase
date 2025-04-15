@@ -24,6 +24,46 @@
       "image": "/lovable-uploads/81021753-01cc-4d9d-bf82-66816b5838ee.png",
       "link": "#",
       "description": "Logo écologique pour une entreprise de papier durable"
+    },
+    {
+      "id": 4,
+      "title": "Diobass Construction",
+      "category": "logo",
+      "image": "/lovable-uploads/fbd73fc7-98cc-4bd3-85f6-fa11e5ca3468.png",
+      "link": "#",
+      "description": "Logo pour une entreprise de construction"
+    },
+    {
+      "id": 5,
+      "title": "Expertise 360",
+      "category": "logo",
+      "image": "/lovable-uploads/804453b7-5afa-4daa-865c-9f42a4f1344f.png",
+      "link": "#",
+      "description": "Logo pour un service de conseil et expertise"
+    },
+    {
+      "id": 6,
+      "title": "Mynadoo Boutique",
+      "category": "logo",
+      "image": "/lovable-uploads/7f9ab54c-8eb0-477a-b499-a4558b699da1.png",
+      "link": "#",
+      "description": "Logo pour une boutique de mode"
+    },
+    {
+      "id": 7,
+      "title": "Paris Dakar",
+      "category": "logo",
+      "image": "/lovable-uploads/9dbee993-0a9c-4a91-bc05-d7402bff3e1b.png",
+      "link": "#",
+      "description": "Logo pour une parfumerie de luxe"
+    },
+    {
+      "id": 8,
+      "title": "MCS Millenium Commerce Services",
+      "category": "logo",
+      "image": "/lovable-uploads/dd32486a-e1ef-4dbb-845b-da9719cf1c72.png",
+      "link": "#",
+      "description": "Logo pour une entreprise de services commerciaux"
     }
   ]
 }
