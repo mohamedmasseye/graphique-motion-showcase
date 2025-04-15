@@ -119,6 +119,22 @@
       "image": "/lovable-uploads/bae2148c-6358-4f1a-b3cb-a6065a2c2735.png",
       "link": "#",
       "description": "Carte de visite pour une boutique de couture"
+    },
+    {
+      "id": 16,
+      "title": "NFP Seafood",
+      "category": "web",
+      "image": "/path/to/nfp-seafood.jpg",
+      "link": "https://nfpseafood.com/",
+      "description": "Site web pour une entreprise de produits de la mer"
+    },
+    {
+      "id": 17,
+      "title": "Turquoise",
+      "category": "web",
+      "image": "/path/to/turquoise.jpg",
+      "link": "https://turquoise.sn/",
+      "description": "Site web pour une entreprise de construction et d'aménagement"
     }
   ]
 }
