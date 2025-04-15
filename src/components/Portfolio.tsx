@@ -1,21 +1,22 @@
+
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { ExternalLink } from 'lucide-react';
-import { Project } from '@/types/project';
+import { Project, ProjectCategory } from '@/types/project';
 import projectsData from '@/data/projects.json';
 
-type Category = 'all' | 'logo' | 'web' | 'print' | 'video';
+type FilterCategory = ProjectCategory | 'all';
 
 const Portfolio = () => {
-  const [activeCategory, setActiveCategory] = useState<Project['category']>('all');
-  const [filteredProjects, setFilteredProjects] = useState<Project[]>(projectsData.projects);
+  const [activeCategory, setActiveCategory] = useState<FilterCategory>('all');
+  const [filteredProjects, setFilteredProjects] = useState<Project[]>(projectsData.projects as Project[]);
   const sectionRef = useRef<HTMLElement>(null);
   
   useEffect(() => {
     if (activeCategory === 'all') {
-      setFilteredProjects(projectsData.projects);
+      setFilteredProjects(projectsData.projects as Project[]);
     } else {
-      setFilteredProjects(projectsData.projects.filter(project => project.category === activeCategory));
+      setFilteredProjects((projectsData.projects as Project[]).filter(project => project.category === activeCategory));
     }
   }, [activeCategory]);
   
@@ -70,7 +71,7 @@ const Portfolio = () => {
           {categories.map((category) => (
             <button
               key={category.id}
-              onClick={() => setActiveCategory(category.id as Project['category'])}
+              onClick={() => setActiveCategory(category.id as FilterCategory)}
               className={`px-6 py-2 rounded-full transition-all duration-300 ${
                 activeCategory === category.id
                   ? 'bg-design-accent text-white'
