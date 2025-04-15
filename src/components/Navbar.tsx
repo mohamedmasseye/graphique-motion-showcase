@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
@@ -29,11 +28,7 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 ${
-      scrolled 
-        ? 'py-3 bg-black/80 backdrop-blur-md shadow-sm' 
-        : 'py-5 bg-transparent'
-    }`}>
+    <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'py-3 bg-black/80 backdrop-blur-md' : 'py-5 bg-transparent'}`}>
       <div className="container mx-auto px-4 flex justify-between items-center">
         <motion.a 
           href="#" 
@@ -43,9 +38,9 @@ const Navbar = () => {
           transition={{ duration: 0.5 }}
         >
           <img 
-            src="/lovable-uploads/45b52ce7-2ad6-4964-93ec-65a156db653d.png"
-            className="h-16 w-auto object-contain"
-            alt="Graphic & Motion Logo"
+            src="/lovable-uploads/01f63d3b-985e-46d0-aae1-4b6fa5a45e2d.png" 
+            alt="Graphic & Motion Logo" 
+            className="h-12 w-auto object-contain"
           />
         </motion.a>
         
