@@ -100,4 +100,16 @@
   .card-dark {
     @apply bg-white/90 backdrop-blur-sm border border-gray-200 dark:bg-black/30 dark:border-white/10 rounded-xl shadow-lg;
   }
+
+  .text-light-primary {
+    @apply text-gray-900 dark:text-white;
+  }
+
+  .text-light-secondary {
+    @apply text-gray-700 dark:text-gray-300;
+  }
+
+  .text-light-muted {
+    @apply text-gray-600 dark:text-gray-400;
+  }
 }

@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from 'react';
 import { Calendar, Layers, Monitor, User } from 'lucide-react';
 
@@ -37,9 +36,9 @@ const About = () => {
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
           <h2 className="text-sm uppercase tracking-widest text-design-accent mb-2 reveal">À PROPOS</h2>
-          <h3 className="text-3xl md:text-4xl font-bold mb-4 reveal" data-delay="1">Mohamed Masseye DIOP</h3>
+          <h3 className="text-3xl md:text-4xl font-bold mb-4 reveal text-light-primary" data-delay="1">Mohamed Masseye DIOP</h3>
           <div className="w-20 h-1 bg-design-accent mx-auto mb-8 reveal" data-delay="2"></div>
-          <p className="max-w-2xl mx-auto text-gray-300 reveal" data-delay="3">
+          <p className="max-w-2xl mx-auto text-light-secondary reveal" data-delay="3">
             Fondateur de GRAPHIQUE&MOTION depuis 2014, je suis passionné par la création visuelle sous toutes ses formes.
           </p>
         </div>
@@ -64,11 +63,11 @@ const About = () => {
           </div>
           
           <div>
-            <h4 className="text-2xl font-bold mb-6 reveal-right">Ma passion pour le design</h4>
-            <p className="text-gray-300 mb-6 reveal-right" data-delay="1">
+            <h4 className="text-2xl font-bold mb-6 reveal-right text-light-primary">Ma passion pour le design</h4>
+            <p className="text-light-secondary mb-6 reveal-right" data-delay="1">
               Depuis plus de 10 ans, je mets ma créativité et mon expertise technique au service de clients variés, des startups aux grandes entreprises. GRAPHIQUE&MOTION est née de ma passion pour l'art visuel et la communication graphique.
             </p>
-            <p className="text-gray-300 mb-8 reveal-right" data-delay="2">
+            <p className="text-light-secondary mb-8 reveal-right" data-delay="2">
               Mon approche allie créativité, stratégie et précision technique pour donner vie à des projets visuels qui se démarquent et atteignent leurs objectifs.
             </p>
             

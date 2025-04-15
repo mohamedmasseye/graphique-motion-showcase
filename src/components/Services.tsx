@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from 'react';
 import { Box, Brush, Image, Layout, Pen, PlayCircle, Printer, Type } from 'lucide-react';
 
@@ -75,14 +74,13 @@ const Services = () => {
   return (
     <section id="services" ref={sectionRef} className="section-padding relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-white via-gray-50 to-gray-100 dark:from-design-dark dark:via-black dark:to-design-dark"></div>
-      <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-design-tertiary/5 rounded-full blur-3xl"></div>
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-16">
           <h2 className="text-sm uppercase tracking-widest text-design-accent mb-2 reveal">Services</h2>
-          <h3 className="text-3xl md:text-4xl font-bold mb-4 reveal text-gray-900 dark:text-white" data-delay="1">Mes Expertises</h3>
+          <h3 className="text-3xl md:text-4xl font-bold mb-4 reveal text-light-primary" data-delay="1">Mes Expertises</h3>
           <div className="w-20 h-1 bg-design-accent mx-auto mb-8 reveal" data-delay="2"></div>
-          <p className="max-w-2xl mx-auto text-gray-600 dark:text-gray-300 reveal" data-delay="3">
+          <p className="max-w-2xl mx-auto text-light-secondary reveal" data-delay="3">
             Une gamme complète de services créatifs pour répondre à tous vos besoins en communication visuelle.
           </p>
         </div>
@@ -97,8 +95,8 @@ const Services = () => {
               <div className="w-12 h-12 rounded-lg bg-design-accent/10 flex items-center justify-center mb-4 text-design-accent">
                 {service.icon}
               </div>
-              <h4 className="text-xl font-medium mb-3">{service.title}</h4>
-              <p className="text-gray-400 text-sm">{service.description}</p>
+              <h4 className="text-xl font-medium mb-3 text-light-primary">{service.title}</h4>
+              <p className="text-light-secondary text-sm">{service.description}</p>
             </div>
           ))}
         </div>
