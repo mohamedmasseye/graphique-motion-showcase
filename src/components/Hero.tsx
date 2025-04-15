@@ -2,6 +2,7 @@
 import React, { useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowDown } from 'lucide-react';
+import AnimatedBackground from './AnimatedBackground';
 
 const Hero = () => {
   const parallaxRef = useRef<HTMLDivElement>(null);
@@ -20,9 +21,9 @@ const Hero = () => {
 
   return (
     <section id="home" className="relative h-screen overflow-hidden flex items-center">
-      {/* Background gradient and particles */}
-      <div className="absolute inset-0 hero-gradient"></div>
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-design-accent/10 via-transparent to-transparent opacity-60"></div>
+      {/* Background gradient and animated shapes */}
+      <div className="absolute inset-0 hero-gradient opacity-90 z-0"></div>
+      <AnimatedBackground />
       
       {/* Parallax elements */}
       <div ref={parallaxRef} className="absolute inset-0 pointer-events-none">
