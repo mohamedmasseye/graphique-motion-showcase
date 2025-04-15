@@ -1,7 +1,5 @@
-
 import React from 'react';
-// Utilisation d'une URL d'image placeholder depuis Unsplash au lieu du chemin qui pose problème
-import FooterLogo from 'https://images.unsplash.com/photo-1460925895917-afdab827c52f';
+import FooterLogo from '/footer-logo.png';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
