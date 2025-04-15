@@ -1,4 +1,3 @@
-
 {
   "projects": [
     {
@@ -133,9 +132,9 @@
       "id": 17,
       "title": "Turquoise",
       "category": "web",
-      "image": "/path/to/turquoise.jpg",
+      "image": "/lovable-uploads/1abb6637-9c53-484c-8ee1-1f1e7c198477.png",
       "link": "https://turquoise.sn/",
-      "description": "Site web pour une entreprise de construction et d'aménagement"
+      "description": "Site web pour une entreprise de restauration"
     },
     {
       "id": 18,
