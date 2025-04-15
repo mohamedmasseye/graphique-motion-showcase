@@ -1,6 +1,6 @@
 
 import React, { useEffect, useRef, useState } from 'react';
-import { MapPin, Mail, Phone, Send } from 'lucide-react';
+import { MapPin, Mail, Phone, Send, Instagram, Facebook } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 const Contact = () => {
@@ -89,7 +89,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <h5 className="font-medium mb-1">Adresse</h5>
-                    <p className="text-gray-400">Votre adresse ici</p>
+                    <p className="text-gray-400">Dakar, Sénégal</p>
                   </div>
                 </div>
                 
@@ -99,7 +99,11 @@ const Contact = () => {
                   </div>
                   <div>
                     <h5 className="font-medium mb-1">Email</h5>
-                    <p className="text-gray-400">votre@email.com</p>
+                    <p className="text-gray-400">
+                      <a href="mailto:mohamed.masseye@gmail.com" className="hover:underline">mohamed.masseye@gmail.com</a>
+                      <br />
+                      <a href="mailto:graphiquemotion@gmail.com" className="hover:underline">graphiquemotion@gmail.com</a>
+                    </p>
                   </div>
                 </div>
                 
@@ -109,7 +113,7 @@ const Contact = () => {
                   </div>
                   <div>
                     <h5 className="font-medium mb-1">Téléphone</h5>
-                    <p className="text-gray-400">+1 234 567 890</p>
+                    <p className="text-gray-400">+221 77 564 44 78</p>
                   </div>
                 </div>
               </div>
@@ -117,14 +121,21 @@ const Contact = () => {
               <div className="pt-8">
                 <h5 className="font-medium mb-4">Suivez-moi</h5>
                 <div className="flex space-x-4">
-                  <a href="#" className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-design-accent hover:border-design-accent transition-all duration-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+                  <a 
+                    href="https://www.facebook.com/share/18ZbMPjH39/?mibextid=wwXIfr" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-design-accent hover:border-design-accent transition-all duration-300"
+                  >
+                    <Facebook size={18} />
                   </a>
-                  <a href="#" className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-design-accent hover:border-design-accent transition-all duration-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-                  </a>
-                  <a href="#" className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-design-accent hover:border-design-accent transition-all duration-300">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+                  <a 
+                    href="https://www.instagram.com/graphiquemotion?igsh=MTI4M2YzMDRvZW1uOQ%3D%3D&utm_source=qr" 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="w-10 h-10 rounded-full border border-white/20 flex items-center justify-center text-white hover:bg-design-accent hover:border-design-accent transition-all duration-300"
+                  >
+                    <Instagram size={18} />
                   </a>
                 </div>
               </div>
