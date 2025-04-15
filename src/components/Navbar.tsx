@@ -29,7 +29,11 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className={`fixed w-full z-50 transition-all duration-300 ${scrolled ? 'py-3 bg-white/80 dark:bg-black/80 backdrop-blur-md' : 'py-5 bg-transparent'}`}>
+    <nav className={`fixed w-full z-50 transition-all duration-300 ${
+      scrolled 
+        ? 'py-3 bg-white/80 dark:bg-black/80 backdrop-blur-md shadow-sm' 
+        : 'py-5 bg-transparent'
+    }`}>
       <div className="container mx-auto px-4 flex justify-between items-center">
         <motion.a 
           href="#" 
