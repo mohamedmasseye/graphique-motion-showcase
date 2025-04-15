@@ -40,12 +40,12 @@ const Navbar = () => {
         >
           <img 
             src="/lovable-uploads/45b52ce7-2ad6-4964-93ec-65a156db653d.png"
-            className="h-12 w-auto object-contain hidden dark:block"
+            className="h-16 w-auto object-contain hidden dark:block"
             alt="Graphic & Motion Logo Dark"
           />
           <img 
             src="/lovable-uploads/766a3e77-2c67-4867-89cd-816890c628c2.png"
-            className="h-12 w-auto object-contain block dark:hidden"
+            className="h-16 w-auto object-contain block dark:hidden"
             alt="Graphic & Motion Logo Light"
           />
         </motion.a>
