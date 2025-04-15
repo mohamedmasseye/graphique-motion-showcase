@@ -1,3 +1,4 @@
+
 {
   "projects": [
     {
@@ -124,7 +125,7 @@
       "id": 16,
       "title": "NFP Seafood",
       "category": "web",
-      "image": "/path/to/nfp-seafood.jpg",
+      "image": "/lovable-uploads/66cb0484-238e-4301-8316-dfc713183977.png",
       "link": "https://nfpseafood.com/",
       "description": "Site web pour une entreprise de produits de la mer"
     },
