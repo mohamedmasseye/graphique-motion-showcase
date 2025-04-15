@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
@@ -8,53 +9,24 @@
   :root {
     --background: 240 10% 3.9%;
     --foreground: 0 0% 98%;
-
     --card: 240 10% 3.9%;
     --card-foreground: 0 0% 98%;
-
     --popover: 240 10% 3.9%;
     --popover-foreground: 0 0% 98%;
-
     --primary: 263 90% 51%;
     --primary-foreground: 0 0% 100%;
-
     --secondary: 303 93% 58%;
     --secondary-foreground: 0 0% 100%;
-
     --muted: 240 3.7% 15.9%;
     --muted-foreground: 240 5% 64.9%;
-
     --accent: 240 3.7% 15.9%;
     --accent-foreground: 0 0% 98%;
-
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-
     --border: 240 3.7% 15.9%;
     --input: 240 3.7% 15.9%;
     --ring: 240 4.9% 83.9%;
-
     --radius: 0.5rem;
-  }
-
-  .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 240 5.9% 10%;
-    --secondary: 240 3.7% 15.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-    --accent: 240 3.7% 15.9%;
-    --accent-foreground: 0 0% 98%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 240 4.9% 83.9%;
   }
 
   * {
@@ -62,7 +34,7 @@
   }
 
   body {
-    @apply bg-white dark:bg-design-dark text-gray-800 dark:text-white font-sans antialiased;
+    @apply bg-design-dark text-white font-sans antialiased;
   }
 
   h1, h2, h3, h4, h5, h6 {
@@ -86,7 +58,7 @@
   }
 
   .hero-gradient {
-    @apply bg-gradient-to-br from-white via-gray-50 to-gray-100 dark:from-design-dark dark:via-design-dark dark:to-design-accent/10;
+    @apply bg-gradient-to-br from-design-dark via-design-dark to-design-accent/10;
   }
 
   .text-gradient {
@@ -98,18 +70,18 @@
   }
 
   .card-dark {
-    @apply bg-white/90 backdrop-blur-sm border border-gray-200 dark:bg-black/30 dark:border-white/10 rounded-xl shadow-lg;
+    @apply bg-black/30 border border-white/10 rounded-xl shadow-lg backdrop-blur-sm;
   }
 
   .text-light-primary {
-    @apply text-gray-900 dark:text-white;
+    @apply text-white;
   }
 
   .text-light-secondary {
-    @apply text-gray-700 dark:text-gray-300;
+    @apply text-gray-300;
   }
 
   .text-light-muted {
-    @apply text-gray-600 dark:text-gray-400;
+    @apply text-gray-400;
   }
 }
