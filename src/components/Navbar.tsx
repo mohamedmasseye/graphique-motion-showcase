@@ -1,8 +1,6 @@
-
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
-import Logo from '/logo.png';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -40,9 +38,9 @@ const Navbar = () => {
           transition={{ duration: 0.5 }}
         >
           <img 
-            src={Logo} 
-            alt="Graphique & Motion Logo" 
-            className="h-16 w-auto object-contain"
+            src="/lovable-uploads/01f63d3b-985e-46d0-aae1-4b6fa5a45e2d.png" 
+            alt="Graphic & Motion Logo" 
+            className="h-12 w-auto object-contain"
           />
         </motion.a>
         
