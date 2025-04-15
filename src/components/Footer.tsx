@@ -1,5 +1,7 @@
 
 import React from 'react';
+// Changement d'importation pour utiliser le chemin direct
+import Logo from '../assets/logo.png';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -10,15 +12,15 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="mb-6 md:mb-0 flex items-center">
             <img 
-              src="/lovable-uploads/01f63d3b-985e-46d0-aae1-4b6fa5a45e2d.png" 
-              alt="Graphic & Motion Logo" 
+              src="/lovable-uploads/724c9a3c-46ac-4cdf-b270-73bc0e5401aa.png" 
+              alt="Logo" 
               className="h-12 w-auto object-contain"
             />
           </div>
           
           <div className="text-center md:text-right">
             <p className="text-gray-400 text-sm">
-              &copy; {currentYear} GRAPHIQUE&MOTION. Tous droits réservés.
+              &copy; {currentYear} Tous droits réservés.
             </p>
             <p className="text-gray-500 text-xs mt-2">
               Conçu avec passion par Mohamed Masseye DIOP
