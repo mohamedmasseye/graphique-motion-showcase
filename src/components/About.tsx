@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from 'react';
 import { Calendar, Layers, Monitor, User } from 'lucide-react';
 
@@ -48,11 +47,11 @@ const About = () => {
           <div className="reveal-left">
             <div className="relative">
               <div className="aspect-[4/5] bg-gradient-to-br from-design-accent/20 to-design-tertiary/20 rounded-xl overflow-hidden">
-                {/* Remplacer par votre photo */}
-                <div className="absolute inset-0 flex items-center justify-center text-white/50">
-                  <User size={64} />
-                  <span className="ml-2 text-lg">Votre photo ici</span>
-                </div>
+                <img 
+                  src="/lovable-uploads/1a2b0b30-84c4-4386-858d-1d05d363cb54.png"
+                  alt="Mohamed Masseye DIOP"
+                  className="w-full h-full object-cover object-top"
+                />
               </div>
               <div className="absolute -bottom-6 -right-6 w-2/3 h-24 bg-design-accent/10 rounded-lg backdrop-blur-sm border border-white/10 p-4">
                 <div className="text-white">
