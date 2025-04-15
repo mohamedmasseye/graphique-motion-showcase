@@ -1,66 +1,21 @@
-
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { ExternalLink } from 'lucide-react';
+import { Project } from '@/types/project';
+import projectsData from '@/data/projects.json';
 
 type Category = 'all' | 'logo' | 'web' | 'print' | 'video';
 
-// Ces projets sont fictifs - à remplacer par vos vrais projets
-const projects = [
-  {
-    id: 1,
-    title: "Logo Entreprise Tech",
-    category: "logo",
-    image: "https://via.placeholder.com/600x400/8B5CF6/FFFFFF?text=Logo+Design",
-    link: "#"
-  },
-  {
-    id: 2,
-    title: "Site Web E-commerce",
-    category: "web",
-    image: "https://via.placeholder.com/600x400/D946EF/FFFFFF?text=Web+Design",
-    link: "#"
-  },
-  {
-    id: 3,
-    title: "Brochure Produit",
-    category: "print",
-    image: "https://via.placeholder.com/600x400/F97316/FFFFFF?text=Print+Design",
-    link: "#"
-  },
-  {
-    id: 4,
-    title: "Vidéo Promotionnelle",
-    category: "video",
-    image: "https://via.placeholder.com/600x400/8B5CF6/FFFFFF?text=Motion+Design",
-    link: "#"
-  },
-  {
-    id: 5,
-    title: "Identité Restaurant",
-    category: "logo",
-    image: "https://via.placeholder.com/600x400/D946EF/FFFFFF?text=Brand+Identity",
-    link: "#"
-  },
-  {
-    id: 6,
-    title: "Application Mobile",
-    category: "web",
-    image: "https://via.placeholder.com/600x400/F97316/FFFFFF?text=UI+Design",
-    link: "#"
-  }
-];
-
 const Portfolio = () => {
-  const [activeCategory, setActiveCategory] = useState<Category>('all');
-  const [filteredProjects, setFilteredProjects] = useState(projects);
+  const [activeCategory, setActiveCategory] = useState<Project['category']>('all');
+  const [filteredProjects, setFilteredProjects] = useState<Project[]>(projectsData.projects);
   const sectionRef = useRef<HTMLElement>(null);
   
   useEffect(() => {
     if (activeCategory === 'all') {
-      setFilteredProjects(projects);
+      setFilteredProjects(projectsData.projects);
     } else {
-      setFilteredProjects(projects.filter(project => project.category === activeCategory));
+      setFilteredProjects(projectsData.projects.filter(project => project.category === activeCategory));
     }
   }, [activeCategory]);
   
@@ -115,7 +70,7 @@ const Portfolio = () => {
           {categories.map((category) => (
             <button
               key={category.id}
-              onClick={() => setActiveCategory(category.id as Category)}
+              onClick={() => setActiveCategory(category.id as Project['category'])}
               className={`px-6 py-2 rounded-full transition-all duration-300 ${
                 activeCategory === category.id
                   ? 'bg-design-accent text-white'
