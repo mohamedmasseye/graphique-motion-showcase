@@ -16,6 +16,14 @@
       "image": "/path/to/ecommerce-site.jpg",
       "link": "#",
       "description": "Site web responsive pour une boutique en ligne"
+    },
+    {
+      "id": 3,
+      "title": "Ecoleaf - Green Paper",
+      "category": "logo",
+      "image": "/lovable-uploads/81021753-01cc-4d9d-bf82-66816b5838ee.png",
+      "link": "#",
+      "description": "Logo écologique pour une entreprise de papier durable"
     }
   ]
 }
