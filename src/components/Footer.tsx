@@ -12,7 +12,7 @@ const Footer = () => {
             <img 
               src="/lovable-uploads/de699b4d-f281-49b8-b42d-18ceb13b6677.png" 
               alt="Notion Logo" 
-              className="h-12 w-auto object-contain"
+              className="h-24 w-auto object-contain" // Increased from h-12 to h-24
             />
           </div>
           
