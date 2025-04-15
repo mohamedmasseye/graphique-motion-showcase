@@ -1,8 +1,7 @@
-
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
-import Logo from '/logo.png';
+import Logo from '/lovable-uploads/925bd2ad-f421-4956-b894-1560661f9795.png';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
