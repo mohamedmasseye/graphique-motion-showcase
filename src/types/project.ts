@@ -1,5 +1,5 @@
 
-export type ProjectCategory = 'logo' | 'web' | 'print' | 'video';
+export type ProjectCategory = 'logo' | 'web' | 'print' | 'video' | 'event';
 
 export interface Project {
   id: number;
