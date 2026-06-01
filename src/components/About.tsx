@@ -50,7 +50,7 @@ const pillars = [
   {
     icon: Clock,
     title: 'Disponibilité locale',
-    desc: 'Basés à Dakar, on comprend votre marché, votre langue et vos clients.',
+    desc: 'Disponibles 7j/7, on s\'adapte à votre marché, votre secteur et vos clients.',
     color: '#378ADD',
     span: 'lg:col-span-2',
   },
@@ -108,7 +108,7 @@ export default function About() {
           >
             <p className="text-[#A0A0A0] text-lg leading-relaxed max-w-md">
               <strong className="text-white">GRAPHIQUE & MOTION</strong> est une agence digitale
-              basée à Dakar. Depuis plus de 10 ans, on accompagne les entrepreneurs et PME
+              spécialisée en design et développement. Depuis plus de 10 ans, on accompagne les entrepreneurs et PME
               dans leur présence en ligne — du logo au site web, de l'app mobile à la stratégie de marque.
             </p>
             <p className="text-[#A0A0A0] mt-4 text-base leading-relaxed max-w-md">

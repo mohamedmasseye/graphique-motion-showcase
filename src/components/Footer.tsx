@@ -18,7 +18,7 @@ export default function Footer() {
               className="h-20 w-auto object-contain mb-3"
             />
             <p className="text-[#A0A0A0] text-sm max-w-xs">
-              Agence digitale à Dakar — sites web, apps & branding professionnel.
+              Design premium. Livré en 7 jours. Sites web, apps & branding.
             </p>
           </div>
 

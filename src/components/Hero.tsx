@@ -354,9 +354,9 @@ export default function Hero() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.72, ease: [0.22, 1, 0.36, 1] }}
             >
-              On aide les business à Dakar à vendre plus en ligne.
+              On crée des sites qui vendent, des apps qui convertissent.
               <br />
-              <span className="text-white/50 text-base">Sans jargon, sans délai, sans mauvaises surprises.</span>
+              <span className="text-white/50 text-base">Livré en 7 jours. Sans jargon, sans mauvaises surprises.</span>
             </motion.p>
 
             {/* Service chips */}
@@ -470,7 +470,7 @@ export default function Hero() {
             style={{ fontSize: '9.5px', fontFamily: 'Montserrat, sans-serif', fontWeight: 600, letterSpacing: '0.22em', fill: 'rgba(255,255,255,0.55)' }}
           >
             <textPath href="#circle-path">
-              GRAPHIQUE&MOTION • DAKAR • AGENCE •
+              GRAPHIQUE&MOTION • PREMIUM • DIGITAL •
             </textPath>
           </text>
         </motion.svg>
