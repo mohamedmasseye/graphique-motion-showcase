@@ -4,49 +4,90 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <!-- Theme color (Chrome Android browser bar) -->
+    <meta name="theme-color" content="#00B2AA" />
+
     <!-- Primary SEO -->
-    <title>Agence Web Dakar | Sites Web, Apps & Branding | Graphique &amp; Motion</title>
+    <title>Agence Web Dakar | Sites Web, Apps &amp; Branding | Graphique &amp; Motion</title>
     <meta name="description" content="Graphique &amp; Motion, agence digitale à Dakar. Création de sites web, applications mobiles et branding professionnel. Packs dès 200 000 FCFA. Livraison en 7 jours." />
-    <meta name="author" content="Mohamed Masseye DIOP — Graphique &amp; Motion" />
+    <meta name="author" content="Graphique &amp; Motion — Dakar, Sénégal" />
     <meta name="keywords" content="agence web Dakar, création site web Sénégal, application mobile Dakar, branding Dakar, logo Sénégal, PWA, e-commerce Dakar, Graphique Motion" />
     <link rel="canonical" href="https://graphiquemotion.com/" />
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="/logo.png" />
+    <!-- Hreflang (signal langue/région pour Google) -->
+    <link rel="alternate" hreflang="fr" href="https://graphiquemotion.com/" />
+    <link rel="alternate" hreflang="x-default" href="https://graphiquemotion.com/" />
 
-    <!-- Open Graph -->
+    <!-- Robots -->
+    <meta name="robots" content="index, follow" />
+
+    <!-- Favicon + Apple Touch Icon -->
+    <link rel="icon" type="image/png" href="/logo.png" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <!-- Google Fonts — preconnect avant @import CSS pour charger plus vite -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&display=swap"
+    />
+
+    <!-- Open Graph (Facebook, LinkedIn, WhatsApp) -->
     <meta property="og:title" content="Agence Web Dakar | Sites Web, Apps &amp; Branding | Graphique &amp; Motion" />
     <meta property="og:description" content="Graphique &amp; Motion, agence digitale à Dakar. Création de sites web, applications mobiles et branding. Packs dès 200 000 FCFA. Livraison en 7 jours." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://graphiquemotion.com/" />
-    <meta property="og:image" content="https://graphiquemotion.com/logo.png" />
+    <meta property="og:image" content="https://graphiquemotion.com/og-image.png" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Graphique &amp; Motion — Agence digitale à Dakar" />
     <meta property="og:locale" content="fr_SN" />
     <meta property="og:site_name" content="Graphique &amp; Motion" />
 
     <!-- Twitter / X Card -->
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@graphiquemotion" />
+    <meta name="twitter:creator" content="@graphiquemotion" />
     <meta name="twitter:title" content="Agence Web Dakar | Graphique &amp; Motion" />
     <meta name="twitter:description" content="Sites web, Apps &amp; Branding à Dakar. Packs dès 200 000 FCFA. Livraison 7 jours." />
-    <meta name="twitter:image" content="https://graphiquemotion.com/logo.png" />
-    <meta name="twitter:site" content="@graphiquemotion" />
+    <meta name="twitter:image" content="https://graphiquemotion.com/og-image.png" />
+    <meta name="twitter:image:alt" content="Graphique &amp; Motion — Agence digitale à Dakar" />
 
-    <!-- Robots -->
-    <meta name="robots" content="index, follow" />
-
-    <!-- Schema.org LocalBusiness -->
+    <!-- Schema.org — LocalBusiness + ProfessionalService -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "LocalBusiness",
+      "@type": ["LocalBusiness", "ProfessionalService"],
       "name": "Graphique & Motion",
       "description": "Agence digitale à Dakar spécialisée en création de sites web, applications mobiles et branding professionnel.",
       "url": "https://graphiquemotion.com",
+      "logo": "https://graphiquemotion.com/logo.png",
+      "image": "https://graphiquemotion.com/og-image.png",
       "telephone": "+221775644478",
       "email": "graphiquemotion@gmail.com",
+      "priceRange": "200 000 – 1 500 000 FCFA",
+      "areaServed": {
+        "@type": "Country",
+        "name": "Sénégal"
+      },
       "address": {
         "@type": "PostalAddress",
         "addressLocality": "Dakar",
+        "addressRegion": "Dakar",
         "addressCountry": "SN"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 14.6937,
+        "longitude": -17.4441
+      },
+      "openingHoursSpecification": {
+        "@type": "OpeningHoursSpecification",
+        "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+        "opens": "08:00",
+        "closes": "20:00"
       },
       "sameAs": [
         "https://www.instagram.com/graphiquemotion",
