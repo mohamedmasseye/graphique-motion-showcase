@@ -1,6 +1,4 @@
-
-
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, X, ZoomIn } from 'lucide-react';
 import { Project, ProjectCategory } from '@/types/project';
@@ -8,239 +6,286 @@ import projectsData from '@/data/projects.json';
 
 type FilterCategory = ProjectCategory | 'all';
 
-const Portfolio = () => {
+const categories: { id: FilterCategory; name: string }[] = [
+  { id: 'all', name: 'Tous' },
+  { id: 'web', name: 'Web' },
+  { id: 'pwa', name: 'PWA / App' },
+  { id: 'app', name: 'Mobile' },
+  { id: 'logo', name: 'Logos' },
+  { id: 'print', name: 'Print' },
+  { id: 'event', name: 'Événements' },
+];
+
+const categoryLabel: Record<ProjectCategory, string> = {
+  logo: 'Design de Logo',
+  web: 'Design Web',
+  pwa: 'App Web / PWA',
+  app: 'Application Mobile',
+  print: 'Design Imprimé',
+  video: 'Motion Design',
+  event: 'Design Événementiel',
+};
+
+const categoryColor: Record<ProjectCategory, string> = {
+  logo: '#00B2AA',
+  web: '#378ADD',
+  pwa: '#7F77DD',
+  app: '#F5821F',
+  print: '#A0A0A0',
+  video: '#EC4899',
+  event: '#F5821F',
+};
+
+export default function Portfolio() {
   const [activeCategory, setActiveCategory] = useState<FilterCategory>('all');
-  const [filteredProjects, setFilteredProjects] = useState<Project[]>(projectsData.projects as Project[]);
+  const [filtered, setFiltered] = useState<Project[]>(projectsData.projects as Project[]);
   const [selectedImage, setSelectedImage] = useState<Project | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
-  
+
   useEffect(() => {
     if (activeCategory === 'all') {
-      setFilteredProjects(projectsData.projects as Project[]);
+      setFiltered(projectsData.projects as Project[]);
     } else {
-      setFilteredProjects((projectsData.projects as Project[]).filter(project => project.category === activeCategory));
+      setFiltered((projectsData.projects as Project[]).filter((p) => p.category === activeCategory));
     }
   }, [activeCategory]);
-  
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            const elements = entry.target.querySelectorAll('.reveal, .reveal-left, .reveal-right');
-            elements.forEach(el => el.classList.add('active'));
-          }
-        });
-      },
-      { threshold: 0.1 }
-    );
-    
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
-    }
-    
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
-      }
-    };
-  }, []);
 
-  // Fermer la modal avec la touche Escape
   useEffect(() => {
-    const handleKeyDown = (event: KeyboardEvent) => {
-      if (event.key === 'Escape') {
-        setSelectedImage(null);
-      }
-    };
-
+    const handleKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setSelectedImage(null); };
     if (selectedImage) {
-      document.addEventListener('keydown', handleKeyDown);
+      document.addEventListener('keydown', handleKey);
       document.body.style.overflow = 'hidden';
     }
-
     return () => {
-      document.removeEventListener('keydown', handleKeyDown);
-      document.body.style.overflow = 'unset';
+      document.removeEventListener('keydown', handleKey);
+      document.body.style.overflow = '';
     };
   }, [selectedImage]);
-  
-  const categories = [
-    { id: 'all', name: 'Tous' },
-    { id: 'logo', name: 'Logos' },
-    { id: 'web', name: 'Web' },
-    { id: 'print', name: 'Print' },
-    { id: 'video', name: 'Vidéo' },
-    { id: 'event', name: 'Événements' }
-  ];
 
-  const handleImageClick = (project: Project) => {
-    setSelectedImage(project);
-  };
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => entries.forEach((e) => {
+        if (e.isIntersecting) e.target.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach((el) => el.classList.add('active'));
+      }),
+      { threshold: 0.1 }
+    );
+    if (sectionRef.current) observer.observe(sectionRef.current);
+    return () => { if (sectionRef.current) observer.unobserve(sectionRef.current); };
+  }, []);
 
-  const closeModal = () => {
-    setSelectedImage(null);
-  };
-  
   return (
     <>
-      <section id="portfolio" ref={sectionRef} className="section-padding bg-design-dark relative overflow-hidden">
-        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent"></div>
-        <div className="absolute -top-40 -left-40 w-80 h-80 bg-design-secondary/5 rounded-full blur-3xl"></div>
-        
+      <section id="portfolio" ref={sectionRef} className="relative py-24 md:py-32 overflow-hidden" style={{ background: 'linear-gradient(180deg, #000000 0%, #05060F 50%, #000000 100%)' }}>
+        {/* Atmospheric lighting */}
+        <div className="pointer-events-none absolute top-1/4 left-1/2 -translate-x-1/2 w-[700px] h-[300px] rounded-full bg-brand-blue/4 blur-[120px]" />
+        <div className="pointer-events-none absolute bottom-0 right-0 w-[350px] h-[350px] rounded-full bg-brand-purple/4 blur-[100px]" />
+
         <div className="container mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-sm uppercase tracking-widest text-design-accent mb-2 reveal">Portfolio</h2>
-            <h3 className="text-3xl md:text-4xl font-bold mb-4 reveal" data-delay="1">Mes Réalisations</h3>
-            <div className="w-20 h-1 bg-design-accent mx-auto mb-8 reveal" data-delay="2"></div>
-            <p className="max-w-2xl mx-auto text-gray-300 reveal" data-delay="3">
-              Découvrez une sélection de mes projets les plus récents et représentatifs.
-            </p>
-          </div>
-          
-          <div className="flex flex-wrap justify-center gap-4 mb-12 reveal" data-delay="4">
-            {categories.map((category) => (
-              <button
-                key={category.id}
-                onClick={() => setActiveCategory(category.id as FilterCategory)}
-                className={`px-6 py-2 rounded-full transition-all duration-300 ${
-                  activeCategory === category.id
-                    ? 'bg-design-accent text-white'
-                    : 'bg-white/5 hover:bg-white/10 text-white'
-                }`}
-              >
-                {category.name}
-              </button>
-            ))}
-          </div>
-          
-          <motion.div 
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-            layout
+          {/* Header */}
+          <motion.div
+            className="mb-16"
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
           >
-            {filteredProjects.map((project, index) => (
-              <motion.div
-                key={project.id}
-                className="group relative overflow-hidden rounded-xl card-hover reveal cursor-pointer"
-                data-delay={(index % 3) + 1}
-                layout
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: 20 }}
-                transition={{ duration: 0.5 }}
-                onClick={() => handleImageClick(project)}
+            <p className="text-brand-teal text-sm font-semibold uppercase tracking-[0.2em] mb-3">Portfolio</p>
+            <h2 className="font-syne text-4xl md:text-6xl font-black text-white leading-none tracking-tight">
+              Nos <span className="text-brand-teal">réalisations</span>.
+            </h2>
+            <p className="mt-5 text-[#A0A0A0] text-lg max-w-xl">
+              Chaque projet est une collaboration. Voici ce qu'on a construit ensemble.
+            </p>
+          </motion.div>
+
+          {/* Filters — centrés sur mobile */}
+          <motion.div
+            className="flex flex-wrap justify-center gap-2 mb-10"
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
+            {categories.map((cat) => (
+              <motion.button
+                key={cat.id}
+                onClick={() => setActiveCategory(cat.id)}
+                className={`relative px-4 py-2 rounded-full text-sm font-semibold cursor-pointer border overflow-hidden ${
+                  activeCategory === cat.id
+                    ? 'text-white border-brand-teal'
+                    : 'bg-white/5 text-[#A0A0A0] border-white/10'
+                }`}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.97 }}
+                transition={{ type: 'spring', stiffness: 400, damping: 20 }}
               >
-                <div className="aspect-video overflow-hidden relative">
-                  <img 
-                    src={project.image} 
-                    alt={project.title}
-                    className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
+                {activeCategory === cat.id && (
+                  <motion.span
+                    className="absolute inset-0 bg-brand-teal rounded-full"
+                    layoutId="filterActive"
+                    transition={{ type: 'spring', stiffness: 400, damping: 30 }}
                   />
-                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-300 flex items-center justify-center">
-                    <ZoomIn 
-                      size={32} 
-                      className="text-white opacity-0 group-hover:opacity-100 transition-all duration-300 transform scale-75 group-hover:scale-100" 
-                    />
-                  </div>
-                </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-end p-6">
-                  <div>
-                    <h4 className="text-xl font-medium text-white mb-2">{project.title}</h4>
-                    <p className="text-sm text-gray-300 mb-4">
-                      {project.category === 'logo' && 'Design de Logo'}
-                      {project.category === 'web' && 'Design Web'}
-                      {project.category === 'print' && 'Design Imprimé'}
-                      {project.category === 'video' && 'Motion Design'}
-                      {project.category === 'event' && 'Design Événementiel'}
-                    </p>
-                    <a 
-                      href={project.link}
-                      className="inline-flex items-center text-sm text-design-accent hover:text-design-accent/80 transition-colors"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      Voir le projet <ExternalLink size={14} className="ml-1" />
-                    </a>
-                  </div>
-                </div>
-              </motion.div>
+                )}
+                <span className="relative z-10">{cat.name}</span>
+              </motion.button>
             ))}
           </motion.div>
-          
-          <div className="mt-16 text-center reveal" data-delay="5">
-            <p className="text-gray-400 mb-4">Vous aimez ce que vous voyez?</p>
-            <a 
-              href="#contact" 
-              className="bg-design-accent hover:bg-design-accent/90 text-white font-medium py-3 px-8 rounded-full transition-all duration-300 inline-block"
+
+          {/* Grid — 2 colonnes mobile, 2 tablette, 3 desktop */}
+          <motion.div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5" layout>
+            <AnimatePresence mode="popLayout">
+              {filtered.map((project) => (
+                <motion.div
+                  key={project.id}
+                  layout
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                  className="group relative overflow-hidden rounded-2xl bg-white/[0.05] border border-white/10 cursor-pointer hover:border-white/20 transition-colors duration-300"
+                  onClick={() => setSelectedImage(project)}
+                >
+                  {/* Category badge */}
+                  <div
+                    className="absolute top-2 left-2 z-10 text-[9px] sm:text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full"
+                    style={{
+                      background: categoryColor[project.category] + '22',
+                      color: categoryColor[project.category],
+                    }}
+                  >
+                    {categoryLabel[project.category]}
+                  </div>
+
+                  {/* Image — aspect carré sur mobile, vidéo sur sm+ */}
+                  <div className="aspect-square sm:aspect-video overflow-hidden">
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                      loading="lazy"
+                    />
+                  </div>
+
+                  {/* Titre toujours visible sous l'image sur mobile */}
+                  <div className="sm:hidden px-3 py-2.5">
+                    <p className="text-white text-xs font-semibold leading-tight line-clamp-2">{project.title}</p>
+                  </div>
+
+                  {/* Hover overlay — desktop uniquement */}
+                  <div className="hidden sm:flex absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex-col justify-end p-5">
+                    <h4 className="text-white font-bold text-lg leading-tight mb-2">{project.title}</h4>
+                    {project.tags && (
+                      <div className="flex flex-wrap gap-1.5 mb-3">
+                        {project.tags.slice(0, 3).map((tag) => (
+                          <span key={tag} className="text-[10px] bg-white/10 text-white/70 px-2 py-0.5 rounded-full">{tag}</span>
+                        ))}
+                      </div>
+                    )}
+                    <div className="flex items-center justify-between">
+                      <span className="text-[#A0A0A0] text-xs flex items-center gap-1">
+                        <ZoomIn size={12} /> Voir détails
+                      </span>
+                      {project.link !== '#' && (
+                        <a
+                          href={project.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-brand-teal text-xs flex items-center gap-1 hover:text-brand-orange transition-colors"
+                          onClick={(e) => e.stopPropagation()}
+                        >
+                          Visiter <ExternalLink size={11} />
+                        </a>
+                      )}
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </motion.div>
+
+          {/* Bottom CTA */}
+          <motion.div
+            className="mt-16 text-center"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3 }}
+          >
+            <p className="text-[#A0A0A0] mb-4 text-sm">Vous aimez ce que vous voyez ?</p>
+            <a
+              href="#contact"
+              className="inline-block bg-brand-teal hover:bg-brand-teal/85 text-white font-bold py-3 px-8 rounded-full transition-all duration-200 text-sm cursor-pointer"
             >
-              Contactez-moi
+              Démarrer un projet
             </a>
-          </div>
+          </motion.div>
         </div>
       </section>
 
-      {/* Modal d'image */}
+      {/* Lightbox */}
       <AnimatePresence>
         {selectedImage && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-sm"
-            onClick={closeModal}
+            transition={{ duration: 0.25 }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/95 backdrop-blur-sm"
+            onClick={() => setSelectedImage(null)}
           >
             <motion.div
-              initial={{ scale: 0.8, opacity: 0 }}
+              initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.8, opacity: 0 }}
-              transition={{ duration: 0.3, ease: "easeOut" }}
-              className="relative max-w-4xl max-h-[90vh] w-full bg-design-dark rounded-2xl overflow-hidden shadow-2xl"
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
+              className="relative max-w-4xl max-h-[90vh] w-full bg-[#111115] rounded-2xl overflow-hidden border border-white/10 shadow-2xl"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* Bouton de fermeture */}
               <button
-                onClick={closeModal}
-                className="absolute top-4 right-4 z-10 p-2 bg-black/50 hover:bg-black/70 rounded-full transition-all duration-200 text-white hover:scale-110"
+                onClick={() => setSelectedImage(null)}
+                className="absolute top-4 right-4 z-10 p-2 bg-white/10 hover:bg-white/20 rounded-full transition-colors cursor-pointer"
+                aria-label="Fermer"
               >
-                <X size={20} />
+                <X size={18} className="text-white" />
               </button>
 
-              {/* Image */}
-              <div className="relative">
-                <img
-                  src={selectedImage.image}
-                  alt={selectedImage.title}
-                  className="w-full h-auto max-h-[70vh] object-contain"
-                />
-              </div>
+              <img
+                src={selectedImage.image}
+                alt={selectedImage.title}
+                className="w-full h-auto max-h-[65vh] object-contain bg-black"
+              />
 
-              {/* Informations du projet */}
-              <div className="p-6 bg-gradient-to-t from-design-dark to-transparent">
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <h3 className="text-2xl font-bold text-white mb-2">{selectedImage.title}</h3>
-                    <p className="text-design-accent text-sm font-medium mb-3">
-                      {selectedImage.category === 'logo' && 'Design de Logo'}
-                      {selectedImage.category === 'web' && 'Design Web'}
-                      {selectedImage.category === 'print' && 'Design Imprimé'}
-                      {selectedImage.category === 'video' && 'Motion Design'}
-                      {selectedImage.category === 'event' && 'Design Événementiel'}
-                    </p>
-                    <p className="text-gray-300 text-sm leading-relaxed mb-4">
-                      {selectedImage.description}
-                    </p>
-                    {selectedImage.link !== '#' && (
-                      <a
-                        href={selectedImage.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center px-4 py-2 bg-design-accent hover:bg-design-accent/90 text-white rounded-lg transition-all duration-200 text-sm font-medium"
-                      >
-                        Voir le projet <ExternalLink size={16} className="ml-2" />
-                      </a>
-                    )}
-                  </div>
+              <div className="p-6">
+                <div
+                  className="inline-block text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full mb-3"
+                  style={{
+                    background: categoryColor[selectedImage.category] + '22',
+                    color: categoryColor[selectedImage.category],
+                  }}
+                >
+                  {categoryLabel[selectedImage.category]}
                 </div>
+                <h3 className="text-xl font-black text-white mb-2">{selectedImage.title}</h3>
+                {selectedImage.description && (
+                  <p className="text-[#A0A0A0] text-sm leading-relaxed mb-4">{selectedImage.description}</p>
+                )}
+                {selectedImage.tags && (
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {selectedImage.tags.map((tag) => (
+                      <span key={tag} className="text-xs bg-white/8 text-white/60 px-3 py-1 rounded-full border border-white/10">{tag}</span>
+                    ))}
+                  </div>
+                )}
+                {selectedImage.link !== '#' && (
+                  <a
+                    href={selectedImage.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 bg-brand-teal hover:bg-brand-teal/85 text-white text-sm font-bold px-5 py-2.5 rounded-lg transition-colors cursor-pointer"
+                  >
+                    Visiter le projet <ExternalLink size={14} />
+                  </a>
+                )}
               </div>
             </motion.div>
           </motion.div>
@@ -248,7 +293,4 @@ const Portfolio = () => {
       </AnimatePresence>
     </>
   );
-};
-
-export default Portfolio;
-
+}

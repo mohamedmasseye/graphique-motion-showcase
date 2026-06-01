@@ -1,140 +1,175 @@
 {
   "projects": [
     {
+      "id": 1,
+      "title": "Turquoise – Commande en ligne",
+      "category": "pwa",
+      "image": "/lovable-uploads/1abb6637-9c53-484c-8ee1-1f1e7c198477.png",
+      "link": "https://turquoise.sn",
+      "description": "Application web de commande en ligne pour restaurant. Livraison à domicile & à emporter. PWA installable sur Android & iOS.",
+      "tags": ["App Web", "PWA", "Restaurant", "E-commerce"]
+    },
+    {
+      "id": 2,
+      "title": "Daara Serigne Mor Diop – Site officiel",
+      "category": "web",
+      "image": "/lovable-uploads/724c9a3c-46ac-4cdf-b270-73bc0e5401aa.png",
+      "link": "https://daaraserignemordiop.com",
+      "description": "Site officiel de l'institution religieuse Daara Serigne Mor Diop. Brochures, événements, blog, chaîne YouTube intégrée.",
+      "tags": ["Site Web", "Institution", "WordPress"]
+    },
+    {
       "id": 3,
-      "title": "Ecoleaf - Green Paper",
-      "category": "logo",
-      "image": "/lovable-uploads/81021753-01cc-4d9d-bf82-66816b5838ee.png",
-      "link": "#",
-      "description": "Logo écologique pour une entreprise de papier durable"
+      "title": "Daara Serigne Mor Diop – Application mobile",
+      "category": "app",
+      "image": "/lovable-uploads/9d0d54f3-5813-4505-8319-36145c272c82.png",
+      "link": "https://app.daaraserignemordiop.com",
+      "description": "Application PWA mobile Android pour le Daara Serigne Mor Diop. Contenu religieux, calendrier, publications accessibles hors ligne.",
+      "tags": ["PWA", "App Android", "Application Mobile"]
     },
     {
       "id": 4,
+      "title": "Dakar Store Express – Boutique e-commerce",
+      "category": "web",
+      "image": "/lovable-uploads/01f63d3b-985e-46d0-aae1-4b6fa5a45e2d.png",
+      "link": "https://dakarstoreexpress.com",
+      "description": "Boutique e-commerce complète pour la vente de téléphones, gadgets et accessoires électroniques à Dakar. Paiement en ligne, suivi de commande, livraison.",
+      "tags": ["E-commerce", "Boutique en ligne", "WooCommerce"]
+    },
+    {
+      "id": 5,
+      "title": "NFP Sea Food – Site vitrine",
+      "category": "web",
+      "image": "/lovable-uploads/66cb0484-238e-4301-8316-dfc713183977.png",
+      "link": "https://nfpseafood.com",
+      "description": "Site vitrine international pour NFP Sea Food, entreprise d'import/export de poisson. Catalogue produits, présentation des services Asie, Afrique et Import.",
+      "tags": ["Site Vitrine", "International", "Import/Export"]
+    },
+    {
+      "id": 6,
+      "title": "Ecoleaf – Green Paper",
+      "category": "logo",
+      "image": "/lovable-uploads/81021753-01cc-4d9d-bf82-66816b5838ee.png",
+      "link": "#",
+      "description": "Logo écologique pour une entreprise de papier durable",
+      "tags": ["Logo", "Branding", "Écologie"]
+    },
+    {
+      "id": 7,
       "title": "Diobass Construction",
       "category": "logo",
       "image": "/lovable-uploads/fbd73fc7-98cc-4bd3-85f6-fa11e5ca3468.png",
       "link": "#",
-      "description": "Logo pour une entreprise de construction"
+      "description": "Logo pour une entreprise de construction",
+      "tags": ["Logo", "BTP", "Branding"]
     },
     {
-      "id": 5,
+      "id": 8,
       "title": "Expertise 360",
       "category": "logo",
       "image": "/lovable-uploads/804453b7-5afa-4daa-865c-9f42a4f1344f.png",
       "link": "#",
-      "description": "Logo pour un service de conseil et expertise"
+      "description": "Logo pour un service de conseil et expertise",
+      "tags": ["Logo", "Conseil", "Branding"]
     },
     {
-      "id": 6,
+      "id": 9,
       "title": "Mynadoo Boutique",
       "category": "logo",
       "image": "/lovable-uploads/7f9ab54c-8eb0-477a-b499-a4558b699da1.png",
       "link": "#",
-      "description": "Logo pour une boutique de mode"
+      "description": "Logo pour une boutique de mode",
+      "tags": ["Logo", "Mode", "Branding"]
     },
     {
-      "id": 7,
-      "title": "Paris Dakar",
+      "id": 10,
+      "title": "Paris Dakar Parfumerie",
       "category": "logo",
       "image": "/lovable-uploads/9dbee993-0a9c-4a91-bc05-d7402bff3e1b.png",
       "link": "#",
-      "description": "Logo pour une parfumerie de luxe"
+      "description": "Logo pour une parfumerie de luxe",
+      "tags": ["Logo", "Luxe", "Parfumerie"]
     },
     {
-      "id": 8,
+      "id": 11,
       "title": "MCS Millenium Commerce Services",
       "category": "logo",
       "image": "/lovable-uploads/dd32486a-e1ef-4dbb-845b-da9719cf1c72.png",
       "link": "#",
-      "description": "Logo pour une entreprise de services commerciaux"
+      "description": "Logo pour une entreprise de services commerciaux",
+      "tags": ["Logo", "Commerce", "Branding"]
     },
     {
-      "id": 9,
+      "id": 12,
+      "title": "Seyda Style – Logo",
+      "category": "logo",
+      "image": "/lovable-uploads/b72ab9de-798d-4d34-af77-49d0f3b29706.png",
+      "link": "#",
+      "description": "Design de logo pour une marque de mode",
+      "tags": ["Logo", "Mode", "Fashion"]
+    },
+    {
+      "id": 13,
       "title": "Loulou Deco & Design",
       "category": "print",
       "image": "/lovable-uploads/9d0d54f3-5813-4505-8319-36145c272c82.png",
       "link": "#",
-      "description": "Carte de visite pour une entreprise d'ameublement et décoration"
+      "description": "Carte de visite pour une entreprise d'ameublement et décoration",
+      "tags": ["Print", "Carte de visite", "Décoration"]
     },
     {
-      "id": 10,
+      "id": 14,
       "title": "Mètre Carré BTP",
       "category": "print",
       "image": "/lovable-uploads/b96d4a7e-c3eb-47df-9b0d-fe5de048da6e.png",
       "link": "#",
-      "description": "Carte de visite pour une entreprise immobilière"
+      "description": "Carte de visite pour une entreprise immobilière",
+      "tags": ["Print", "Immobilier", "Carte de visite"]
     },
     {
-      "id": 11,
+      "id": 15,
       "title": "Baol Chicken",
       "category": "print",
       "image": "/lovable-uploads/e415331a-e168-467c-9c51-7ed37bdce148.png",
       "link": "#",
-      "description": "Carte de visite pour un commerce de poulets"
+      "description": "Carte de visite pour un commerce de poulets",
+      "tags": ["Print", "Restauration", "Carte de visite"]
     },
     {
-      "id": 12,
+      "id": 16,
       "title": "Car For All",
       "category": "print",
       "image": "/lovable-uploads/5a2345f0-0643-43e3-8755-11a81f8b849e.png",
       "link": "#",
-      "description": "Carte de visite pour une entreprise de location de véhicules"
+      "description": "Carte de visite pour une entreprise de location de véhicules",
+      "tags": ["Print", "Transport", "Carte de visite"]
     },
     {
-      "id": 13,
-      "title": "Diobass Construction",
-      "category": "print",
-      "image": "/lovable-uploads/ab9fd61c-b318-4ca2-8489-578d05af2400.png",
-      "link": "#",
-      "description": "Carte de visite pour une entreprise de construction"
-    },
-    {
-      "id": 14,
-      "title": "Ministère de l'Economie Numérique",
+      "id": 17,
+      "title": "Ministère de l'Économie Numérique",
       "category": "print",
       "image": "/lovable-uploads/fdcf3848-5356-457c-bfad-5bcfd059608f.png",
       "link": "#",
-      "description": "Carte de visite officielle pour un directeur d'administration"
+      "description": "Carte de visite officielle pour un directeur d'administration",
+      "tags": ["Print", "Institutionnel", "Officiel"]
     },
     {
-      "id": 15,
+      "id": 18,
       "title": "Salma Couture",
       "category": "print",
       "image": "/lovable-uploads/bae2148c-6358-4f1a-b3cb-a6065a2c2735.png",
       "link": "#",
-      "description": "Carte de visite pour une boutique de couture"
-    },
-    {
-      "id": 16,
-      "title": "NFP Seafood",
-      "category": "web",
-      "image": "/lovable-uploads/66cb0484-238e-4301-8316-dfc713183977.png",
-      "link": "https://nfpseafood.com/",
-      "description": "Site web pour une entreprise de produits de la mer"
-    },
-    {
-      "id": 17,
-      "title": "Turquoise",
-      "category": "web",
-      "image": "/lovable-uploads/1abb6637-9c53-484c-8ee1-1f1e7c198477.png",
-      "link": "https://turquoise.sn/",
-      "description": "Site web pour une entreprise de restauration"
-    },
-    {
-      "id": 18,
-      "title": "Boubacar Ndiaye - Event",
-      "category": "event",
-      "image": "/lovable-uploads/d2e3a578-9aff-44d7-8999-7f7feb0a5c50.png",
-      "link": "#",
-      "description": "Affiche événementielle pour une soirée sénégalaise"
+      "description": "Carte de visite pour une boutique de couture",
+      "tags": ["Print", "Mode", "Couture"]
     },
     {
       "id": 19,
-      "title": "Pape & Cheikh - Concert",
-      "category": "event",
-      "image": "/lovable-uploads/0a603940-7ede-4ede-9021-50dd49dc77b4.png",
+      "title": "HDior Hotel",
+      "category": "print",
+      "image": "/lovable-uploads/89ec49c3-b350-4fdc-b85e-b7e8a257663a.png",
       "link": "#",
-      "description": "Design d'affiche pour un concert spécial Sargal"
+      "description": "Design promotionnel pour un hôtel de luxe",
+      "tags": ["Print", "Hôtellerie", "Luxe"]
     },
     {
       "id": 20,
@@ -142,87 +177,62 @@
       "category": "print",
       "image": "/lovable-uploads/041dc03b-b50a-472c-a5cb-4a7670108146.png",
       "link": "#",
-      "description": "Flyer pour une entreprise de livraison"
+      "description": "Flyer pour une entreprise de livraison",
+      "tags": ["Print", "Flyer", "Livraison"]
     },
     {
       "id": 21,
-      "title": "Seyda Style - Mode",
+      "title": "Seyda Style – Mode",
       "category": "print",
       "image": "/lovable-uploads/f5b11d42-8a9a-419b-9213-efc0c9340590.png",
       "link": "#",
-      "description": "Design publicitaire pour une boutique de mode"
+      "description": "Design publicitaire pour une boutique de mode",
+      "tags": ["Print", "Mode", "Publicité"]
     },
     {
       "id": 22,
-      "title": "Match de Football",
-      "category": "event",
-      "image": "/lovable-uploads/cb52c47e-a011-453b-9dcc-d54bc0a33d3c.png",
-      "link": "#",
-      "description": "Affiche promotionnelle pour un match de football"
-    },
-    {
-      "id": 23,
-      "title": "Seyda Style - Logo",
-      "category": "logo",
-      "image": "/lovable-uploads/b72ab9de-798d-4d34-af77-49d0f3b29706.png",
-      "link": "#",
-      "description": "Design de logo pour une marque de mode"
-    },
-    {
-      "id": 24,
       "title": "Simha Distribution",
       "category": "print",
       "image": "/lovable-uploads/b39954db-e4ce-4091-834d-fdca2c608c05.png",
       "link": "#",
-      "description": "Brochure promotionnelle pour une entreprise de distribution de fruits"
+      "description": "Brochure promotionnelle pour une entreprise de distribution de fruits",
+      "tags": ["Print", "Brochure", "Distribution"]
     },
     {
-      "id": 25,
-      "title": "HDior Hotel",
-      "category": "print",
-      "image": "/lovable-uploads/89ec49c3-b350-4fdc-b85e-b7e8a257639a.png",
-      "link": "#",
-      "description": "Design promotionnel pour un hôtel de luxe"
-    },
-    {
-      "id": 26,
-      "title": "SecuVizion - Business Card",
-      "category": "print",
-      "image": "/lovable-uploads/644bafe7-bdb5-44f4-8583-ff1275aac95c.png",
-      "link": "https://secuvizion.com",
-      "description": "Business card design for SecuVizion, a security solutions company"
-    },
-    {
-      "id": 27,
-      "title": "Seyda Style - Business Card",
-      "category": "print",
-      "image": "/lovable-uploads/d3be0b11-a8e6-4abf-9872-8ca79ece0262.png",
-      "link": "#",
-      "description": "Business card design for Seyda Style, a fashion boutique specializing in modest wear"
-    },
-    {
-      "id": 28,
-      "title": "Proxi Plus - Business Card",
-      "category": "print",
-      "image": "/lovable-uploads/18954cf2-a7ed-49e4-964b-941b3affcc80.png",
-      "link": "#",
-      "description": "Business card design for Proxi Plus, a delivery service company"
-    },
-    {
-      "id": 29,
-      "title": "Seyda Style - Flyer",
-      "category": "print",
-      "image": "/lovable-uploads/52daf7a8-4faf-4984-b479-c4d7366cde3a.png",
-      "link": "#",
-      "description": "Flyer design for Seyda Style, a modest fashion boutique"
-    },
-    {
-      "id": 30,
-      "title": "Sonab Store - Packaging",
+      "id": 23,
+      "title": "Sonab Store – Packaging",
       "category": "print",
       "image": "/lovable-uploads/200b7f61-950c-48c1-bb4f-a71c79b397cb.png",
       "link": "#",
-      "description": "Shopping bag design for Sonab Store, a textile and fabric retailer"
+      "description": "Shopping bag design pour Sonab Store, textile et tissu",
+      "tags": ["Packaging", "Print", "Textile"]
+    },
+    {
+      "id": 24,
+      "title": "Pape & Cheikh – Concert",
+      "category": "event",
+      "image": "/lovable-uploads/0a603940-7ede-4ede-9021-50dd49dc77b4.png",
+      "link": "#",
+      "description": "Design d'affiche pour un concert spécial Sargal",
+      "tags": ["Affiche", "Concert", "Événement"]
+    },
+    {
+      "id": 25,
+      "title": "Boubacar Ndiaye – Soirée",
+      "category": "event",
+      "image": "/lovable-uploads/d2e3a578-9aff-44d7-8999-7f7feb0a5c50.png",
+      "link": "#",
+      "description": "Affiche événementielle pour une soirée sénégalaise",
+      "tags": ["Affiche", "Événement", "Soirée"]
+    },
+    {
+      "id": 26,
+      "title": "Match de Football",
+      "category": "event",
+      "image": "/lovable-uploads/cb52c47e-a011-453b-9dcc-d54bc0a33d3c.png",
+      "link": "#",
+      "description": "Affiche promotionnelle pour un match de football",
+      "tags": ["Affiche", "Sport", "Football"]
     }
   ]
 }

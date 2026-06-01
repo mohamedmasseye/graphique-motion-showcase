@@ -63,11 +63,18 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				design: {
-					dark: '#1A1F2C',
+					dark: '#0A0A0F',
 					light: '#F1F0FB',
-					accent: '#F97316',
-					secondary: '#009688',
-					tertiary: '#F97316'
+					accent: '#00B2AA',
+					secondary: '#F5821F',
+					tertiary: '#F5821F'
+				},
+				brand: {
+					teal: '#00B2AA',
+					orange: '#F5821F',
+					blue: '#378ADD',
+					purple: '#7F77DD',
+					dark: '#0A0A0F',
 				}
 			},
 			borderRadius: {
@@ -151,8 +158,11 @@ export default {
 				'scale': 'scale 0.5s ease-out'
 			},
 			fontFamily: {
-				sans: ['Inter', 'sans-serif'],
-				poppins: ['Poppins', 'sans-serif']
+				sans: ['Montserrat', 'sans-serif'],
+				poppins: ['Montserrat', 'sans-serif'],
+				syne: ['Montserrat', 'sans-serif'],
+				manrope: ['Montserrat', 'sans-serif'],
+				montserrat: ['Montserrat', 'sans-serif'],
 			}
 		}
 	},

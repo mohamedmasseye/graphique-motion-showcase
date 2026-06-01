@@ -1,5 +1,4 @@
-
-export type ProjectCategory = 'logo' | 'web' | 'print' | 'video' | 'event';
+export type ProjectCategory = 'logo' | 'web' | 'pwa' | 'app' | 'print' | 'video' | 'event';
 
 export interface Project {
   id: number;
@@ -8,4 +7,5 @@ export interface Project {
   image: string;
   link: string;
   description?: string;
+  tags?: string[];
 }
