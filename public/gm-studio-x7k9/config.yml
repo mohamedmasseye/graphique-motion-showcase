@@ -19,68 +19,72 @@ collections:
   # ── PORTFOLIO ────────────────────────────────────────────────────────────────
   - name: portfolio
     label: "🖼 Portfolio"
-    label_singular: "Projet"
-    file: src/data/projects.json
-    description: "Gérer les projets affichés dans le portfolio"
-    fields:
+    files:
       - name: projects
         label: Projets
-        widget: list
-        label_singular: Projet
-        summary: "{{fields.title}}"
+        file: src/data/projects.json
+        description: "Gérer les projets affichés dans le portfolio"
         fields:
-          - { name: id,          label: ID,          widget: number,  hint: "Nombre unique (1, 2, 3...)" }
-          - { name: title,       label: Titre,        widget: string }
-          - name: category
-            label: Catégorie
-            widget: select
-            options:
-              - { label: "Site Web",        value: web }
-              - { label: "Application PWA", value: pwa }
-              - { label: "App Mobile",      value: app }
-              - { label: "Logo",            value: logo }
-              - { label: "Print",           value: print }
-              - { label: "Événementiel",    value: event }
-          - { name: image,       label: Image,        widget: image,  hint: "Uploadez l'image du projet" }
-          - { name: link,        label: "Lien URL",   widget: string, required: false, hint: "https://..." }
-          - { name: description, label: Description,  widget: text }
-          - name: tags
-            label: Tags
+          - name: projects
+            label: Projets
             widget: list
-            field: { name: tag, label: Tag, widget: string }
+            label_singular: Projet
+            summary: "{{fields.title}}"
+            fields:
+              - { name: id,          label: ID,          widget: number,  hint: "Nombre unique (1, 2, 3...)" }
+              - { name: title,       label: Titre,        widget: string }
+              - name: category
+                label: Catégorie
+                widget: select
+                options:
+                  - { label: "Site Web",        value: web }
+                  - { label: "Application PWA", value: pwa }
+                  - { label: "App Mobile",      value: app }
+                  - { label: "Logo",            value: logo }
+                  - { label: "Print",           value: print }
+                  - { label: "Événementiel",    value: event }
+              - { name: image,       label: Image,        widget: image,  hint: "Uploadez l'image du projet" }
+              - { name: link,        label: "Lien URL",   widget: string, required: false, hint: "https://..." }
+              - { name: description, label: Description,  widget: text }
+              - name: tags
+                label: Tags
+                widget: list
+                field: { name: tag, label: Tag, widget: string }
 
   # ── TARIFS ───────────────────────────────────────────────────────────────────
   - name: pricing
     label: "💰 Tarifs"
-    label_singular: "Plan"
-    file: src/data/pricing.json
-    description: "Modifier les offres et prix"
-    fields:
+    files:
       - name: plans
         label: Plans tarifaires
-        widget: list
-        label_singular: Plan
-        summary: "Pack {{fields.name}} — {{fields.price}} {{fields.currency}}"
+        file: src/data/pricing.json
+        description: "Modifier les offres et prix"
         fields:
-          - { name: name,     label: "Nom du pack",  widget: string }
-          - { name: price,    label: Prix,            widget: string, hint: "Ex: 200 000 ou Dès 1 300 000" }
-          - { name: currency, label: Devise,          widget: string, default: FCFA }
-          - name: border
-            label: "Couleur d'accent"
-            widget: select
-            options:
-              - { label: Teal,   value: "#00B2AA" }
-              - { label: Bleu,   value: "#378ADD" }
-              - { label: Violet, value: "#7F77DD" }
-              - { label: Orange, value: "#F5821F" }
-          - { name: badge,    label: "Badge (ex: Le plus demandé)", widget: string, required: false }
-          - { name: delay,    label: "Délai de livraison",          widget: string }
-          - name: features
-            label: Fonctionnalités incluses
+          - name: plans
+            label: Plans tarifaires
             widget: list
-            field: { name: feature, label: Fonctionnalité, widget: string }
-          - { name: cta, label: "Texte du bouton", widget: string, default: Commander }
-          - { name: wa,  label: "Lien WhatsApp",   widget: string, hint: "https://wa.me/221775644478?text=..." }
+            label_singular: Plan
+            summary: "Pack {{fields.name}} — {{fields.price}} {{fields.currency}}"
+            fields:
+              - { name: name,     label: "Nom du pack",  widget: string }
+              - { name: price,    label: Prix,            widget: string, hint: "Ex: 200 000 ou Dès 1 300 000" }
+              - { name: currency, label: Devise,          widget: string, default: FCFA }
+              - name: border
+                label: "Couleur d'accent"
+                widget: select
+                options:
+                  - { label: Teal,   value: "#00B2AA" }
+                  - { label: Bleu,   value: "#378ADD" }
+                  - { label: Violet, value: "#7F77DD" }
+                  - { label: Orange, value: "#F5821F" }
+              - { name: badge,    label: "Badge (ex: Le plus demandé)", widget: string, required: false }
+              - { name: delay,    label: "Délai de livraison",          widget: string }
+              - name: features
+                label: Fonctionnalités incluses
+                widget: list
+                field: { name: feature, label: Fonctionnalité, widget: string }
+              - { name: cta, label: "Texte du bouton", widget: string, default: Commander }
+              - { name: wa,  label: "Lien WhatsApp",   widget: string, hint: "https://wa.me/221775644478?text=..." }
 
   # ── PARAMÈTRES GÉNÉRAUX ──────────────────────────────────────────────────────
   - name: settings
