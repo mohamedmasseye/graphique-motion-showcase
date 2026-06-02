@@ -1,6 +1,8 @@
 backend:
-  name: git-gateway
+  name: github
+  repo: mohamedmasseye/graphique-motion-showcase
   branch: main
+  base_url: https://gm-oauth.mohamed-masseye.workers.dev
 
 # Cloudinary — images hébergées sur CDN, aucun redéploiement Netlify
 media_folder: public/lovable-uploads
