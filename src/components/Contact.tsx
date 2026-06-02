@@ -1,23 +1,64 @@
 import { useEffect, useRef, useState } from 'react';
-import emailjs from '@emailjs/browser';
 import { motion } from 'framer-motion';
 import { MapPin, Mail, Phone, Send, Instagram, Facebook, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 
-// ─── EmailJS configuration ──────────────────────────────────────────────────
-// 1. Créez un compte sur https://www.emailjs.com
-// 2. Ajoutez un service email (Gmail → Service ID ci-dessous)
-// 3. Créez un template avec les variables : {{from_name}}, {{from_email}}, {{subject}}, {{message}}
-// 4. Copiez vos clés ici ou dans un fichier .env (VITE_EMAILJS_*)
-const EMAILJS_SERVICE_ID = import.meta.env.VITE_EMAILJS_SERVICE_ID || 'YOUR_SERVICE_ID';
-const EMAILJS_TEMPLATE_ID = import.meta.env.VITE_EMAILJS_TEMPLATE_ID || 'YOUR_TEMPLATE_ID';
-const EMAILJS_PUBLIC_KEY = import.meta.env.VITE_EMAILJS_PUBLIC_KEY || 'YOUR_PUBLIC_KEY';
+// ─── Brevo (ex-Sendinblue) configuration ────────────────────────────────────
+// 1. Créez un compte sur https://app.brevo.com
+// 2. Allez dans SMTP & API → Clés API → Générez une clé
+// 3. Ajoutez dans votre .env (jamais dans le code) :
+//    VITE_BREVO_API_KEY=xkeysib-xxxxxxxxxxxxxxxx
+// 4. Dans Brevo : vérifiez le domaine expéditeur support@graphiquemotion.com
 // ────────────────────────────────────────────────────────────────────────────
+const BREVO_API_KEY = import.meta.env.VITE_BREVO_API_KEY || '';
+const TO_EMAIL      = 'support@graphiquemotion.com';
+const SENDER_NAME   = 'Graphique & Motion';
 
 type Status = 'idle' | 'loading' | 'success' | 'error';
 
+async function sendViaBrevo(data: {
+  name: string;
+  email: string;
+  subject: string;
+  message: string;
+}) {
+  const res = await fetch('https://api.brevo.com/v3/smtp/email', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'api-key': BREVO_API_KEY,
+    },
+    body: JSON.stringify({
+      sender: { name: SENDER_NAME, email: TO_EMAIL },
+      to: [{ email: TO_EMAIL, name: SENDER_NAME }],
+      replyTo: { email: data.email, name: data.name },
+      subject: `[Contact] ${data.subject}`,
+      htmlContent: `
+        <div style="font-family:sans-serif;max-width:600px;margin:auto;padding:24px;background:#0A0A0F;color:#fff;border-radius:12px">
+          <h2 style="color:#00B2AA;margin-bottom:4px">Nouveau message</h2>
+          <p style="color:#A0A0A0;margin-top:0;font-size:13px">via graphiquemotion.com</p>
+          <hr style="border:none;border-top:1px solid rgba(255,255,255,0.1);margin:16px 0"/>
+          <table style="width:100%;font-size:14px">
+            <tr><td style="color:#A0A0A0;padding:4px 0;width:100px">Nom</td><td style="color:#fff">${data.name}</td></tr>
+            <tr><td style="color:#A0A0A0;padding:4px 0">Email</td><td><a href="mailto:${data.email}" style="color:#00B2AA">${data.email}</a></td></tr>
+            <tr><td style="color:#A0A0A0;padding:4px 0">Sujet</td><td style="color:#fff">${data.subject}</td></tr>
+          </table>
+          <hr style="border:none;border-top:1px solid rgba(255,255,255,0.1);margin:16px 0"/>
+          <p style="color:#A0A0A0;font-size:12px;margin-bottom:6px">MESSAGE</p>
+          <div style="background:rgba(255,255,255,0.05);border-radius:8px;padding:16px;color:#fff;font-size:14px;line-height:1.6;white-space:pre-wrap">${data.message}</div>
+          <p style="color:#A0A0A0;font-size:11px;margin-top:24px">Graphique &amp; Motion · support@graphiquemotion.com</p>
+        </div>
+      `,
+    }),
+  });
+
+  if (!res.ok) {
+    const err = await res.json().catch(() => ({}));
+    throw new Error(err.message || `Brevo error ${res.status}`);
+  }
+}
+
 export default function Contact() {
   const sectionRef = useRef<HTMLElement>(null);
-  const formRef = useRef<HTMLFormElement>(null);
   const [formData, setFormData] = useState({ name: '', email: '', subject: '', message: '' });
   const [status, setStatus] = useState<Status>('idle');
 
@@ -30,14 +71,8 @@ export default function Contact() {
     e.preventDefault();
     if (status === 'loading') return;
     setStatus('loading');
-
     try {
-      await emailjs.sendForm(
-        EMAILJS_SERVICE_ID,
-        EMAILJS_TEMPLATE_ID,
-        formRef.current!,
-        EMAILJS_PUBLIC_KEY
-      );
+      await sendViaBrevo(formData);
       setStatus('success');
       setFormData({ name: '', email: '', subject: '', message: '' });
       setTimeout(() => setStatus('idle'), 6000);
@@ -63,7 +98,6 @@ export default function Contact() {
 
   return (
     <section id="contact" ref={sectionRef} className="relative py-24 md:py-32 overflow-hidden" style={{ background: 'linear-gradient(140deg, #080508 0%, #0D0810 50%, #0A0608 100%)' }}>
-      {/* Atmospheric lighting chaude */}
       <div className="pointer-events-none absolute -top-32 left-0 w-[500px] h-[500px] rounded-full bg-brand-purple/5 blur-[130px]" />
       <div className="pointer-events-none absolute -bottom-32 right-0 w-[500px] h-[500px] rounded-full bg-brand-orange/7 blur-[130px]" />
       <div className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[200px] rounded-full bg-brand-teal/3 blur-[100px]" />
@@ -96,19 +130,14 @@ export default function Contact() {
             transition={{ duration: 0.6 }}
           >
             <p className="text-[#A0A0A0] leading-relaxed">
-              Nous sommes disponibles pour discuter de vos projets et répondre à toutes vos questions. N'hésitez pas à nous écrire.
+              Disponibles pour discuter de vos projets et répondre à toutes vos questions. N'hésitez pas à nous écrire.
             </p>
 
             <div className="space-y-5">
               {[
                 { icon: MapPin, label: 'Adresse', value: 'Dakar, Sénégal' },
-                {
-                  icon: Mail,
-                  label: 'Email',
-                  value: 'graphiquemotion@gmail.com',
-                  href: 'mailto:graphiquemotion@gmail.com',
-                },
-                { icon: Phone, label: 'Téléphone', value: '+221 77 564 44 78', href: 'tel:+221775644478' },
+                { icon: Mail,   label: 'Email',   value: 'support@graphiquemotion.com', href: 'mailto:support@graphiquemotion.com' },
+                { icon: Phone,  label: 'Téléphone', value: '+221 77 564 44 78', href: 'tel:+221775644478' },
               ].map(({ icon: Icon, label, value, href }) => (
                 <div key={label} className="flex items-start gap-4">
                   <div className="w-10 h-10 rounded-xl bg-brand-teal/10 flex items-center justify-center text-brand-teal shrink-0">
@@ -129,22 +158,12 @@ export default function Contact() {
             <div>
               <p className="text-xs text-[#A0A0A0] font-medium uppercase tracking-widest mb-4">Suivez-nous</p>
               <div className="flex gap-3">
-                <a
-                  href="https://www.facebook.com/share/18ZbMPjH39/?mibextid=wwXIfr"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Facebook"
-                  className="w-10 h-10 rounded-xl border border-white/10 flex items-center justify-center text-white/60 hover:bg-brand-teal hover:border-brand-teal hover:text-white transition-all duration-200 cursor-pointer"
-                >
+                <a href="https://www.facebook.com/share/18ZbMPjH39/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" aria-label="Facebook"
+                  className="w-10 h-10 rounded-xl border border-white/10 flex items-center justify-center text-white/60 hover:bg-brand-teal hover:border-brand-teal hover:text-white transition-all duration-200 cursor-pointer">
                   <Facebook size={16} />
                 </a>
-                <a
-                  href="https://www.instagram.com/graphiquemotion"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label="Instagram"
-                  className="w-10 h-10 rounded-xl border border-white/10 flex items-center justify-center text-white/60 hover:bg-brand-teal hover:border-brand-teal hover:text-white transition-all duration-200 cursor-pointer"
-                >
+                <a href="https://www.instagram.com/graphiquemotion" target="_blank" rel="noopener noreferrer" aria-label="Instagram"
+                  className="w-10 h-10 rounded-xl border border-white/10 flex items-center justify-center text-white/60 hover:bg-brand-teal hover:border-brand-teal hover:text-white transition-all duration-200 cursor-pointer">
                   <Instagram size={16} />
                 </a>
               </div>
@@ -171,48 +190,30 @@ export default function Contact() {
                   <p className="text-[#A0A0A0] text-sm">Nous vous répondrons dans les 24h.</p>
                 </motion.div>
               ) : (
-                <form ref={formRef} onSubmit={handleSubmit} noValidate>
+                <form onSubmit={handleSubmit} noValidate>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-5 mb-5">
                     <div>
                       <label htmlFor="name" className="block text-xs font-semibold text-[#A0A0A0] uppercase tracking-widest mb-2">Nom complet</label>
-                      <input
-                        type="text" id="name" name="from_name"
-                        value={formData.name}
-                        onChange={(e) => setFormData((p) => ({ ...p, name: e.target.value }))}
-                        required className={inputClass} placeholder="Votre nom"
-                      />
+                      <input type="text" id="name" name="name" value={formData.name} onChange={handleChange}
+                        required className={inputClass} placeholder="Votre nom" />
                     </div>
                     <div>
                       <label htmlFor="email" className="block text-xs font-semibold text-[#A0A0A0] uppercase tracking-widest mb-2">Email</label>
-                      <input
-                        type="email" id="email" name="from_email"
-                        value={formData.email}
-                        onChange={(e) => setFormData((p) => ({ ...p, email: e.target.value }))}
-                        required className={inputClass} placeholder="votre@email.com"
-                      />
+                      <input type="email" id="email" name="email" value={formData.email} onChange={handleChange}
+                        required className={inputClass} placeholder="votre@email.com" />
                     </div>
                   </div>
 
                   <div className="mb-5">
                     <label htmlFor="subject" className="block text-xs font-semibold text-[#A0A0A0] uppercase tracking-widest mb-2">Sujet</label>
-                    <input
-                      type="text" id="subject" name="subject"
-                      value={formData.subject}
-                      onChange={(e) => setFormData((p) => ({ ...p, subject: e.target.value }))}
-                      required className={inputClass} placeholder="Sujet de votre message"
-                    />
+                    <input type="text" id="subject" name="subject" value={formData.subject} onChange={handleChange}
+                      required className={inputClass} placeholder="Sujet de votre message" />
                   </div>
 
                   <div className="mb-6">
                     <label htmlFor="message" className="block text-xs font-semibold text-[#A0A0A0] uppercase tracking-widest mb-2">Message</label>
-                    <textarea
-                      id="message" name="message"
-                      value={formData.message}
-                      onChange={(e) => setFormData((p) => ({ ...p, message: e.target.value }))}
-                      required rows={5}
-                      className={`${inputClass} resize-none`}
-                      placeholder="Décrivez votre projet..."
-                    />
+                    <textarea id="message" name="message" value={formData.message} onChange={handleChange}
+                      required rows={5} className={`${inputClass} resize-none`} placeholder="Décrivez votre projet..." />
                   </div>
 
                   {status === 'error' && (
@@ -222,20 +223,12 @@ export default function Contact() {
                     </div>
                   )}
 
-                  <button
-                    type="submit"
-                    disabled={status === 'loading'}
-                    className="inline-flex items-center gap-2 bg-brand-teal hover:bg-brand-teal/85 disabled:opacity-60 disabled:cursor-not-allowed text-white font-bold py-3.5 px-8 rounded-xl transition-all duration-200 text-sm cursor-pointer"
-                  >
+                  <button type="submit" disabled={status === 'loading'}
+                    className="inline-flex items-center gap-2 bg-brand-teal hover:bg-brand-teal/85 disabled:opacity-60 disabled:cursor-not-allowed text-white font-bold py-3.5 px-8 rounded-xl transition-all duration-200 text-sm cursor-pointer">
                     {status === 'loading' ? (
-                      <>
-                        <Loader2 size={16} className="animate-spin" />
-                        Envoi en cours…
-                      </>
+                      <><Loader2 size={16} className="animate-spin" />Envoi en cours…</>
                     ) : (
-                      <>
-                        Envoyer <Send size={15} />
-                      </>
+                      <>Envoyer <Send size={15} /></>
                     )}
                   </button>
                 </form>
