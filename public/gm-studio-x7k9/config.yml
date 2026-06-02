@@ -9,7 +9,7 @@ media_library:
   name: cloudinary
   config:
     cloud_name: dgnc9ha2n
-    api_key: GFJqaZ0e4bc945Zrv2iH3jaoQ0I
+    api_key: 995456925512687
 
 # Langue de l'interface
 locale: fr
