@@ -1,0 +1,102 @@
+backend:
+  name: github
+  repo: mohamedmasseye/graphique-motion-showcase
+  branch: main
+  base_url: https://graphiquemotion.com
+  auth_endpoint: /oauth/authorize
+
+# Dossier pour les images uploadées via l'admin
+media_folder: public/lovable-uploads
+public_folder: /lovable-uploads
+
+# Langue de l'interface
+locale: fr
+
+# Slug en minuscules sans accents
+slug:
+  encoding: ascii
+  clean_accents: true
+
+collections:
+
+  # ── PORTFOLIO ────────────────────────────────────────────────────────────────
+  - name: portfolio
+    label: "🖼 Portfolio"
+    label_singular: "Projet"
+    file: src/data/projects.json
+    description: "Gérer les projets affichés dans le portfolio"
+    fields:
+      - name: projects
+        label: Projets
+        widget: list
+        label_singular: Projet
+        summary: "{{fields.title}}"
+        fields:
+          - { name: id,          label: ID,          widget: number,   hint: "Nombre unique (1, 2, 3...)" }
+          - { name: title,       label: Titre,        widget: string }
+          - name: category
+            label: Catégorie
+            widget: select
+            options:
+              - { label: "Site Web",        value: web }
+              - { label: "Application PWA", value: pwa }
+              - { label: "App Mobile",      value: app }
+              - { label: "Logo",            value: logo }
+              - { label: "Print",           value: print }
+              - { label: "Événementiel",    value: event }
+          - { name: image,       label: Image,        widget: image,   hint: "Uploadez l'image du projet" }
+          - { name: link,        label: "Lien URL",   widget: string,  required: false, hint: "https://..." }
+          - { name: description, label: Description,  widget: text }
+          - name: tags
+            label: Tags
+            widget: list
+            field: { name: tag, label: Tag, widget: string }
+
+  # ── TARIFS ───────────────────────────────────────────────────────────────────
+  - name: pricing
+    label: "💰 Tarifs"
+    label_singular: "Plan"
+    file: src/data/pricing.json
+    description: "Modifier les offres et prix"
+    fields:
+      - name: plans
+        label: Plans tarifaires
+        widget: list
+        label_singular: Plan
+        summary: "Pack {{fields.name}} — {{fields.price}} {{fields.currency}}"
+        fields:
+          - { name: name,     label: "Nom du pack",  widget: string }
+          - { name: price,    label: Prix,            widget: string, hint: "Ex: 200 000 ou Dès 1 300 000" }
+          - { name: currency, label: Devise,          widget: string, default: FCFA }
+          - name: border
+            label: "Couleur d'accent"
+            widget: select
+            options:
+              - { label: Teal,   value: "#00B2AA" }
+              - { label: Bleu,   value: "#378ADD" }
+              - { label: Violet, value: "#7F77DD" }
+              - { label: Orange, value: "#F5821F" }
+          - { name: badge,  label: "Badge (ex: Le plus demandé)", widget: string, required: false }
+          - { name: delay,  label: "Délai de livraison",          widget: string }
+          - name: features
+            label: Fonctionnalités incluses
+            widget: list
+            field: { name: feature, label: Fonctionnalité, widget: string }
+          - { name: cta, label: "Texte du bouton", widget: string, default: Commander }
+          - { name: wa,  label: "Lien WhatsApp",   widget: string, hint: "https://wa.me/221775644478?text=..." }
+
+  # ── PARAMÈTRES GÉNÉRAUX ──────────────────────────────────────────────────────
+  - name: settings
+    label: "⚙️ Paramètres"
+    files:
+      - name: contact
+        label: "Coordonnées & Contact"
+        file: src/data/settings.json
+        description: "Numéro WhatsApp, email, adresse, réseaux sociaux"
+        fields:
+          - { name: phone,     label: "Téléphone (avec indicatif)", widget: string, hint: "+221775644478" }
+          - { name: email,     label: Email,    widget: string }
+          - { name: address,   label: Adresse,  widget: string }
+          - { name: whatsapp,  label: "Lien WhatsApp (URL complète)", widget: string }
+          - { name: instagram, label: "URL Instagram", widget: string }
+          - { name: facebook,  label: "URL Facebook",  widget: string }
