@@ -1,0 +1,41 @@
+[build]
+  command         = "npm run build"
+  publish         = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# ── SPA routing — toutes les routes -> index.html ──────────────────────────
+[[redirects]]
+  from   = "/*"
+  to     = "/index.html"
+  status = 200
+
+# ── Sécurité headers ────────────────────────────────────────────────────────
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options        = "SAMEORIGIN"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy        = "strict-origin-when-cross-origin"
+    Permissions-Policy     = "camera=(), microphone=(), geolocation=()"
+    X-XSS-Protection       = "1; mode=block"
+
+# Cache long pour les assets statiques (JS/CSS avec hash)
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Cache pour les images
+[[headers]]
+  for = "/lovable-uploads/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Pas de cache pour le panel admin (toujours frais)
+[[headers]]
+  for = "/gm-studio-x7k9/*"
+  [headers.values]
+    Cache-Control = "no-store, no-cache, must-revalidate"
+    X-Robots-Tag  = "noindex, nofollow"

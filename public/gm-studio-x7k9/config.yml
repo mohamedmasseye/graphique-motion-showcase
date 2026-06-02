@@ -1,9 +1,6 @@
 backend:
-  name: github
-  repo: mohamedmasseye/graphique-motion-showcase
+  name: git-gateway
   branch: main
-  base_url: https://graphiquemotion.com
-  auth_endpoint: /oauth/authorize
 
 # Dossier pour les images uploadées via l'admin
 media_folder: public/lovable-uploads
@@ -32,7 +29,7 @@ collections:
         label_singular: Projet
         summary: "{{fields.title}}"
         fields:
-          - { name: id,          label: ID,          widget: number,   hint: "Nombre unique (1, 2, 3...)" }
+          - { name: id,          label: ID,          widget: number,  hint: "Nombre unique (1, 2, 3...)" }
           - { name: title,       label: Titre,        widget: string }
           - name: category
             label: Catégorie
@@ -44,8 +41,8 @@ collections:
               - { label: "Logo",            value: logo }
               - { label: "Print",           value: print }
               - { label: "Événementiel",    value: event }
-          - { name: image,       label: Image,        widget: image,   hint: "Uploadez l'image du projet" }
-          - { name: link,        label: "Lien URL",   widget: string,  required: false, hint: "https://..." }
+          - { name: image,       label: Image,        widget: image,  hint: "Uploadez l'image du projet" }
+          - { name: link,        label: "Lien URL",   widget: string, required: false, hint: "https://..." }
           - { name: description, label: Description,  widget: text }
           - name: tags
             label: Tags
@@ -76,8 +73,8 @@ collections:
               - { label: Bleu,   value: "#378ADD" }
               - { label: Violet, value: "#7F77DD" }
               - { label: Orange, value: "#F5821F" }
-          - { name: badge,  label: "Badge (ex: Le plus demandé)", widget: string, required: false }
-          - { name: delay,  label: "Délai de livraison",          widget: string }
+          - { name: badge,    label: "Badge (ex: Le plus demandé)", widget: string, required: false }
+          - { name: delay,    label: "Délai de livraison",          widget: string }
           - name: features
             label: Fonctionnalités incluses
             widget: list
