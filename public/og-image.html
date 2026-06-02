@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=1200" />
+  <title>OG Image — Graphique & Motion</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      width: 1200px;
+      height: 630px;
+      overflow: hidden;
+      background: #000000;
+      font-family: 'Montserrat', sans-serif;
+      position: relative;
+    }
+
+    /* ── Dot grid ── */
+    .dot-grid {
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(0,178,170,0.22) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+
+    /* ── Radial fade over dot grid ── */
+    .radial-fade {
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 85% 85% at 50% 50%, transparent 25%, #000 100%);
+    }
+
+    /* ── Glows ── */
+    .glow-teal {
+      position: absolute;
+      left: -120px;
+      top: -80px;
+      width: 500px;
+      height: 500px;
+      border-radius: 50%;
+      background: rgba(0,178,170,0.12);
+      filter: blur(100px);
+    }
+    .glow-orange {
+      position: absolute;
+      right: -100px;
+      bottom: -100px;
+      width: 420px;
+      height: 420px;
+      border-radius: 50%;
+      background: rgba(245,130,31,0.09);
+      filter: blur(90px);
+    }
+    .glow-blue {
+      position: absolute;
+      right: 200px;
+      top: -60px;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: rgba(55,138,221,0.07);
+      filter: blur(80px);
+    }
+
+    /* ── Border frame ── */
+    .frame {
+      position: absolute;
+      inset: 24px;
+      border: 1px solid rgba(0,178,170,0.15);
+      border-radius: 24px;
+      pointer-events: none;
+    }
+
+    /* ── Top accent line ── */
+    .top-line {
+      position: absolute;
+      top: 24px;
+      left: 24px;
+      right: 24px;
+      height: 2px;
+      background: linear-gradient(90deg, transparent 0%, #00B2AA 30%, #F5821F 70%, transparent 100%);
+      border-radius: 0 0 0 0;
+    }
+
+    /* ── Content layout ── */
+    .content {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      padding: 0 80px;
+      gap: 60px;
+    }
+
+    /* ── Left column ── */
+    .left {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .logo-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 32px;
+    }
+
+    .logo-img {
+      height: 72px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      color: #00B2AA;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      margin-bottom: 18px;
+    }
+
+    .headline {
+      font-size: 58px;
+      font-weight: 900;
+      line-height: 1.05;
+      color: #ffffff;
+      margin-bottom: 24px;
+      letter-spacing: -0.02em;
+    }
+
+    .headline .teal {
+      background: linear-gradient(90deg, #00B2AA 0%, #378ADD 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .headline .orange { color: #F5821F; }
+
+    .tagline {
+      font-size: 16px;
+      font-weight: 500;
+      color: rgba(160,160,160,0.9);
+      line-height: 1.5;
+      margin-bottom: 36px;
+      max-width: 440px;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    .chip {
+      font-size: 11px;
+      font-weight: 700;
+      padding: 6px 14px;
+      border-radius: 100px;
+      border: 1px solid;
+      letter-spacing: 0.05em;
+    }
+    .chip-teal  { color: #00B2AA; border-color: rgba(0,178,170,0.35); background: rgba(0,178,170,0.08); }
+    .chip-orange{ color: #F5821F; border-color: rgba(245,130,31,0.35); background: rgba(245,130,31,0.08); }
+    .chip-blue  { color: #378ADD; border-color: rgba(55,138,221,0.35); background: rgba(55,138,221,0.08); }
+    .chip-purple{ color: #7F77DD; border-color: rgba(127,119,221,0.35); background: rgba(127,119,221,0.08); }
+
+    /* ── Right column ── */
+    .right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 20px;
+      flex-shrink: 0;
+    }
+
+    /* Stats card */
+    .stats-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 28px 32px;
+      display: flex;
+      gap: 36px;
+    }
+
+    .stat { display: flex; flex-direction: column; align-items: center; }
+    .stat-value {
+      font-size: 38px;
+      font-weight: 900;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .stat-label {
+      font-size: 10px;
+      font-weight: 600;
+      color: rgba(160,160,160,0.7);
+      text-align: center;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    /* Mini browser mockup */
+    .browser {
+      width: 280px;
+      background: #0C1018;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .browser-bar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 14px;
+      background: #13181F;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .dot { width: 8px; height: 8px; border-radius: 50%; }
+    .dot-red    { background: #FF5F57; }
+    .dot-yellow { background: #FEBC2E; }
+    .dot-green  { background: #28C840; }
+    .url-bar {
+      flex: 1;
+      margin-left: 8px;
+      height: 16px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      padding: 0 8px;
+      gap: 5px;
+    }
+    .url-dot { width: 5px; height: 5px; border-radius: 50%; background: #00B2AA; opacity: 0.7; }
+    .url-text { font-size: 8px; color: rgba(255,255,255,0.3); font-family: monospace; letter-spacing: 0.03em; }
+    .browser-content { padding: 14px; }
+    .bc-line { height: 8px; border-radius: 4px; background: rgba(255,255,255,0.12); margin-bottom: 7px; }
+    .bc-line.teal { background: rgba(0,178,170,0.45); width: 60%; }
+    .bc-line.short { width: 70%; }
+    .bc-line.shorter { width: 50%; }
+    .bc-btn { height: 20px; width: 70px; border-radius: 10px; background: rgba(0,178,170,0.6); margin-top: 10px; }
+    .bc-cards { display: flex; gap: 6px; margin-top: 10px; }
+    .bc-card { flex: 1; height: 28px; border-radius: 6px; }
+
+    /* URL badge bottom right */
+    .url-badge {
+      position: absolute;
+      bottom: 40px;
+      right: 56px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .url-badge-dot {
+      width: 6px; height: 6px; border-radius: 50%; background: #00B2AA;
+    }
+    .url-badge-text {
+      font-size: 13px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.35);
+      letter-spacing: 0.06em;
+    }
+  </style>
+</head>
+<body>
+  <!-- Backgrounds -->
+  <div class="dot-grid"></div>
+  <div class="radial-fade"></div>
+  <div class="glow-teal"></div>
+  <div class="glow-orange"></div>
+  <div class="glow-blue"></div>
+
+  <!-- Frame -->
+  <div class="frame"></div>
+  <div class="top-line"></div>
+
+  <!-- Content -->
+  <div class="content">
+
+    <!-- Left -->
+    <div class="left">
+      <div class="logo-row">
+        <img class="logo-img" src="./logo.png" alt="Graphique & Motion" />
+      </div>
+
+      <div class="eyebrow">Agence digitale · Design &amp; Développement</div>
+
+      <div class="headline">
+        Sites qui <span class="teal">vendent.</span><br />
+        Livrés en <span class="orange">7 jours.</span>
+      </div>
+
+      <div class="tagline">
+        Sites web · Apps mobiles · Branding premium<br />
+        Dès 200 000 FCFA · Sans jargon · Garanti
+      </div>
+
+      <div class="chips">
+        <span class="chip chip-teal">Sites Web</span>
+        <span class="chip chip-orange">Apps Mobiles</span>
+        <span class="chip chip-blue">Branding</span>
+        <span class="chip chip-purple">Motion Design</span>
+      </div>
+    </div>
+
+    <!-- Right -->
+    <div class="right">
+
+      <!-- Stats -->
+      <div class="stats-card">
+        <div class="stat">
+          <span class="stat-value" style="color:#00B2AA">10+</span>
+          <span class="stat-label">Ans<br/>d'exp.</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value" style="color:#F5821F">50+</span>
+          <span class="stat-label">Projets<br/>livrés</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value" style="color:#378ADD">7j</span>
+          <span class="stat-label">Délai<br/>livraison</span>
+        </div>
+      </div>
+
+      <!-- Browser mockup -->
+      <div class="browser">
+        <div class="browser-bar">
+          <div class="dot dot-red"></div>
+          <div class="dot dot-yellow"></div>
+          <div class="dot dot-green"></div>
+          <div class="url-bar">
+            <div class="url-dot"></div>
+            <span class="url-text">graphiquemotion.com</span>
+          </div>
+        </div>
+        <div class="browser-content">
+          <div class="bc-line teal"></div>
+          <div class="bc-line short"></div>
+          <div class="bc-line shorter"></div>
+          <div class="bc-btn"></div>
+          <div class="bc-cards">
+            <div class="bc-card" style="background:rgba(0,178,170,0.15)"></div>
+            <div class="bc-card" style="background:rgba(245,130,31,0.12)"></div>
+            <div class="bc-card" style="background:rgba(55,138,221,0.12)"></div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- URL bottom right -->
+  <div class="url-badge">
+    <div class="url-badge-dot"></div>
+    <span class="url-badge-text">graphiquemotion.com</span>
+  </div>
+
+</body>
+</html>
