@@ -10,5 +10,8 @@ Allow: /
 User-agent: facebookexternalhit
 Allow: /
 
+# Bloquer tout le monde sur les zones sensibles
 User-agent: *
 Allow: /
+Disallow: /gm-studio-x7k9/
+Disallow: /oauth/
