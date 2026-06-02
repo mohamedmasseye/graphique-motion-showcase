@@ -2,9 +2,14 @@ backend:
   name: git-gateway
   branch: main
 
-# Dossier pour les images uploadées via l'admin
+# Cloudinary — images hébergées sur CDN, aucun redéploiement Netlify
 media_folder: public/lovable-uploads
 public_folder: /lovable-uploads
+media_library:
+  name: cloudinary
+  config:
+    cloud_name: dgnc9ha2n
+    api_key: GFJqaZ0e4bc945Zrv2iH3jaoQ0I
 
 # Langue de l'interface
 locale: fr
