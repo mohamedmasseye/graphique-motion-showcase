@@ -1,60 +1,62 @@
 {
   "plans": [
     {
-      "name": "Starter",
-      "price": "200 000",
-      "currency": "FCFA",
-      "border": "#00B2AA",
-      "badge": "",
       "delay": "5 jours",
+      "badge": "",
+      "price": "200 000",
+      "wa": "https://wa.me/221775644478?text=Bonjour%2C%20je%20suis%20int%C3%A9ress%C3%A9%20par%20le%20Pack%20Starter",
+      "name": "Starter",
+      "border": "#00B2AA",
+      "cta": "Commander",
+      "currency": "FCFA",
       "features": [
         "Logo professionnel (2 propositions + 2 révisions)",
         "Charte couleurs & typographie",
         "Kit réseaux sociaux (formats IG + FB prêts à l'emploi)"
-      ],
-      "cta": "Commander",
-      "wa": "https://wa.me/221775644478?text=Bonjour%2C%20je%20suis%20int%C3%A9ress%C3%A9%20par%20le%20Pack%20Starter"
+      ]
     },
     {
-      "name": "Vitrine",
-      "price": "450 000",
-      "currency": "FCFA",
-      "border": "#378ADD",
-      "badge": "Le plus demandé",
       "delay": "10 jours",
+      "badge": "Le plus demandé",
+      "price": "450 000",
+      "wa": "https://wa.me/221775644478?text=Bonjour%2C%20je%20suis%20int%C3%A9ress%C3%A9%20par%20le%20Pack%20Vitrine",
+      "name": "Vitrine",
+      "border": "#378ADD",
+      "cta": "Commander",
+      "currency": "FCFA",
       "features": [
         "Site web 5 pages responsive (mobile + desktop)",
         "Formulaire de contact fonctionnel",
         "Hébergement + domaine inclus (1 an)",
         "SEO de base configuré"
-      ],
-      "cta": "Commander",
-      "wa": "https://wa.me/221775644478?text=Bonjour%2C%20je%20suis%20int%C3%A9ress%C3%A9%20par%20le%20Pack%20Vitrine"
+      ]
     },
     {
-      "name": "Pro",
-      "price": "750 000",
-      "currency": "FCFA",
-      "border": "#7F77DD",
-      "badge": "",
       "delay": "21 jours",
+      "badge": "",
+      "price": "750 000",
+      "wa": "https://wa.me/221775644478?text=Bonjour%2C%20je%20suis%20int%C3%A9ress%C3%A9%20par%20le%20Pack%20Pro",
+      "name": "Pro",
+      "border": "#7F77DD",
+      "cta": "Commander",
+      "currency": "FCFA",
       "features": [
         "Site web jusqu'à 10 pages",
         "App web installable PWA (Android & iOS)",
         "Identité visuelle complète",
         "1 mois de support technique inclus",
         "SEO avancé"
-      ],
-      "cta": "Commander",
-      "wa": "https://wa.me/221775644478?text=Bonjour%2C%20je%20suis%20int%C3%A9ress%C3%A9%20par%20le%20Pack%20Pro"
+      ]
     },
     {
-      "name": "App Native",
-      "price": "Dès 1 300 000",
-      "currency": "FCFA",
-      "border": "#F5821F",
-      "badge": "",
       "delay": "Selon cahier des charges",
+      "badge": "",
+      "price": "Dès 1 500 000",
+      "wa": "https://wa.me/221775644478?text=Bonjour%2C%20je%20voudrais%20un%20devis%20pour%20une%20App%20Native",
+      "name": "App Native",
+      "border": "#F5821F",
+      "cta": "Demander un devis",
+      "currency": "FCFA",
       "features": [
         "Application Android (Google Play Store)",
         "Application iOS (Apple App Store)",
@@ -62,9 +64,7 @@
         "Notifications push",
         "3 mois de support inclus",
         "Publication sur les stores gérée"
-      ],
-      "cta": "Demander un devis",
-      "wa": "https://wa.me/221775644478?text=Bonjour%2C%20je%20voudrais%20un%20devis%20pour%20une%20App%20Native"
+      ]
     }
   ]
 }
