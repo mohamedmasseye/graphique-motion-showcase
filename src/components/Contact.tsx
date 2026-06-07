@@ -2,16 +2,10 @@ import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { MapPin, Mail, Phone, Send, Instagram, Facebook, CheckCircle, AlertCircle, Loader2 } from 'lucide-react';
 
-// ─── Brevo (ex-Sendinblue) configuration ────────────────────────────────────
-// 1. Créez un compte sur https://app.brevo.com
-// 2. Allez dans SMTP & API → Clés API → Générez une clé
-// 3. Ajoutez dans votre .env (jamais dans le code) :
-//    VITE_BREVO_API_KEY=xkeysib-xxxxxxxxxxxxxxxx
-// 4. Dans Brevo : vérifiez le domaine expéditeur support@graphiquemotion.com
+// ─── Email via Cloudflare Pages Function (sécurisé côté serveur) ─────────────
+// La clé Brevo est stockée dans les variables d'environnement Cloudflare
+// et n'est JAMAIS exposée dans le bundle JavaScript client.
 // ────────────────────────────────────────────────────────────────────────────
-const BREVO_API_KEY = import.meta.env.VITE_BREVO_API_KEY || '';
-const TO_EMAIL      = 'support@graphiquemotion.com';
-const SENDER_NAME   = 'Graphique & Motion';
 
 type Status = 'idle' | 'loading' | 'success' | 'error';
 
@@ -21,39 +15,15 @@ async function sendViaBrevo(data: {
   subject: string;
   message: string;
 }) {
-  const res = await fetch('https://api.brevo.com/v3/smtp/email', {
+  const res = await fetch('/send-email', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'api-key': BREVO_API_KEY,
-    },
-    body: JSON.stringify({
-      sender: { name: SENDER_NAME, email: TO_EMAIL },
-      to: [{ email: TO_EMAIL, name: SENDER_NAME }],
-      replyTo: { email: data.email, name: data.name },
-      subject: `[Contact] ${data.subject}`,
-      htmlContent: `
-        <div style="font-family:sans-serif;max-width:600px;margin:auto;padding:24px;background:#0A0A0F;color:#fff;border-radius:12px">
-          <h2 style="color:#00B2AA;margin-bottom:4px">Nouveau message</h2>
-          <p style="color:#A0A0A0;margin-top:0;font-size:13px">via graphiquemotion.com</p>
-          <hr style="border:none;border-top:1px solid rgba(255,255,255,0.1);margin:16px 0"/>
-          <table style="width:100%;font-size:14px">
-            <tr><td style="color:#A0A0A0;padding:4px 0;width:100px">Nom</td><td style="color:#fff">${data.name}</td></tr>
-            <tr><td style="color:#A0A0A0;padding:4px 0">Email</td><td><a href="mailto:${data.email}" style="color:#00B2AA">${data.email}</a></td></tr>
-            <tr><td style="color:#A0A0A0;padding:4px 0">Sujet</td><td style="color:#fff">${data.subject}</td></tr>
-          </table>
-          <hr style="border:none;border-top:1px solid rgba(255,255,255,0.1);margin:16px 0"/>
-          <p style="color:#A0A0A0;font-size:12px;margin-bottom:6px">MESSAGE</p>
-          <div style="background:rgba(255,255,255,0.05);border-radius:8px;padding:16px;color:#fff;font-size:14px;line-height:1.6;white-space:pre-wrap">${data.message}</div>
-          <p style="color:#A0A0A0;font-size:11px;margin-top:24px">Graphique &amp; Motion · support@graphiquemotion.com</p>
-        </div>
-      `,
-    }),
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data),
   });
 
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
-    throw new Error(err.message || `Brevo error ${res.status}`);
+    throw new Error(err.error || `Erreur ${res.status}`);
   }
 }
 
