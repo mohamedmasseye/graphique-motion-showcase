@@ -31,7 +31,7 @@
       "id": 3,
       "title": "Daara Serigne Mor Diop – Application mobile",
       "category": "app",
-      "image": "https://res.cloudinary.com/dgnc9ha2n/image/upload/v1780436713/DSMD_z1snbr.png",
+      "image": "https://res.cloudinary.com/dgnc9ha2n/image/upload/v1781132645/APP_cavdz9.png",
       "link": "https://app.daaraserignemordiop.com",
       "description": "Application PWA mobile Android pour le Daara Serigne Mor Diop. Contenu religieux, calendrier, publications accessibles hors ligne.",
       "tags": [
@@ -44,7 +44,7 @@
       "id": 4,
       "title": "Dakar Store Express – Boutique e-commerce",
       "category": "web",
-      "image": "/lovable-uploads/01f63d3b-985e-46d0-aae1-4b6fa5a45e2d.png",
+      "image": "https://res.cloudinary.com/dgnc9ha2n/image/upload/v1781133397/DKSTORE_p1rrgv.png",
       "link": "https://dakarstoreexpress.com",
       "description": "Boutique e-commerce complète pour la vente de téléphones, gadgets et accessoires électroniques à Dakar. Paiement en ligne, suivi de commande, livraison.",
       "tags": [
@@ -338,6 +338,14 @@
         "Sport",
         "Football"
       ]
+    },
+    {
+      "title": "Daara Serigne Mor Diop – Application Web",
+      "category": "pwa",
+      "image": "https://res.cloudinary.com/dgnc9ha2n/image/upload/v1780442387/Capture_d_%C3%A9cran_2026-06-02_125918_tqpw7e.png",
+      "link": "https://app.daaraserignemordiop.com/",
+      "id": 27,
+      "description": "Application web  pour le Daara Serigne Mor Diop. Contenu religieux, calendrier, publications accessibles hors ligne."
     }
   ]
 }
