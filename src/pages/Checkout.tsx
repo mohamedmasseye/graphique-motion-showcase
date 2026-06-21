@@ -89,28 +89,33 @@ export default function Checkout() {
 
       // Wave payment → redirect to Wave checkout
       if (paymentMethod === 'wave') {
-        try {
-          const waveRes = await fetch('/api/wave-checkout', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              amount: total,
-              orderId: order.id,
-              orderNumber: order.order_number,
-              customerPhone: info.phone.trim(),
-            }),
-          });
-          const waveData = await waveRes.json();
-          if (waveData.wave_launch_url) {
-            clearCart();
-            window.location.href = waveData.wave_launch_url;
-            return;
-          }
-        } catch {
-          // Wave failed — fall through to confirmation page
+        const waveRes = await fetch('/api/wave-checkout', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            amount: total,
+            orderId: order.id,
+            orderNumber: order.order_number,
+            customerPhone: info.phone.trim(),
+          }),
+        }).catch(() => null);
+
+        const waveData = waveRes ? await waveRes.json().catch(() => ({})) : {};
+
+        if (waveData.wave_launch_url) {
+          clearCart();
+          window.location.href = waveData.wave_launch_url;
+          return;
         }
+
+        // Wave failed — show order number but explain Wave link will come by SMS
+        setOrderNumber(order.order_number);
+        setStep('confirm');
+        clearCart();
+        return;
       }
 
+      // Cash on delivery → direct confirmation
       setOrderNumber(order.order_number);
       setStep('confirm');
       clearCart();

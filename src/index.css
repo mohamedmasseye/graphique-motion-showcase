@@ -15,6 +15,13 @@
 }
 
 @layer base {
+  select option {
+    background-color: #0C0C12;
+    color: #fff;
+  }
+}
+
+@layer base {
   :root {
     --background: 240 50% 3%;
     --foreground: 0 0% 98%;
