@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Pencil, Trash2, Package, Search, X, Save, Loader2, Image as ImageIcon } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import { formatPrice } from '@/lib/formatPrice';
+import ImageUploader from '@/components/admin/ImageUploader';
+import VariantEditor, { type VariantData } from '@/components/admin/VariantEditor';
 import type { Product, Category, ProductStatus } from '@/types/database';
 
 const statusLabels: Record<ProductStatus, { label: string; color: string }> = {
@@ -17,6 +19,7 @@ export default function AdminProducts() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [editing, setEditing] = useState<Partial<Product> | null>(null);
+  const [editingVariants, setEditingVariants] = useState<VariantData[]>([]);
   const [saving, setSaving] = useState(false);
 
   const loadProducts = async () => {
@@ -42,10 +45,21 @@ export default function AdminProducts() {
       featured: false, has_variants: false, tags: [], brand: '', sku: '', weight: null,
       warranty: '', specifications: {}, meta_title: '', meta_description: '',
     });
+    setEditingVariants([]);
   };
 
-  const openEdit = (p: Product) => {
+  const openEdit = async (p: Product) => {
     setEditing({ ...p });
+    const { data } = await supabase
+      .from('product_variants')
+      .select('*')
+      .eq('product_id', p.id)
+      .order('sort_order');
+    setEditingVariants((data ?? []).map((v: any) => ({
+      id: v.id, name: v.name, sku: v.sku ?? '', price: v.price,
+      compare_price: v.compare_price, stock: v.stock,
+      attributes: v.attributes ?? {}, is_default: v.is_default, sort_order: v.sort_order,
+    })));
   };
 
   const handleSave = async () => {
@@ -76,14 +90,37 @@ export default function AdminProducts() {
       meta_description: editing.meta_description || null,
     };
 
-    if (editing.id) {
-      await supabase.from('products').update(payload).eq('id', editing.id);
+    let productId = editing.id;
+
+    if (productId) {
+      await supabase.from('products').update({ ...payload, has_variants: editingVariants.length > 0 }).eq('id', productId);
     } else {
-      await supabase.from('products').insert(payload);
+      const { data } = await supabase.from('products').insert({ ...payload, has_variants: editingVariants.length > 0 }).select('id').single();
+      productId = data?.id;
+    }
+
+    // Save variants
+    if (productId && editingVariants.length > 0) {
+      await supabase.from('product_variants').delete().eq('product_id', productId);
+      const variantsPayload = editingVariants.map((v, i) => ({
+        product_id: productId,
+        name: v.name,
+        sku: v.sku || null,
+        price: v.price,
+        compare_price: v.compare_price,
+        stock: v.stock,
+        attributes: v.attributes,
+        is_default: v.is_default,
+        sort_order: i,
+      }));
+      await supabase.from('product_variants').insert(variantsPayload);
+    } else if (productId) {
+      await supabase.from('product_variants').delete().eq('product_id', productId);
     }
 
     setSaving(false);
     setEditing(null);
+    setEditingVariants([]);
     loadProducts();
   };
 
@@ -268,16 +305,15 @@ export default function AdminProducts() {
                   <textarea value={editing.description ?? ''} onChange={(e) => updateField('description', e.target.value)} rows={4} className={`${inputClass} resize-none`} placeholder="Description détaillée du produit..." />
                 </div>
 
-                <div>
-                  <label className="block text-white/50 text-xs font-semibold uppercase tracking-widest mb-1.5">Images (URLs Cloudinary, une par ligne)</label>
-                  <textarea
-                    value={(editing.images ?? []).join('\n')}
-                    onChange={(e) => updateField('images', e.target.value.split('\n').filter(Boolean))}
-                    rows={3}
-                    className={`${inputClass} resize-none font-mono text-xs`}
-                    placeholder="https://res.cloudinary.com/..."
-                  />
-                </div>
+                <ImageUploader
+                  images={editing.images ?? []}
+                  onChange={(imgs) => updateField('images', imgs)}
+                />
+
+                <VariantEditor
+                  variants={editingVariants}
+                  onChange={setEditingVariants}
+                />
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
