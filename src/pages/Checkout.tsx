@@ -89,29 +89,35 @@ export default function Checkout() {
 
       // Wave payment → redirect to Wave checkout
       if (paymentMethod === 'wave') {
-        const waveRes = await fetch('/api/wave-checkout', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            amount: total,
-            orderId: order.id,
-            orderNumber: order.order_number,
-            customerPhone: info.phone.trim(),
-          }),
-        }).catch(() => null);
+        let waveError = '';
+        try {
+          const waveRes = await fetch('/api/wave-checkout', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              amount: total,
+              orderId: order.id,
+              orderNumber: order.order_number,
+              customerPhone: info.phone.trim(),
+            }),
+          });
 
-        const waveData = waveRes ? await waveRes.json().catch(() => ({})) : {};
+          const waveData = await waveRes.json();
 
-        if (waveData.wave_launch_url) {
-          clearCart();
-          window.location.href = waveData.wave_launch_url;
-          return;
+          if (waveData.wave_launch_url) {
+            clearCart();
+            window.location.href = waveData.wave_launch_url;
+            return;
+          }
+
+          waveError = waveData.error || `Wave: réponse ${waveRes.status}`;
+        } catch (err: any) {
+          waveError = err?.message || 'Impossible de contacter Wave';
         }
 
-        // Wave failed — show order number but explain Wave link will come by SMS
-        setOrderNumber(order.order_number);
-        setStep('confirm');
-        clearCart();
+        // Wave failed — set error and stay on payment step
+        setError(`Paiement Wave indisponible (${waveError}). Commande ${order.order_number} enregistrée — réessayez ou choisissez paiement à la livraison.`);
+        setIsSubmitting(false);
         return;
       }
 
