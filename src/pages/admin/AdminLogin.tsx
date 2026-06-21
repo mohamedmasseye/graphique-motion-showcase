@@ -1,15 +1,21 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Lock, Mail, Loader2, AlertCircle, Eye, EyeOff } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
 
 export default function AdminLogin() {
-  const { signIn } = useAuth();
+  const { user, loading: authLoading, signIn } = useAuth();
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+
+  useEffect(() => {
+    if (user) navigate('/admin', { replace: true });
+  }, [user, navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -17,12 +23,21 @@ export default function AdminLogin() {
     setError('');
     try {
       await signIn(email, password);
+      navigate('/admin', { replace: true });
     } catch (err: any) {
       setError('Email ou mot de passe incorrect');
     } finally {
       setLoading(false);
     }
   };
+
+  if (authLoading) {
+    return (
+      <div className="min-h-screen bg-[#08080C] flex items-center justify-center">
+        <div className="w-8 h-8 border-2 border-brand-teal border-t-transparent rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#08080C] flex items-center justify-center p-4">
