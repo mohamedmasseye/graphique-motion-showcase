@@ -16,4 +16,4 @@ Allow: /
 Disallow: /gm-studio-x7k9/
 Disallow: /oauth/
 
-Sitemap: https://graphiquemotion.com/sitemap.xml
+Sitemap: https://graphiquemotion.com/api/sitemap

@@ -1,0 +1,21 @@
+# ═══════════════════════════════════════════════════════════════════
+# Cloudflare Workers — Variables d'environnement
+# Copier en .dev.vars (local) + ajouter dans CF Dashboard → Workers → Settings
+# ⚠️ NE JAMAIS COMMITER .dev.vars — il est dans .gitignore
+# ═══════════════════════════════════════════════════════════════════
+
+# Supabase — clé SERVICE ROLE (accès admin, JAMAIS côté client)
+SUPABASE_URL=https://xxxxx.supabase.co
+SUPABASE_SERVICE_KEY=eyJhbGci...votre_service_role_key
+
+# Cloudinary — signature sécurisée pour uploads
+CLOUDINARY_CLOUD_NAME=dgnc9ha2n
+CLOUDINARY_API_KEY=995456925512687
+CLOUDINARY_API_SECRET=votre_secret_cloudinary
+
+# Brevo — envoi emails (déjà configuré)
+BREVO_API_KEY=votre_clé_brevo
+
+# Paiement mobile
+WAVE_API_KEY=votre_clé_wave
+WAVE_WEBHOOK_SECRET=votre_secret_webhook
