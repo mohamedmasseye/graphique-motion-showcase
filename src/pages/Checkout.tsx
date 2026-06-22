@@ -7,8 +7,8 @@ import { formatPrice } from '@/lib/formatPrice';
 import { supabase } from '@/lib/supabase';
 import type { PaymentMethod } from '@/types/database';
 
-const SHIPPING_FEE = 2000;
-const FREE_SHIPPING_THRESHOLD = 50000;
+const SHIPPING_FEE = 0;
+const FREE_SHIPPING_THRESHOLD = 0;
 
 type Step = 'info' | 'payment' | 'confirm';
 
@@ -415,15 +415,8 @@ export default function Checkout() {
                       </div>
                       <div className="flex justify-between text-sm">
                         <span className="text-white/40">Livraison</span>
-                        <span className={shipping === 0 ? 'text-brand-teal font-semibold' : 'text-white/60'}>
-                          {shipping === 0 ? 'Gratuite' : formatPrice(shipping)}
-                        </span>
+                        <span className="text-brand-teal font-semibold">Gratuite</span>
                       </div>
-                      {shipping > 0 && (
-                        <p className="text-brand-teal/60 text-[10px]">
-                          Gratuite à partir de {formatPrice(FREE_SHIPPING_THRESHOLD)}
-                        </p>
-                      )}
                       <div className="flex justify-between text-base pt-2 border-t border-white/[0.06]">
                         <span className="text-white font-bold">Total</span>
                         <span className="text-brand-teal font-black text-lg">{formatPrice(total)}</span>
