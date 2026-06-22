@@ -44,9 +44,9 @@ export default function PaymentReturn() {
         // ignore — retry
       }
 
-      // Retry up to 5 times (Wave may take a few seconds to settle)
-      if (!cancelled && attempts < 5) {
-        setTimeout(check, 2000);
+      // Retry up to 10 times (webhook may take a few seconds)
+      if (!cancelled && attempts < 10) {
+        setTimeout(check, 3000);
       } else if (!cancelled) {
         setStatus('pending');
       }
