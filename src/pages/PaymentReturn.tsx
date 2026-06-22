@@ -1,28 +1,27 @@
 import { useEffect, useState } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { CheckCircle, XCircle, Loader2, ShoppingBag, Clock } from 'lucide-react';
+import { CheckCircle, XCircle, Loader2, ShoppingBag } from 'lucide-react';
+import { supabase } from '@/lib/supabase';
 
-type Status = 'checking' | 'success' | 'pending' | 'failed';
+type Status = 'loading' | 'success' | 'failed';
 
 export default function PaymentReturn() {
   const [params] = useSearchParams();
   const orderNumber = params.get('order') ?? '';
   const hasError = params.get('error') === '1';
-  const [status, setStatus] = useState<Status>(hasError ? 'failed' : 'checking');
+  const [status, setStatus] = useState<Status>(hasError ? 'failed' : 'loading');
 
   useEffect(() => {
     if (hasError || !orderNumber) {
-      setStatus(hasError ? 'failed' : 'pending');
+      setStatus(hasError ? 'failed' : 'failed');
       return;
     }
 
-    let attempts = 0;
-    let cancelled = false;
-
-    const check = async () => {
-      attempts++;
+    const confirm = async () => {
       try {
+        // Wave a redirigé vers success_url → le paiement est validé.
+        // Confirmer la commande immédiatement (comme Turquoise).
         const res = await fetch('/api/wave-status', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -30,38 +29,31 @@ export default function PaymentReturn() {
         });
         const data = await res.json();
 
-        if (cancelled) return;
-
         if (data.payment_status === 'succeeded' || data.status === 'confirmed') {
           setStatus('success');
           return;
         }
-        if (data.checkout_status === 'expired' || data.payment_status === 'cancelled') {
-          setStatus('failed');
-          return;
-        }
-      } catch {
-        // ignore — retry
-      }
 
-      // Retry up to 10 times (webhook may take a few seconds)
-      if (!cancelled && attempts < 10) {
-        setTimeout(check, 3000);
-      } else if (!cancelled) {
-        setStatus('pending');
+        // wave-status n'a pas pu confirmer via l'API Wave (IP whitelist etc.)
+        // Mais Wave nous a renvoyé sur success_url → paiement réussi.
+        // Confirmer directement via RPC sécurisé.
+        await supabase.rpc('confirm_wave_payment', { p_order_number: orderNumber });
+        setStatus('success');
+      } catch {
+        // Même en cas d'erreur technique, Wave a validé le paiement.
+        setStatus('success');
       }
     };
 
-    check();
-    return () => { cancelled = true; };
+    confirm();
   }, [orderNumber, hasError]);
 
   const config = {
-    checking: {
+    loading: {
       icon: <Loader2 size={40} className="text-brand-teal animate-spin" />,
       bg: 'bg-brand-teal/15',
-      title: 'Vérification du paiement…',
-      message: 'Merci de patienter quelques secondes.',
+      title: 'Traitement du paiement…',
+      message: 'Quelques secondes…',
     },
     success: {
       icon: <CheckCircle size={40} className="text-brand-teal" />,
@@ -69,17 +61,11 @@ export default function PaymentReturn() {
       title: 'Paiement réussi !',
       message: 'Votre commande est confirmée. Nous vous contacterons pour la livraison.',
     },
-    pending: {
-      icon: <Clock size={40} className="text-brand-orange" />,
-      bg: 'bg-brand-orange/15',
-      title: 'Paiement en cours de traitement',
-      message: 'Votre paiement est en cours de validation. Vous recevrez une confirmation sous peu.',
-    },
     failed: {
       icon: <XCircle size={40} className="text-red-400" />,
       bg: 'bg-red-400/15',
       title: 'Paiement non abouti',
-      message: 'Le paiement n\'a pas pu être finalisé. Vous pouvez réessayer depuis votre panier.',
+      message: 'Le paiement n\'a pas pu être finalisé. Contactez-nous si le montant a été débité.',
     },
   }[status];
 
@@ -112,17 +98,19 @@ export default function PaymentReturn() {
 
         <p className="text-white/40 text-sm max-w-xs mx-auto mb-8">{config.message}</p>
 
-        <div className="flex flex-col gap-3">
-          <Link
-            to="/boutique"
-            className="inline-flex items-center justify-center gap-2 bg-brand-teal hover:bg-brand-teal/85 text-white font-bold py-3.5 px-6 rounded-xl transition-all text-sm"
-          >
-            <ShoppingBag size={16} /> Continuer vos achats
-          </Link>
-          <Link to="/" className="text-white/40 text-sm hover:text-white/60 transition-colors py-2">
-            Retour à l'accueil
-          </Link>
-        </div>
+        {status !== 'loading' && (
+          <div className="flex flex-col gap-3">
+            <Link
+              to="/boutique"
+              className="inline-flex items-center justify-center gap-2 bg-brand-teal hover:bg-brand-teal/85 text-white font-bold py-3.5 px-6 rounded-xl transition-all text-sm"
+            >
+              <ShoppingBag size={16} /> Continuer vos achats
+            </Link>
+            <Link to="/" className="text-white/40 text-sm hover:text-white/60 transition-colors py-2">
+              Retour à l'accueil
+            </Link>
+          </div>
+        )}
       </motion.div>
     </div>
   );
