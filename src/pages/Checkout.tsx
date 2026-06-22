@@ -46,25 +46,21 @@ export default function Checkout() {
     setError('');
 
     try {
-      const { data: order, error: orderErr } = await supabase
-        .from('orders')
-        .insert({
-          order_number: 'TEMP',
-          customer_name: info.name.trim(),
-          customer_phone: info.phone.trim(),
-          customer_email: info.email.trim() || null,
-          customer_address: info.address.trim(),
-          city: info.city,
-          payment_method: paymentMethod,
-          subtotal: sub,
-          shipping_fee: shipping,
-          total,
-          notes: info.notes.trim() || null,
-        })
-        .select('id, order_number')
-        .single();
+      const { data: orderData, error: orderErr } = await supabase.rpc('create_order', {
+        p_customer_name: info.name.trim(),
+        p_customer_phone: info.phone.trim(),
+        p_customer_email: info.email.trim() || null,
+        p_customer_address: info.address.trim(),
+        p_city: info.city,
+        p_payment_method: paymentMethod,
+        p_subtotal: sub,
+        p_shipping_fee: shipping,
+        p_total: total,
+        p_notes: info.notes.trim() || null,
+      });
 
       if (orderErr) throw orderErr;
+      const order = orderData as { id: string; order_number: string };
 
       const orderItems = items.map((item) => ({
         order_id: order.id,
