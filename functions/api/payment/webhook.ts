@@ -1,5 +1,6 @@
 interface Env {
-  WAVE_SIGNING_SECRET: string;
+  WAVE_WEBHOOK_SECRET?: string;
+  WAVE_SIGNING_SECRET?: string;
   SUPABASE_URL: string;
   SUPABASE_SERVICE_KEY: string;
 }
@@ -39,10 +40,11 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   const body = await request.text();
   if (!body) return new Response('Empty body', { status: 400 });
 
-  // 2. Signature verification
-  if (env.WAVE_SIGNING_SECRET) {
+  // 2. Signature verification (webhook secret, fallback to signing secret)
+  const webhookSecret = env.WAVE_WEBHOOK_SECRET || env.WAVE_SIGNING_SECRET;
+  if (webhookSecret) {
     const sig = request.headers.get('wave-signature');
-    const valid = await verifyWaveSignature(body, sig, env.WAVE_SIGNING_SECRET);
+    const valid = await verifyWaveSignature(body, sig, webhookSecret);
     if (!valid) {
       console.error('Wave webhook: invalid signature');
       return new Response('Invalid signature', { status: 401 });
@@ -82,7 +84,8 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
         },
         body: JSON.stringify({
           status: 'confirmed',
-          payment_ref: transactionId ?? checkoutId,
+          payment_status: 'paid',
+          wave_transaction_id: transactionId ?? checkoutId,
         }),
       }
     );

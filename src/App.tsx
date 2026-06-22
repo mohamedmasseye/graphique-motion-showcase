@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import Boutique from "./pages/Boutique";
 import ProductDetail from "./pages/ProductDetail";
 import Checkout from "./pages/Checkout";
+import PaymentReturn from "./pages/PaymentReturn";
 import AdminLogin from "./pages/admin/AdminLogin";
 import AdminLayout from "./pages/admin/AdminLayout";
 import Dashboard from "./pages/admin/Dashboard";
@@ -45,6 +46,7 @@ const App = () => (
           <Route path="/boutique" element={<Boutique />} />
           <Route path="/boutique/:slug" element={<ProductDetail />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/paiement" element={<PaymentReturn />} />
 
           {/* Admin */}
           <Route path="/admin/login" element={<AdminLogin />} />

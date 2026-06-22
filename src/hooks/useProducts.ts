@@ -6,6 +6,19 @@ export function useProducts(categorySlug?: string, search?: string) {
   return useQuery({
     queryKey: ['products', categorySlug, search],
     queryFn: async () => {
+      // Resolve category slug → id first (left-join filtering on embedded
+      // tables doesn't restrict parent rows in PostgREST)
+      let categoryId: string | undefined;
+      if (categorySlug) {
+        const { data: cat } = await supabase
+          .from('categories')
+          .select('id')
+          .eq('slug', categorySlug)
+          .maybeSingle();
+        if (cat) categoryId = cat.id;
+        else return [] as Product[];
+      }
+
       let query = supabase
         .from('products')
         .select('*, category:categories(*), variants:product_variants(*)')
@@ -13,12 +26,12 @@ export function useProducts(categorySlug?: string, search?: string) {
         .order('featured', { ascending: false })
         .order('created_at', { ascending: false });
 
-      if (categorySlug) {
-        query = query.eq('category.slug', categorySlug);
+      if (categoryId) {
+        query = query.eq('category_id', categoryId);
       }
 
       if (search) {
-        query = query.or(`name.ilike.%${search}%,brand.ilike.%${search}%,tags.cs.{${search}}`);
+        query = query.or(`name.ilike.%${search}%,brand.ilike.%${search}%`);
       }
 
       const { data, error } = await query;

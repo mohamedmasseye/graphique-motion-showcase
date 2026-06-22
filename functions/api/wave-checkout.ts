@@ -56,8 +56,8 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
       amount: amountStr,
       currency: 'XOF',
       client_reference: String(orderId),
-      success_url: `https://graphiquemotion.com/boutique?payment=success&order=${orderNumber}`,
-      error_url: `https://graphiquemotion.com/boutique?payment=error&order=${orderNumber}`,
+      success_url: `https://graphiquemotion.com/paiement?order=${orderNumber}`,
+      error_url: `https://graphiquemotion.com/paiement?order=${orderNumber}&error=1`,
     };
 
     if (formattedPhone) {

@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { ShoppingCart, Star, Eye } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useCartStore } from '@/store/cartStore';
 import { formatPrice } from '@/lib/formatPrice';
 import type { Product } from '@/types/database';
@@ -12,6 +12,8 @@ interface Props {
 
 export default function ProductCard({ product, index = 0 }: Props) {
   const addItem = useCartStore((s) => s.addItem);
+  const navigate = useNavigate();
+  const goToProduct = () => navigate(`/boutique/${product.slug}`);
   const image = product.images?.[0];
   const hasDiscount = product.compare_price && product.compare_price > product.price;
   const discountPercent = hasDiscount
@@ -30,7 +32,7 @@ export default function ProductCard({ product, index = 0 }: Props) {
       className="group relative bg-white/[0.04] border border-white/[0.08] rounded-2xl overflow-hidden hover:border-brand-teal/30 transition-all duration-300"
     >
       {/* Image */}
-      <Link to={`/boutique/${product.slug}`} className="block relative aspect-square overflow-hidden">
+      <div onClick={goToProduct} className="block relative aspect-square overflow-hidden cursor-pointer">
         {image ? (
           <img
             src={image}
@@ -65,25 +67,27 @@ export default function ProductCard({ product, index = 0 }: Props) {
 
         {/* Quick actions overlay */}
         <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-3">
-          <Link
-            to={`/boutique/${product.slug}`}
+          <button
+            onClick={(e) => { e.stopPropagation(); goToProduct(); }}
             className="w-10 h-10 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 flex items-center justify-center text-white hover:bg-white/20 transition-colors"
+            aria-label="Voir le produit"
           >
             <Eye size={16} />
-          </Link>
+          </button>
           {!product.has_variants && product.stock > 0 && (
             <button
               onClick={(e) => {
-                e.preventDefault();
+                e.stopPropagation();
                 addItem(product);
               }}
               className="w-10 h-10 rounded-full bg-brand-teal/80 backdrop-blur-sm border border-brand-teal flex items-center justify-center text-white hover:bg-brand-teal transition-colors"
+              aria-label="Ajouter au panier"
             >
               <ShoppingCart size={16} />
             </button>
           )}
         </div>
-      </Link>
+      </div>
 
       {/* Info */}
       <div className="p-4">

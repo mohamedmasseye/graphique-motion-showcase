@@ -21,6 +21,18 @@ function Divider({ flip = false }: { flip?: boolean }) {
 
 const Index = () => {
   useEffect(() => {
+    // Scroll to hash section when arriving from another page (e.g. /#home)
+    if (window.location.hash) {
+      const id = window.location.hash;
+      setTimeout(() => {
+        const target = document.querySelector(id);
+        if (target) {
+          const navH = document.querySelector('nav')?.offsetHeight || 0;
+          window.scrollTo({ top: target.getBoundingClientRect().top + window.pageYOffset - navH, behavior: 'smooth' });
+        }
+      }, 100);
+    }
+
     const observer = new IntersectionObserver(
       (entries) => entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add('active'); }),
       { threshold: 0.1 }

@@ -253,6 +253,26 @@ export default function AdminOrders() {
                   </div>
                 </div>
 
+                {/* Payment info */}
+                <div className="bg-white/[0.04] rounded-xl p-4 space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-white/40">Méthode</span>
+                    <span className="text-white/70">{selectedOrder.payment_method === 'wave' ? 'Wave' : 'À la livraison'}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-white/40">Statut paiement</span>
+                    <span className={selectedOrder.payment_status === 'paid' ? 'text-brand-teal font-semibold' : 'text-white/60'}>
+                      {selectedOrder.payment_status === 'paid' ? 'Payé ✓' : selectedOrder.payment_status === 'failed' ? 'Échoué' : 'En attente'}
+                    </span>
+                  </div>
+                  {selectedOrder.wave_transaction_id && (
+                    <div className="flex justify-between text-sm items-center">
+                      <span className="text-white/40">ID Transaction Wave</span>
+                      <span className="text-white/80 font-mono text-xs bg-white/[0.06] px-2 py-1 rounded select-all">{selectedOrder.wave_transaction_id}</span>
+                    </div>
+                  )}
+                </div>
+
                 {/* Status update */}
                 <div>
                   <p className="text-white/50 text-xs font-semibold uppercase tracking-widest mb-3">Mettre à jour le statut</p>

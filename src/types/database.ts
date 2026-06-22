@@ -79,6 +79,8 @@ export interface Order {
   status: OrderStatus;
   payment_method: PaymentMethod;
   payment_ref: string | null;
+  payment_status: string | null;
+  wave_transaction_id: string | null;
   subtotal: number;
   shipping_fee: number;
   total: number;

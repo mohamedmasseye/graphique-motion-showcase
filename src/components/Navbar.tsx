@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const Logo = '/lovable-uploads/71d36db5-bb9d-4336-8965-1ace529d6ed6.png';
 
@@ -17,12 +18,39 @@ const navLinks = [
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
+
+  // Smart navigation: hash links scroll on home, navigate cross-page otherwise
+  const handleNav = (e: React.MouseEvent, href: string) => {
+    setIsOpen(false);
+
+    // Real route (e.g. /boutique) → let router handle via navigate
+    if (href.startsWith('/')) {
+      e.preventDefault();
+      navigate(href);
+      return;
+    }
+
+    // Hash link
+    e.preventDefault();
+    if (location.pathname !== '/') {
+      // Go to home then scroll to the section
+      navigate('/' + href);
+    } else {
+      const el = document.querySelector(href);
+      if (el) {
+        const navH = document.querySelector('nav')?.offsetHeight || 0;
+        window.scrollTo({ top: el.getBoundingClientRect().top + window.pageYOffset - navH, behavior: 'smooth' });
+      }
+    }
+  };
 
   return (
     <>
@@ -44,7 +72,8 @@ export default function Navbar() {
           <div className="max-w-7xl mx-auto px-5 flex items-center justify-between h-16">
             {/* Logo */}
             <motion.a
-              href="#home"
+              href="/#home"
+              onClick={(e) => handleNav(e, '#home')}
               className="flex items-center shrink-0 cursor-pointer"
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
@@ -62,7 +91,8 @@ export default function Navbar() {
               {navLinks.map((link, i) => (
                 <motion.a
                   key={link.name}
-                  href={link.href}
+                  href={link.href.startsWith('/') ? link.href : '/' + link.href}
+                  onClick={(e) => handleNav(e, link.href)}
                   className={`relative font-syne text-sm font-semibold px-4 py-2 rounded-xl cursor-pointer transition-colors duration-200 group ${
                     link.name === 'Offres'
                       ? 'text-brand-teal'
@@ -156,7 +186,7 @@ export default function Navbar() {
                 {navLinks.map((link, i) => (
                   <motion.a
                     key={link.name}
-                    href={link.href}
+                    href={link.href.startsWith('/') ? link.href : '/' + link.href}
                     className={`font-syne text-base font-semibold px-4 py-3 rounded-xl cursor-pointer flex items-center justify-between transition-colors duration-150 ${
                       link.name === 'Offres'
                         ? 'text-brand-teal bg-brand-teal/8'
@@ -165,7 +195,7 @@ export default function Navbar() {
                     initial={{ opacity: 0, x: -16 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.25, delay: i * 0.04 }}
-                    onClick={() => setIsOpen(false)}
+                    onClick={(e) => handleNav(e, link.href)}
                   >
                     {link.name}
                     {link.name === 'Offres' && (
