@@ -80,6 +80,9 @@ export default function Checkout() {
       const { error: itemsErr } = await supabase.from('order_items').insert(orderItems);
       if (itemsErr) throw itemsErr;
 
+      // Décrémenter le stock (atomique, côté serveur)
+      supabase.rpc('decrement_stock_for_order', { p_order_id: order.id }).then(() => {});
+
       // Notify admin (email)
       fetch('/api/notify', {
         method: 'POST',

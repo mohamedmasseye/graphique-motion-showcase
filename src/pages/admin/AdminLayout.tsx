@@ -8,6 +8,27 @@ import {
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/lib/supabase';
 import { useEffect, useState as useS } from 'react';
+import { toast } from 'sonner';
+
+// Petit son de notification (bip court encodé en base64 WAV)
+function playNotificationSound() {
+  try {
+    const ctx = new (window.AudioContext || (window as any).webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(880, ctx.currentTime);
+    osc.frequency.setValueAtTime(1175, ctx.currentTime + 0.12);
+    gain.gain.setValueAtTime(0.15, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.4);
+    osc.start(ctx.currentTime);
+    osc.stop(ctx.currentTime + 0.4);
+  } catch {
+    // ignore
+  }
+}
 
 const navItems = [
   { to: '/admin', icon: LayoutDashboard, label: 'Dashboard', end: true },
@@ -33,13 +54,24 @@ export default function AdminLayout() {
 
     const channel = supabase
       .channel('admin-orders')
-      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'orders' }, () => {
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'orders' }, (payload) => {
         setPendingOrders((c) => c + 1);
+        playNotificationSound();
+        const order: any = payload.new;
+        const fmt = new Intl.NumberFormat('fr-SN').format(order?.total ?? 0);
+        toast.success('🛒 Nouvelle commande !', {
+          description: `${order?.order_number ?? ''} — ${order?.customer_name ?? ''} · ${fmt} FCFA`,
+          duration: 10000,
+          action: {
+            label: 'Voir',
+            onClick: () => navigate('/admin/orders'),
+          },
+        });
       })
       .subscribe();
 
     return () => { supabase.removeChannel(channel); };
-  }, []);
+  }, [navigate]);
 
   const handleSignOut = async () => {
     await signOut();

@@ -38,15 +38,17 @@ export const useCartStore = create<CartState>()(
       addItem: (product, variant = null, quantity = 1) => {
         set((state) => {
           const key = itemKey(product.id, variant?.id);
+          const maxStock = variant?.stock ?? product.stock;
           const existing = state.items.find(
             (i) => itemKey(i.product.id, i.variant?.id) === key
           );
 
           if (existing) {
+            const newQty = Math.min(existing.quantity + quantity, maxStock);
             return {
               items: state.items.map((i) =>
                 itemKey(i.product.id, i.variant?.id) === key
-                  ? { ...i, quantity: i.quantity + quantity }
+                  ? { ...i, quantity: newQty }
                   : i
               ),
               isOpen: true,
@@ -54,7 +56,7 @@ export const useCartStore = create<CartState>()(
           }
 
           return {
-            items: [...state.items, { product, variant, quantity }],
+            items: [...state.items, { product, variant, quantity: Math.min(quantity, maxStock) }],
             isOpen: true,
           };
         });
@@ -74,11 +76,11 @@ export const useCartStore = create<CartState>()(
           return;
         }
         set((state) => ({
-          items: state.items.map((i) =>
-            itemKey(i.product.id, i.variant?.id) === itemKey(productId, variantId)
-              ? { ...i, quantity }
-              : i
-          ),
+          items: state.items.map((i) => {
+            if (itemKey(i.product.id, i.variant?.id) !== itemKey(productId, variantId)) return i;
+            const maxStock = i.variant?.stock ?? i.product.stock;
+            return { ...i, quantity: Math.min(quantity, maxStock) };
+          }),
         }));
       },
 
