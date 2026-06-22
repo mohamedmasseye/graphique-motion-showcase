@@ -97,7 +97,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     const session = await waveRes.json();
 
     // Stocker l'ID de session Wave dans la commande
-    await fetch(
+    const patchRes = await fetch(
       `${env.SUPABASE_URL}/rest/v1/orders?id=eq.${orderId}`,
       {
         method: 'PATCH',
@@ -111,11 +111,16 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
       }
     );
 
+    if (!patchRes.ok) {
+      console.error('Failed to store payment_ref:', patchRes.status, await patchRes.text());
+    }
+
     return new Response(
       JSON.stringify({
         success: true,
         wave_launch_url: session.wave_launch_url,
         checkout_id: session.id,
+        order_number: orderNumber,
       }),
       { headers: corsHeaders }
     );

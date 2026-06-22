@@ -59,11 +59,6 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
       }), { headers: corsHeaders });
     }
 
-    const sessionId = order.payment_ref;
-    if (!sessionId) {
-      return new Response(JSON.stringify({ payment_status: 'pending', status: order.status }), { headers: corsHeaders });
-    }
-
     // Try Wave API to check session status
     try {
       const hdrs: Record<string, string> = {
@@ -75,10 +70,28 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
         hdrs['Wave-Signature'] = `t=${timestamp},v1=${signature}`;
       }
 
-      const waveRes = await fetch(`https://api.wave.com/v1/checkout/sessions/${sessionId}`, { headers: hdrs });
+      // Use payment_ref (session ID) if available, else search by client_reference (order ID)
+      const sessionId = order.payment_ref;
+      let waveRes: Response;
+
+      if (sessionId) {
+        waveRes = await fetch(`https://api.wave.com/v1/checkout/sessions/${sessionId}`, { headers: hdrs });
+      } else {
+        waveRes = await fetch(`https://api.wave.com/v1/checkout/sessions/search?client_reference=${order.id}`, { headers: hdrs });
+      }
 
       if (waveRes.ok) {
-        const session = await waveRes.json();
+        const raw = await waveRes.json();
+        // search endpoint returns { result: [...] }, direct endpoint returns the object
+        const session = raw.result ? raw.result[0] : raw;
+        if (!session) {
+          // No matching session found
+          const freshOrder2 = await fetchOrder(env, orderNumber);
+          if (freshOrder2 && (freshOrder2.status === 'confirmed' || freshOrder2.payment_status === 'paid')) {
+            return new Response(JSON.stringify({ payment_status: 'succeeded', status: freshOrder2.status, transaction_id: freshOrder2.wave_transaction_id }), { headers: corsHeaders });
+          }
+          return new Response(JSON.stringify({ payment_status: 'processing' }), { headers: corsHeaders });
+        }
 
         if (session.payment_status === 'succeeded' && session.checkout_status === 'complete') {
           // Update order in DB

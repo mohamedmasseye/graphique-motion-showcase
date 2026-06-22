@@ -104,6 +104,10 @@ export default function Checkout() {
           const waveData = await waveRes.json();
 
           if (waveData.wave_launch_url) {
+            // Backup: store payment_ref via client if Worker PATCH failed
+            if (waveData.checkout_id) {
+              supabase.from('orders').update({ payment_ref: waveData.checkout_id }).eq('id', order.id).then(() => {});
+            }
             clearCart();
             window.location.href = waveData.wave_launch_url;
             return;
