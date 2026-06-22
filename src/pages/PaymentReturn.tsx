@@ -11,6 +11,7 @@ export default function PaymentReturn() {
   const orderNumber = params.get('order') ?? '';
   const hasError = params.get('error') === '1';
   const [status, setStatus] = useState<Status>(hasError ? 'failed' : 'loading');
+  const [transactionId, setTransactionId] = useState<string | null>(null);
 
   useEffect(() => {
     if (hasError || !orderNumber) {
@@ -30,6 +31,7 @@ export default function PaymentReturn() {
         const data = await res.json();
 
         if (data.payment_status === 'succeeded' || data.status === 'confirmed') {
+          if (data.transaction_id) setTransactionId(data.transaction_id);
           setStatus('success');
           return;
         }
@@ -37,7 +39,8 @@ export default function PaymentReturn() {
         // wave-status n'a pas pu confirmer via l'API Wave (IP whitelist etc.)
         // Mais Wave nous a renvoyé sur success_url → paiement réussi.
         // Confirmer directement via RPC sécurisé.
-        await supabase.rpc('confirm_wave_payment', { p_order_number: orderNumber });
+        const { data: rpcData } = await supabase.rpc('confirm_wave_payment', { p_order_number: orderNumber });
+        if (rpcData?.wave_transaction_id) setTransactionId(rpcData.wave_transaction_id);
         setStatus('success');
       } catch {
         // Même en cas d'erreur technique, Wave a validé le paiement.
@@ -96,7 +99,14 @@ export default function PaymentReturn() {
           </div>
         )}
 
-        <p className="text-white/40 text-sm max-w-xs mx-auto mb-8">{config.message}</p>
+        <p className="text-white/40 text-sm max-w-xs mx-auto mb-4">{config.message}</p>
+
+        {transactionId && status === 'success' && (
+          <div className="bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-3 mb-6 inline-block">
+            <p className="text-white/30 text-[10px] font-semibold uppercase tracking-widest mb-1">Transaction Wave</p>
+            <span className="text-white/70 font-mono text-sm select-all">{transactionId}</span>
+          </div>
+        )}
 
         {status !== 'loading' && (
           <div className="flex flex-col gap-3">
