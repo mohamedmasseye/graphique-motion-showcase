@@ -4,13 +4,6 @@ interface Env {
   SUPABASE_SERVICE_KEY: string;
 }
 
-const WAVE_ALLOWED_IPS = [
-  '104.155.43.220', '34.140.23.175', '34.22.138.147', '34.76.157.22',
-  '34.78.253.137', '34.79.119.200', '35.189.207.30', '35.195.255.192',
-  '35.205.122.113', '35.205.190.121', '35.233.61.130', '35.240.61.196',
-  '35.240.75.65', '35.241.190.127', '35.241.219.1',
-];
-
 async function verifyWaveSignature(body: string, header: string | null, secret: string): Promise<boolean> {
   if (!header || !secret) return false;
 
@@ -42,18 +35,11 @@ async function verifyWaveSignature(body: string, header: string | null, secret: 
 }
 
 export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
-  // 1. IP whitelist
-  const clientIP = request.headers.get('cf-connecting-ip') ?? '';
-  if (!WAVE_ALLOWED_IPS.includes(clientIP)) {
-    console.error('Wave webhook: blocked IP', clientIP);
-    return new Response('Forbidden', { status: 403 });
-  }
-
-  // 2. Read body
+  // 1. Read body
   const body = await request.text();
   if (!body) return new Response('Empty body', { status: 400 });
 
-  // 3. Signature verification
+  // 2. Signature verification
   if (env.WAVE_SIGNING_SECRET) {
     const sig = request.headers.get('wave-signature');
     const valid = await verifyWaveSignature(body, sig, env.WAVE_SIGNING_SECRET);
@@ -63,7 +49,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     }
   }
 
-  // 4. Parse event
+  // 3. Parse event
   let event: any;
   try {
     event = JSON.parse(body);
@@ -71,7 +57,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     return new Response('Invalid JSON', { status: 400 });
   }
 
-  // 5. Process checkout.session.completed
+  // 4. Process checkout.session.completed
   if (event.type === 'checkout.session.completed') {
     const data = event.data;
     const orderId = data.client_reference;
