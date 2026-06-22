@@ -56,7 +56,7 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
       const err = await waveRes.text();
       console.error('Wave API error:', waveRes.status, err);
       return new Response(
-        JSON.stringify({ error: 'Échec création session Wave' }),
+        JSON.stringify({ error: `Wave ${waveRes.status}: ${err.substring(0, 200)}` }),
         { status: 500, headers: corsHeaders }
       );
     }
