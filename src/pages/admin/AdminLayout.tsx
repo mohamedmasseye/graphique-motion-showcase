@@ -3,7 +3,7 @@ import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   LayoutDashboard, Package, ShoppingCart, FolderKanban, Settings, LogOut,
-  Menu, X, ChevronLeft, Bell
+  Menu, X, ChevronLeft, Bell, Clock
 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/lib/supabase';
@@ -44,6 +44,17 @@ export default function AdminLayout() {
   const [collapsed, setCollapsed] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const [pendingOrders, setPendingOrders] = useS(0);
+  const [notifOpen, setNotifOpen] = useS(false);
+  const [recentOrders, setRecentOrders] = useS<any[]>([]);
+
+  const loadRecent = () => {
+    supabase
+      .from('orders')
+      .select('id, order_number, customer_name, total, status, created_at')
+      .order('created_at', { ascending: false })
+      .limit(8)
+      .then(({ data }) => setRecentOrders(data ?? []));
+  };
 
   useEffect(() => {
     supabase
@@ -52,10 +63,13 @@ export default function AdminLayout() {
       .eq('status', 'pending')
       .then(({ count }) => setPendingOrders(count ?? 0));
 
+    loadRecent();
+
     const channel = supabase
       .channel('admin-orders')
       .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'orders' }, (payload) => {
         setPendingOrders((c) => c + 1);
+        loadRecent();
         playNotificationSound();
         const order: any = payload.new;
         const fmt = new Intl.NumberFormat('fr-SN').format(order?.total ?? 0);
@@ -72,6 +86,16 @@ export default function AdminLayout() {
 
     return () => { supabase.removeChannel(channel); };
   }, [navigate]);
+
+  const openNotif = () => {
+    loadRecent();
+    setNotifOpen((o: boolean) => !o);
+  };
+
+  const goToOrders = () => {
+    setNotifOpen(false);
+    navigate('/admin/orders');
+  };
 
   const handleSignOut = async () => {
     await signOut();
@@ -184,11 +208,79 @@ export default function AdminLayout() {
 
           <div className="flex items-center gap-4 ml-auto">
             <div className="relative">
-              <Bell size={18} className="text-white/30 hover:text-white/60 cursor-pointer transition-colors" />
-              {pendingOrders > 0 && (
-                <span className="absolute -top-1 -right-1 w-3 h-3 bg-brand-orange rounded-full animate-pulse" />
-              )}
+              <button
+                onClick={openNotif}
+                className="relative p-2 rounded-lg hover:bg-white/[0.06] transition-colors"
+                aria-label="Notifications"
+              >
+                <Bell size={18} className="text-white/40 hover:text-white/70 transition-colors" />
+                {pendingOrders > 0 && (
+                  <span className="absolute top-1 right-1 min-w-[16px] h-4 px-1 bg-brand-orange rounded-full flex items-center justify-center text-white text-[9px] font-bold">
+                    {pendingOrders}
+                  </span>
+                )}
+              </button>
+
+              <AnimatePresence>
+                {notifOpen && (
+                  <>
+                    <div className="fixed inset-0 z-40" onClick={() => setNotifOpen(false)} />
+                    <motion.div
+                      initial={{ opacity: 0, y: -8, scale: 0.97 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -8, scale: 0.97 }}
+                      transition={{ duration: 0.15 }}
+                      className="absolute right-0 mt-2 w-80 max-w-[calc(100vw-2rem)] bg-[#0C0C12] border border-white/10 rounded-2xl shadow-[0_16px_48px_rgba(0,0,0,0.6)] z-50 overflow-hidden"
+                    >
+                      <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.06]">
+                        <span className="text-white font-bold text-sm">Notifications</span>
+                        {pendingOrders > 0 && (
+                          <span className="text-brand-orange text-xs font-semibold">{pendingOrders} en attente</span>
+                        )}
+                      </div>
+
+                      <div className="max-h-80 overflow-y-auto">
+                        {recentOrders.length === 0 ? (
+                          <div className="px-4 py-8 text-center">
+                            <Bell size={24} className="text-white/10 mx-auto mb-2" />
+                            <p className="text-white/30 text-xs">Aucune commande</p>
+                          </div>
+                        ) : (
+                          recentOrders.map((o) => (
+                            <button
+                              key={o.id}
+                              onClick={goToOrders}
+                              className="w-full flex items-center gap-3 px-4 py-3 hover:bg-white/[0.03] transition-colors text-left border-b border-white/[0.04]"
+                            >
+                              <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${o.status === 'pending' ? 'bg-brand-orange/15' : 'bg-brand-teal/15'}`}>
+                                {o.status === 'pending'
+                                  ? <Clock size={14} className="text-brand-orange" />
+                                  : <ShoppingCart size={14} className="text-brand-teal" />}
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <p className="text-white text-xs font-semibold truncate">{o.customer_name}</p>
+                                <p className="text-white/40 text-[10px] font-mono">{o.order_number}</p>
+                              </div>
+                              <span className="text-brand-teal text-xs font-bold shrink-0">
+                                {new Intl.NumberFormat('fr-SN').format(o.total)} F
+                              </span>
+                            </button>
+                          ))
+                        )}
+                      </div>
+
+                      <button
+                        onClick={goToOrders}
+                        className="w-full px-4 py-3 text-center text-brand-teal text-xs font-semibold hover:bg-white/[0.03] transition-colors border-t border-white/[0.06]"
+                      >
+                        Voir toutes les commandes
+                      </button>
+                    </motion.div>
+                  </>
+                )}
+              </AnimatePresence>
             </div>
+
             <div className="w-8 h-8 rounded-full bg-brand-teal/20 flex items-center justify-center">
               <span className="text-brand-teal text-xs font-bold">
                 {user?.email?.charAt(0).toUpperCase()}
