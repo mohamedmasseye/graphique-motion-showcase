@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Plus, Pencil, Trash2, FolderKanban, X, Save, Loader2, Image as ImageIcon } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
+import ImageUploader from '@/components/admin/ImageUploader';
 import type { PortfolioProject } from '@/types/database';
 
 const categoryOptions = [
@@ -149,10 +150,12 @@ export default function AdminPortfolio() {
                     {categoryOptions.map((c) => <option key={c.value} value={c.value}>{c.label}</option>)}
                   </select>
                 </div>
-                <div>
-                  <label className="block text-white/50 text-xs font-semibold uppercase tracking-widest mb-1.5">Image URL (Cloudinary) *</label>
-                  <input value={editing.image ?? ''} onChange={(e) => updateField('image', e.target.value)} className={inputClass} placeholder="https://res.cloudinary.com/..." />
-                </div>
+                <ImageUploader
+                  images={editing.image ? [editing.image] : []}
+                  onChange={(imgs) => updateField('image', imgs[imgs.length - 1] ?? '')}
+                  folder="portfolio"
+                  max={1}
+                />
                 <div>
                   <label className="block text-white/50 text-xs font-semibold uppercase tracking-widest mb-1.5">Lien (optionnel)</label>
                   <input value={editing.link ?? ''} onChange={(e) => updateField('link', e.target.value)} className={inputClass} placeholder="https://..." />
