@@ -1,15 +1,18 @@
 interface Env {
   SUPABASE_URL: string;
-  SUPABASE_SERVICE_KEY: string;
+  SUPABASE_SERVICE_KEY?: string;
+  SUPABASE_SERVICE_ROLE_KEY?: string;
 }
+
+const svcKey = (env: Env) => env.SUPABASE_SERVICE_KEY || env.SUPABASE_SERVICE_ROLE_KEY || "";
 
 export const onRequestGet: PagesFunction<Env> = async ({ env }) => {
   const [productsRes, portfolioRes] = await Promise.all([
     fetch(`${env.SUPABASE_URL}/rest/v1/products?status=eq.active&select=slug,updated_at`, {
-      headers: { 'apikey': env.SUPABASE_SERVICE_KEY, 'Authorization': `Bearer ${env.SUPABASE_SERVICE_KEY}` },
+      headers: { 'apikey': svcKey(env), 'Authorization': `Bearer ${svcKey(env)}` },
     }),
     fetch(`${env.SUPABASE_URL}/rest/v1/portfolio?select=slug,updated_at`, {
-      headers: { 'apikey': env.SUPABASE_SERVICE_KEY, 'Authorization': `Bearer ${env.SUPABASE_SERVICE_KEY}` },
+      headers: { 'apikey': svcKey(env), 'Authorization': `Bearer ${svcKey(env)}` },
     }),
   ]);
 

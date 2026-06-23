@@ -1,8 +1,11 @@
 interface Env {
   BREVO_API_KEY: string;
   SUPABASE_URL: string;
-  SUPABASE_SERVICE_KEY: string;
+  SUPABASE_SERVICE_KEY?: string;
+  SUPABASE_SERVICE_ROLE_KEY?: string;
 }
+
+const svcKey = (env: Env) => env.SUPABASE_SERVICE_KEY || env.SUPABASE_SERVICE_ROLE_KEY || "";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': 'https://graphiquemotion.com',
@@ -30,8 +33,8 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
     `${env.SUPABASE_URL}/rest/v1/orders?id=eq.${order_id}&select=*,order_items(*)`,
     {
       headers: {
-        'apikey': env.SUPABASE_SERVICE_KEY,
-        'Authorization': `Bearer ${env.SUPABASE_SERVICE_KEY}`,
+        'apikey': svcKey(env),
+        'Authorization': `Bearer ${svcKey(env)}`,
       },
     }
   );

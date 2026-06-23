@@ -2,8 +2,11 @@ interface Env {
   WAVE_WEBHOOK_SECRET?: string;
   WAVE_SIGNING_SECRET?: string;
   SUPABASE_URL: string;
-  SUPABASE_SERVICE_KEY: string;
+  SUPABASE_SERVICE_KEY?: string;
+  SUPABASE_SERVICE_ROLE_KEY?: string;
 }
+
+const svcKey = (env: Env) => env.SUPABASE_SERVICE_KEY || env.SUPABASE_SERVICE_ROLE_KEY || "";
 
 async function verifyWaveSignature(body: string, header: string | null, secret: string): Promise<boolean> {
   if (!header || !secret) return false;
@@ -77,8 +80,8 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
       {
         method: 'PATCH',
         headers: {
-          'apikey': env.SUPABASE_SERVICE_KEY,
-          'Authorization': `Bearer ${env.SUPABASE_SERVICE_KEY}`,
+          'apikey': svcKey(env),
+          'Authorization': `Bearer ${svcKey(env)}`,
           'Content-Type': 'application/json',
           'Prefer': 'return=minimal',
         },

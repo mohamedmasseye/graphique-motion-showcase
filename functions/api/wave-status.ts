@@ -2,8 +2,11 @@ interface Env {
   WAVE_API_KEY: string;
   WAVE_SIGNING_SECRET?: string;
   SUPABASE_URL: string;
-  SUPABASE_SERVICE_KEY: string;
+  SUPABASE_SERVICE_KEY?: string;
+  SUPABASE_SERVICE_ROLE_KEY?: string;
 }
+
+const svcKey = (env: Env) => env.SUPABASE_SERVICE_KEY || env.SUPABASE_SERVICE_ROLE_KEY || '';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': 'https://graphiquemotion.com',
@@ -27,8 +30,8 @@ async function fetchOrder(env: Env, orderNumber: string) {
     `${env.SUPABASE_URL}/rest/v1/orders?order_number=eq.${orderNumber}&select=id,status,payment_ref,payment_status,wave_transaction_id`,
     {
       headers: {
-        'apikey': env.SUPABASE_SERVICE_KEY,
-        'Authorization': `Bearer ${env.SUPABASE_SERVICE_KEY}`,
+        'apikey': svcKey(env),
+        'Authorization': `Bearer ${svcKey(env)}`,
       },
     }
   );
@@ -50,8 +53,8 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
       return new Response(JSON.stringify({ error: 'Commande introuvable' }), { status: 404, headers: corsHeaders });
     }
 
-    // Already confirmed by webhook → return immediately
-    if (order.status === 'confirmed' || order.payment_status === 'paid' || order.wave_transaction_id) {
+    // Already confirmed AND transaction id stored → return immediately
+    if ((order.status === 'confirmed' || order.payment_status === 'paid') && order.wave_transaction_id) {
       return new Response(JSON.stringify({
         payment_status: 'succeeded',
         status: order.status,
@@ -98,8 +101,8 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
           await fetch(`${env.SUPABASE_URL}/rest/v1/orders?id=eq.${order.id}`, {
             method: 'PATCH',
             headers: {
-              'apikey': env.SUPABASE_SERVICE_KEY,
-              'Authorization': `Bearer ${env.SUPABASE_SERVICE_KEY}`,
+              'apikey': svcKey(env),
+              'Authorization': `Bearer ${svcKey(env)}`,
               'Content-Type': 'application/json',
               'Prefer': 'return=minimal',
             },
@@ -120,8 +123,8 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
           await fetch(`${env.SUPABASE_URL}/rest/v1/orders?id=eq.${order.id}`, {
             method: 'PATCH',
             headers: {
-              'apikey': env.SUPABASE_SERVICE_KEY,
-              'Authorization': `Bearer ${env.SUPABASE_SERVICE_KEY}`,
+              'apikey': svcKey(env),
+              'Authorization': `Bearer ${svcKey(env)}`,
               'Content-Type': 'application/json',
               'Prefer': 'return=minimal',
             },
