@@ -7,7 +7,7 @@ import {
 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/lib/supabase';
-import { useEffect, useState as useS } from 'react';
+import { useEffect, useState as useS, useRef } from 'react';
 import { toast } from 'sonner';
 
 // Petit son de notification (bip court encodé en base64 WAV)
@@ -47,44 +47,78 @@ export default function AdminLayout() {
   const [notifOpen, setNotifOpen] = useS(false);
   const [recentOrders, setRecentOrders] = useS<any[]>([]);
 
+  const lastOrderIdRef = useRef<string | null>(null);
+  const initializedRef = useRef(false);
+
+  const notifyNewOrder = (order: any) => {
+    playNotificationSound();
+    const fmt = new Intl.NumberFormat('fr-SN').format(order?.total ?? 0);
+    toast.success('🛒 Nouvelle commande !', {
+      description: `${order?.order_number ?? ''} — ${order?.customer_name ?? ''} · ${fmt} FCFA`,
+      duration: 10000,
+      action: { label: 'Voir', onClick: () => navigate('/admin/orders') },
+    });
+  };
+
   const loadRecent = () => {
-    supabase
+    return supabase
       .from('orders')
       .select('id, order_number, customer_name, total, status, created_at')
       .order('created_at', { ascending: false })
       .limit(8)
-      .then(({ data }) => setRecentOrders(data ?? []));
+      .then(({ data }) => {
+        const rows = data ?? [];
+        setRecentOrders(rows);
+        return rows;
+      });
   };
 
-  useEffect(() => {
+  const refreshPending = () => {
     supabase
       .from('orders')
       .select('id', { count: 'exact', head: true })
       .eq('status', 'pending')
       .then(({ count }) => setPendingOrders(count ?? 0));
+  };
 
-    loadRecent();
+  useEffect(() => {
+    refreshPending();
+    loadRecent().then((rows) => {
+      if (rows.length > 0) lastOrderIdRef.current = rows[0].id;
+      initializedRef.current = true;
+    });
 
+    // ── Realtime (chemin rapide) ──
     const channel = supabase
       .channel('admin-orders')
       .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'orders' }, (payload) => {
-        setPendingOrders((c) => c + 1);
-        loadRecent();
-        playNotificationSound();
         const order: any = payload.new;
-        const fmt = new Intl.NumberFormat('fr-SN').format(order?.total ?? 0);
-        toast.success('🛒 Nouvelle commande !', {
-          description: `${order?.order_number ?? ''} — ${order?.customer_name ?? ''} · ${fmt} FCFA`,
-          duration: 10000,
-          action: {
-            label: 'Voir',
-            onClick: () => navigate('/admin/orders'),
-          },
-        });
+        if (order?.id === lastOrderIdRef.current) return;
+        lastOrderIdRef.current = order?.id ?? lastOrderIdRef.current;
+        refreshPending();
+        loadRecent();
+        notifyNewOrder(order);
       })
       .subscribe();
 
-    return () => { supabase.removeChannel(channel); };
+    // ── Polling de secours (toutes les 15s) ──
+    const poll = setInterval(async () => {
+      const rows = await loadRecent();
+      refreshPending();
+      if (!initializedRef.current || rows.length === 0) return;
+      const newest = rows[0];
+      if (lastOrderIdRef.current && newest.id !== lastOrderIdRef.current) {
+        lastOrderIdRef.current = newest.id;
+        notifyNewOrder(newest);
+      } else if (!lastOrderIdRef.current) {
+        lastOrderIdRef.current = newest.id;
+      }
+    }, 15000);
+
+    return () => {
+      supabase.removeChannel(channel);
+      clearInterval(poll);
+    };
   }, [navigate]);
 
   const openNotif = () => {
