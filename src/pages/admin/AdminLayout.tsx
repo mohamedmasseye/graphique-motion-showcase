@@ -196,7 +196,7 @@ export default function AdminLayout() {
       </aside>
 
       {/* Main content */}
-      <div className="flex-1 flex flex-col min-h-screen">
+      <div className="flex-1 flex flex-col min-h-screen min-w-0 w-full">
         {/* Top bar */}
         <header className="h-16 flex items-center justify-between px-4 lg:px-6 border-b border-white/[0.06] bg-[#08080C]/80 backdrop-blur-xl sticky top-0 z-30">
           <button
@@ -290,7 +290,7 @@ export default function AdminLayout() {
         </header>
 
         {/* Page content */}
-        <main className="flex-1 p-4 lg:p-6">
+        <main className="flex-1 p-4 lg:p-6 min-w-0 overflow-x-hidden">
           <Outlet />
         </main>
       </div>
