@@ -1,8 +1,9 @@
 import { motion } from 'framer-motion';
-import { Check, MessageCircle } from 'lucide-react';
+import { Check, MessageCircle, RefreshCw } from 'lucide-react';
 import pricingData from '../data/pricing.json';
 
 const plans = pricingData.plans;
+const refonte = pricingData.refonte;
 
 const containerStagger = {
   hidden: {},
@@ -147,6 +148,95 @@ export default function Pricing() {
               </div>
             </motion.div>
           ))}
+        </motion.div>
+
+        {/* Refonte de site web */}
+        <motion.div
+          className="mt-16 md:mt-20"
+          initial={{ opacity: 0, y: 28 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <div className="flex items-center gap-2 mb-3">
+            <RefreshCw size={16} className="text-brand-teal" />
+            <p className="text-brand-teal text-sm font-semibold uppercase tracking-[0.2em]">Site déjà en ligne ?</p>
+          </div>
+          <h3 className="font-syne text-2xl md:text-3xl font-black text-white leading-tight mb-2">
+            Refonte de site web
+          </h3>
+          <p className="text-[#A0A0A0] text-base max-w-xl mb-8">
+            Le design vieillit, les usages évoluent. Une refonte périodique garde votre site compétitif.
+          </p>
+
+          <motion.div
+            className="grid grid-cols-1 sm:grid-cols-2 gap-5 max-w-3xl"
+            variants={containerStagger}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: '-60px' }}
+          >
+            {refonte.map((plan) => (
+              <motion.div
+                key={plan.name}
+                variants={cardVariant}
+                className="relative flex flex-col bg-white/[0.05] rounded-2xl border border-white/10 overflow-hidden"
+                style={{ borderLeftColor: plan.border, borderLeftWidth: 3 }}
+                whileHover={{
+                  y: -8,
+                  backgroundColor: 'rgba(255,255,255,0.05)',
+                  boxShadow: `0 20px 60px ${plan.border}15`,
+                  transition: { duration: 0.3, ease: 'easeOut' },
+                }}
+              >
+                <div className="p-6 flex flex-col flex-1">
+                  <p className="text-xs font-bold uppercase tracking-[0.18em] mb-3" style={{ color: plan.border }}>
+                    {plan.name}
+                  </p>
+
+                  <div className="mb-1">
+                    <span className="font-syne text-3xl font-black text-white leading-none">{plan.price}</span>
+                  </div>
+                  <p className="text-[#A0A0A0] text-sm mb-6">{plan.currency}</p>
+
+                  <p className="text-[#A0A0A0] text-sm mb-6">{plan.tagline}</p>
+
+                  <div className="h-px bg-white/8 mb-6" />
+
+                  <ul className="space-y-3 flex-1">
+                    {plan.features.map((f) => (
+                      <li key={f} className="flex items-start gap-2.5 text-sm text-[#A0A0A0]">
+                        <Check size={15} className="mt-0.5 shrink-0" style={{ color: plan.border }} />
+                        <span>{f}</span>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <motion.a
+                    href={plan.wa}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-8 flex items-center justify-center gap-2 w-full text-center py-3 px-5 rounded-xl font-bold text-sm cursor-pointer"
+                    style={{
+                      background: plan.border + '18',
+                      color: plan.border,
+                      border: `1.5px solid ${plan.border}40`,
+                    }}
+                    whileHover={{ backgroundColor: plan.border, color: '#fff', scale: 1.02 }}
+                    whileTap={{ scale: 0.97 }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+                  >
+                    <MessageCircle size={14} />
+                    {plan.cta}
+                  </motion.a>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          <p className="mt-6 text-[#A0A0A0] text-sm">
+            💡 -15% sur la refonte pour les clients sous contrat de maintenance Pro ou Premium.
+          </p>
         </motion.div>
 
         {/* Bottom note */}

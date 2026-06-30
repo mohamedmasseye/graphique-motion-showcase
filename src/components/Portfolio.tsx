@@ -1,8 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, X, ZoomIn } from 'lucide-react';
-import { Project, ProjectCategory } from '@/types/project';
-import projectsData from '@/data/projects.json';
+import { ProjectCategory } from '@/types/project';
+import { supabase } from '@/lib/supabase';
+import type { PortfolioProject } from '@/types/database';
 
 type FilterCategory = ProjectCategory | 'all';
 
@@ -38,17 +39,30 @@ const categoryColor: Record<ProjectCategory, string> = {
 
 export default function Portfolio() {
   const [activeCategory, setActiveCategory] = useState<FilterCategory>('all');
-  const [filtered, setFiltered] = useState<Project[]>(projectsData.projects as Project[]);
-  const [selectedImage, setSelectedImage] = useState<Project | null>(null);
+  const [projects, setProjects] = useState<PortfolioProject[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [filtered, setFiltered] = useState<PortfolioProject[]>([]);
+  const [selectedImage, setSelectedImage] = useState<PortfolioProject | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
+    supabase
+      .from('portfolio')
+      .select('*')
+      .order('sort_order')
+      .then(({ data, error }) => {
+        if (!error && data) setProjects(data as PortfolioProject[]);
+        setLoading(false);
+      });
+  }, []);
+
+  useEffect(() => {
     if (activeCategory === 'all') {
-      setFiltered(projectsData.projects as Project[]);
+      setFiltered(projects);
     } else {
-      setFiltered((projectsData.projects as Project[]).filter((p) => p.category === activeCategory));
+      setFiltered(projects.filter((p) => p.category === activeCategory));
     }
-  }, [activeCategory]);
+  }, [activeCategory, projects]);
 
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setSelectedImage(null); };
@@ -132,6 +146,13 @@ export default function Portfolio() {
           </motion.div>
 
           {/* Grid — 2 colonnes mobile, 2 tablette, 3 desktop */}
+          {loading ? (
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <div key={i} className="aspect-square sm:aspect-video rounded-2xl bg-white/[0.05] border border-white/10 animate-pulse" />
+              ))}
+            </div>
+          ) : (
           <motion.div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-5" layout>
             <AnimatePresence mode="popLayout">
               {filtered.map((project) => (
@@ -149,11 +170,11 @@ export default function Portfolio() {
                   <div
                     className="absolute top-2 left-2 z-10 text-[9px] sm:text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-full"
                     style={{
-                      background: categoryColor[project.category] + '22',
-                      color: categoryColor[project.category],
+                      background: (categoryColor[project.category as ProjectCategory] ?? '#A0A0A0') + '22',
+                      color: categoryColor[project.category as ProjectCategory] ?? '#A0A0A0',
                     }}
                   >
-                    {categoryLabel[project.category]}
+                    {categoryLabel[project.category as ProjectCategory] ?? project.category}
                   </div>
 
                   {/* Image — aspect carré sur mobile, vidéo sur sm+ */}
@@ -185,7 +206,7 @@ export default function Portfolio() {
                       <span className="text-[#A0A0A0] text-xs flex items-center gap-1">
                         <ZoomIn size={12} /> Voir détails
                       </span>
-                      {project.link !== '#' && (
+                      {project.link && (
                         <a
                           href={project.link}
                           target="_blank"
@@ -202,6 +223,7 @@ export default function Portfolio() {
               ))}
             </AnimatePresence>
           </motion.div>
+          )}
 
           {/* Bottom CTA */}
           <motion.div
@@ -259,11 +281,11 @@ export default function Portfolio() {
                 <div
                   className="inline-block text-[11px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full mb-3"
                   style={{
-                    background: categoryColor[selectedImage.category] + '22',
-                    color: categoryColor[selectedImage.category],
+                    background: (categoryColor[selectedImage.category as ProjectCategory] ?? '#A0A0A0') + '22',
+                    color: categoryColor[selectedImage.category as ProjectCategory] ?? '#A0A0A0',
                   }}
                 >
-                  {categoryLabel[selectedImage.category]}
+                  {categoryLabel[selectedImage.category as ProjectCategory] ?? selectedImage.category}
                 </div>
                 <h3 className="text-xl font-black text-white mb-2">{selectedImage.title}</h3>
                 {selectedImage.description && (
@@ -276,7 +298,7 @@ export default function Portfolio() {
                     ))}
                   </div>
                 )}
-                {selectedImage.link !== '#' && (
+                {selectedImage.link && (
                   <a
                     href={selectedImage.link}
                     target="_blank"

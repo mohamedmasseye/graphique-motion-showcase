@@ -66,5 +66,36 @@
         "Publication sur les stores gérée"
       ]
     }
+  ],
+  "refonte": [
+    {
+      "name": "Refonte Lifting",
+      "price": "250 000",
+      "currency": "FCFA — paiement unique",
+      "border": "#00B2AA",
+      "wa": "https://wa.me/221775644478?text=Bonjour%2C%20je%20suis%20int%C3%A9ress%C3%A9%20par%20la%20Refonte%20Lifting",
+      "cta": "Demander un devis",
+      "tagline": "Un coup de jeune sans tout reconstruire.",
+      "features": [
+        "Modernisation du design et de l'identité visuelle",
+        "Optimisation mobile & vitesse de chargement",
+        "Mise à jour du contenu et des visuels"
+      ]
+    },
+    {
+      "name": "Refonte Complète",
+      "price": "500 000",
+      "currency": "FCFA — paiement unique",
+      "border": "#7F77DD",
+      "wa": "https://wa.me/221775644478?text=Bonjour%2C%20je%20suis%20int%C3%A9ress%C3%A9%20par%20la%20Refonte%20Compl%C3%A8te",
+      "cta": "Demander un devis",
+      "tagline": "Nouvelle architecture, site repensé de zéro.",
+      "features": [
+        "Nouvelle arborescence & parcours utilisateur",
+        "Design entièrement repensé",
+        "Migration des contenus et tests complets",
+        "30 jours de support post-lancement inclus"
+      ]
+    }
   ]
 }
