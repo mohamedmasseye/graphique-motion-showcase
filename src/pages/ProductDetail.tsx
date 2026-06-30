@@ -9,6 +9,7 @@ import WhatsAppButton from '@/components/WhatsAppButton';
 import { useProduct } from '@/hooks/useProducts';
 import { useCartStore } from '@/store/cartStore';
 import { formatPrice } from '@/lib/formatPrice';
+import { useMetaTags, useJsonLd } from '@/hooks/useMetaTags';
 import type { ProductVariant } from '@/types/database';
 
 export default function ProductDetail() {
@@ -19,6 +20,48 @@ export default function ProductDetail() {
   const [selectedVariant, setSelectedVariant] = useState<ProductVariant | null>(null);
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
+
+  const seoTitle = product
+    ? product.meta_title || `${product.name} — Boutique Graphique & Motion`
+    : undefined;
+  const seoDescription = product
+    ? product.meta_description || product.short_description || product.description?.slice(0, 160) || undefined
+    : undefined;
+  const seoImage = product?.images?.[0];
+
+  useMetaTags({ title: seoTitle, description: seoDescription, image: seoImage });
+
+  useJsonLd(
+    product
+      ? {
+          '@context': 'https://schema.org',
+          '@type': 'Product',
+          name: product.name,
+          description: seoDescription,
+          image: product.images,
+          sku: product.sku || undefined,
+          brand: product.brand ? { '@type': 'Brand', name: product.brand } : undefined,
+          offers: {
+            '@type': 'Offer',
+            url: `https://graphiquemotion.com/boutique/${product.slug}`,
+            priceCurrency: 'XOF',
+            price: product.price,
+            availability: product.stock > 0 ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+          },
+          ...(product.reviews && product.reviews.length > 0
+            ? {
+                aggregateRating: {
+                  '@type': 'AggregateRating',
+                  ratingValue: (
+                    product.reviews.reduce((sum, r) => sum + r.rating, 0) / product.reviews.length
+                  ).toFixed(1),
+                  reviewCount: product.reviews.length,
+                },
+              }
+            : {}),
+        }
+      : null
+  );
 
   if (isLoading) {
     return (

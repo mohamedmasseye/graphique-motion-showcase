@@ -315,6 +315,35 @@ export default function AdminProducts() {
                   onChange={setEditingVariants}
                 />
 
+                <div className="pt-2 border-t border-white/[0.06]">
+                  <p className="text-white/40 text-xs font-semibold uppercase tracking-widest mb-3 mt-4">Référencement (SEO)</p>
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-white/50 text-xs font-semibold uppercase tracking-widest mb-1.5">Titre SEO</label>
+                      <input
+                        value={editing.meta_title ?? ''}
+                        onChange={(e) => updateField('meta_title', e.target.value)}
+                        className={inputClass}
+                        placeholder={editing.name ? `${editing.name} — Boutique Graphique & Motion` : 'Titre affiché dans Google'}
+                        maxLength={70}
+                      />
+                      <p className="text-white/25 text-[11px] mt-1">{(editing.meta_title ?? '').length}/70 — laissez vide pour utiliser le nom du produit par défaut.</p>
+                    </div>
+                    <div>
+                      <label className="block text-white/50 text-xs font-semibold uppercase tracking-widest mb-1.5">Description SEO</label>
+                      <textarea
+                        value={editing.meta_description ?? ''}
+                        onChange={(e) => updateField('meta_description', e.target.value)}
+                        rows={2}
+                        className={`${inputClass} resize-none`}
+                        placeholder="Résumé affiché dans les résultats Google (150-160 caractères)"
+                        maxLength={160}
+                      />
+                      <p className="text-white/25 text-[11px] mt-1">{(editing.meta_description ?? '').length}/160 — laissez vide pour utiliser la description courte.</p>
+                    </div>
+                  </div>
+                </div>
+
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label className="block text-white/50 text-xs font-semibold uppercase tracking-widest mb-1.5">Statut</label>
