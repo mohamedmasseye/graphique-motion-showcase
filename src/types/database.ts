@@ -68,6 +68,149 @@ export interface ProductReview {
   created_at: string;
 }
 
+/* ═══ Portfolio ══════════════════════════════════════════════════ */
+
+/** Primary project types for filtering */
+export type ProjectType =
+  | 'digital_product'
+  | 'website'
+  | 'ecommerce'
+  | 'web_application'
+  | 'mobile_pwa'
+  | 'branding'
+  | 'graphic_design'
+  | 'event'
+  | 'other';
+
+/** Category groups for portfolio filters */
+export type PortfolioCategory =
+  | 'digital_products'
+  | 'web_ecommerce'
+  | 'branding'
+  | 'design'
+  | 'events';
+
+export const PROJECT_TYPE_LABELS: Record<ProjectType, string> = {
+  digital_product: 'Digital Product',
+  website: 'Website',
+  ecommerce: 'E-commerce',
+  web_application: 'Web Application',
+  mobile_pwa: 'Mobile / PWA',
+  branding: 'Branding',
+  graphic_design: 'Graphic Design',
+  event: 'Event',
+  other: 'Other',
+};
+
+export const PORTFOLIO_CATEGORY_LABELS: Record<PortfolioCategory, string> = {
+  digital_products: 'Digital Products',
+  web_ecommerce: 'Web & E-commerce',
+  branding: 'Branding',
+  design: 'Design',
+  events: 'Events',
+};
+
+export const PORTFOLIO_CATEGORY_COLORS: Record<PortfolioCategory, string> = {
+  digital_products: '#378ADD',
+  web_ecommerce: '#00B2AA',
+  branding: '#F5821F',
+  design: '#7F77DD',
+  events: '#EC4899',
+};
+
+/**
+ * Map legacy category values from Supabase to new PortfolioCategory.
+ * Handles backward compatibility with existing data.
+ */
+export function mapCategoryToGroup(category: string): PortfolioCategory {
+  const c = category.toLowerCase();
+  if (['web', 'pwa'].includes(c)) return 'web_ecommerce';
+  if (['logo', 'branding'].includes(c)) return 'branding';
+  if (['print', 'design', 'video'].includes(c)) return 'design';
+  if (['event'].includes(c)) return 'events';
+  if (['app'].includes(c)) return 'digital_products';
+  return 'web_ecommerce';
+}
+
+export interface PortfolioProject {
+  id: string;
+  title: string;
+  slug: string;
+  category: string;
+  image: string;
+  link: string | null;
+  description: string | null;
+  tags: string[];
+  sort_order: number;
+  created_at: string;
+  updated_at: string;
+
+  /* ── New fields (nullable for backward compat) ─────────────── */
+  project_type: ProjectType | null;
+  short_description: string | null;
+  long_description: string | null;
+  client_name: string | null;
+  industry: string | null;
+  year: number | null;
+  technologies: string[];
+  images: string[];
+  featured: boolean;
+  featured_order: number | null;
+  case_study: boolean;
+  challenge: string | null;
+  strategy: string | null;
+  solution: string | null;
+  development: string | null;
+  outcome: string | null;
+  seo_title: string | null;
+  seo_description: string | null;
+  og_image: string | null;
+  published: boolean;
+}
+
+/** Default values for new fields when creating a project */
+export const PORTFOLIO_DEFAULTS: Partial<PortfolioProject> = {
+  project_type: 'website',
+  short_description: null,
+  long_description: null,
+  client_name: null,
+  industry: null,
+  year: null,
+  technologies: [],
+  images: [],
+  featured: false,
+  featured_order: null,
+  case_study: false,
+  challenge: null,
+  strategy: null,
+  solution: null,
+  development: null,
+  outcome: null,
+  seo_title: null,
+  seo_description: null,
+  og_image: null,
+  published: true,
+};
+
+/* ═══ Orders & Cart (unchanged) ═════════════════════════════════ */
+
+export interface SiteSettings {
+  id: string;
+  phone: string | null;
+  email: string | null;
+  address: string | null;
+  whatsapp: string | null;
+  instagram: string | null;
+  facebook: string | null;
+  updated_at: string;
+}
+
+export interface CartItem {
+  product: Product;
+  variant: ProductVariant | null;
+  quantity: number;
+}
+
 export interface Order {
   id: string;
   order_number: string;
@@ -100,35 +243,4 @@ export interface OrderItem {
   quantity: number;
   unit_price: number;
   total: number;
-}
-
-export interface PortfolioProject {
-  id: string;
-  title: string;
-  slug: string;
-  category: string;
-  image: string;
-  link: string | null;
-  description: string | null;
-  tags: string[];
-  sort_order: number;
-  created_at: string;
-  updated_at: string;
-}
-
-export interface SiteSettings {
-  id: string;
-  phone: string | null;
-  email: string | null;
-  address: string | null;
-  whatsapp: string | null;
-  instagram: string | null;
-  facebook: string | null;
-  updated_at: string;
-}
-
-export interface CartItem {
-  product: Product;
-  variant: ProductVariant | null;
-  quantity: number;
 }
