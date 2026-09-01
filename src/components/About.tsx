@@ -95,23 +95,23 @@ export default function About() {
 
       <div className="container mx-auto px-4">
         {/* ═══ SECTION 1 — PERSONAL HERO (Photo + Bio) ═══ */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 sm:gap-12 lg:gap-16 items-center mb-16 sm:mb-24">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.2fr_1fr] gap-8 sm:gap-12 lg:gap-12 items-center mb-16 sm:mb-24">
           {/* Left — Photo */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-            className="flex justify-center lg:justify-end"
+            className="flex justify-center lg:justify-center"
           >
             <div className="relative">
               {/* Ambient glow behind photo */}
-              <div className="absolute inset-0 bg-brand-teal/10 blur-[60px] rounded-full scale-[1.3] pointer-events-none" />
+              <div className="absolute inset-0 bg-brand-teal/12 blur-[80px] rounded-full scale-[1.5] pointer-events-none" />
               <div className="absolute inset-0 bg-brand-orange/5 blur-[40px] rounded-full scale-[1.1] pointer-events-none translate-x-6" />
 
               {/* Photo frame */}
               <motion.div
-                className="relative w-[280px] h-[340px] md:w-[320px] md:h-[400px] rounded-3xl overflow-hidden border-2 border-white/10"
+                className="relative w-[300px] h-[380px] sm:w-[360px] sm:h-[440px] md:w-[400px] md:h-[500px] lg:w-[440px] lg:h-[540px] rounded-3xl overflow-hidden border-2 border-white/10"
                 style={{ boxShadow: '0 30px 60px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.06)' }}
                 whileHover={{ scale: 1.02, transition: { duration: 0.3 } }}
               >
@@ -123,9 +123,9 @@ export default function About() {
                 {/* Overlay gradient */}
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
                 {/* Name overlay */}
-                <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6">
+                <div className="absolute bottom-0 left-0 right-0 p-5 sm:p-6 md:p-8">
                   <p className="text-brand-teal text-xs font-semibold uppercase tracking-[0.2em] mb-1">Fondateur</p>
-                  <h3 className="font-syne text-base sm:text-xl font-black text-white leading-tight">Mohamed Masseye<br/>DIOP</h3>
+                  <h3 className="font-syne text-lg sm:text-xl md:text-2xl font-black text-white leading-tight">Mohamed Masseye<br/>DIOP</h3>
                 </div>
               </motion.div>
 
@@ -185,12 +185,12 @@ export default function About() {
               depuis 2014.
             </h2>
 
-            <p className="text-[#A0A0A0] text-base sm:text-lg leading-relaxed mb-4">
+            <p className="text-[#A0A0A0] text-base sm:text-lg leading-relaxed mb-4 max-w-lg">
               <strong className="text-white">Fondateur de GRAPHIQUE&MOTION</strong>, je suis passionné par la
               création visuelle sous toutes ses formes. Depuis plus de 10 ans, je mets ma créativité et mon expertise
               technique au service de clients variés, des startups aux grandes entreprises.
             </p>
-            <p className="text-[#A0A0A0] text-base leading-relaxed mb-8">
+            <p className="text-[#A0A0A0] text-base leading-relaxed mb-8 max-w-lg">
               Mon approche allie <strong className="text-white">créativité</strong>,{' '}
               <strong className="text-white">stratégie</strong> et{' '}
               <strong className="text-white">précision technique</strong> pour donner vie à des projets visuels
