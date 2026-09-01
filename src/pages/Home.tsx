@@ -159,16 +159,64 @@ function Hero() {
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2"
-        animate={{ y: [0, 8, 0] }}
-        transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
-      >
-        <div className="w-6 h-10 rounded-full border-2 border-white/20 flex items-start justify-center pt-2">
-          <div className="w-1 h-2 rounded-full bg-brand-teal" />
-        </div>
-      </motion.div>
+      {/* Floating tech elements */}
+      <div className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none overflow-hidden">
+        {/* Floating code tags */}
+        {[
+          { text: '<React />', x: '8%', delay: 0, color: '#378ADD' },
+          { text: 'TypeScript', x: '22%', delay: 1.5, color: '#00B2AA' },
+          { text: 'BSS/Billing', x: '38%', delay: 0.8, color: '#F5821F' },
+          { text: 'Supabase', x: '55%', delay: 2.2, color: '#7F77DD' },
+          { text: 'API', x: '70%', delay: 0.3, color: '#00B2AA' },
+          { text: 'AI/ML', x: '85%', delay: 1.8, color: '#7F77DD' },
+          { text: 'CDR', x: '15%', delay: 2.5, color: '#F5821F' },
+          { text: 'Tailwind', x: '45%', delay: 1.0, color: '#378ADD' },
+          { text: 'Node.js', x: '75%', delay: 0.6, color: '#00B2AA' },
+        ].map((tag, i) => (
+          <motion.div
+            key={i}
+            className="absolute text-[10px] font-mono font-medium px-2.5 py-1 rounded-md border"
+            style={{
+              left: tag.x,
+              bottom: '40%',
+              borderColor: tag.color + '25',
+              color: tag.color + '60',
+              background: tag.color + '06',
+            }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{
+              opacity: [0, 0.6, 0.4, 0.6, 0],
+              y: [20, -30, -50, -70, -100],
+            }}
+            transition={{
+              duration: 6,
+              delay: tag.delay,
+              repeat: Infinity,
+              ease: 'linear',
+            }}
+          >
+            {tag.text}
+          </motion.div>
+        ))}
+
+        {/* Glowing horizontal line */}
+        <motion.div
+          className="absolute bottom-[45%] left-0 right-0 h-px"
+          style={{ background: 'linear-gradient(90deg, transparent 0%, rgba(0,178,170,0.3) 30%, rgba(55,138,221,0.3) 70%, transparent 100%)' }}
+          animate={{ opacity: [0.2, 0.5, 0.2] }}
+          transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
+        />
+
+        {/* Dot pulse on the line */}
+        <motion.div
+          className="absolute bottom-[calc(45%-2px)] w-1 h-1 rounded-full bg-brand-teal"
+          animate={{
+            left: ['10%', '90%'],
+            opacity: [0, 1, 1, 0],
+          }}
+          transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
+        />
+      </div>
     </section>
   );
 }
