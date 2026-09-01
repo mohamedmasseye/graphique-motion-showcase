@@ -13,12 +13,12 @@ import { PORTFOLIO_CATEGORY_LABELS } from '@/types/database';
 type Filter = 'all' | PortfolioCategory;
 
 const FILTERS: { id: Filter; name: string }[] = [
-  { id: 'all', name: 'All' },
-  { id: 'digital_products', name: 'Digital Products' },
-  { id: 'web_ecommerce', name: 'Web & E-commerce' },
+  { id: 'all', name: 'Tous' },
+  { id: 'digital_products', name: 'Produits Digitaux' },
+  { id: 'web_ecommerce', name: 'Sites Web & E-commerce' },
   { id: 'branding', name: 'Branding' },
-  { id: 'design', name: 'Design' },
-  { id: 'events', name: 'Events' },
+  { id: 'design', name: 'Design Graphique' },
+  { id: 'events', name: 'Événementiel' },
 ];
 
 /* Map legacy category to filter group */
@@ -82,8 +82,8 @@ export default function Projects() {
   return (
     <>
       <Head
-        title="Portfolio"
-        description="A selection of brands, digital products and experiences designed and built by Graphique & Motion — Dakar, Sénégal."
+        title="Nos Réalisations"
+        description="Découvrez nos projets — branding, sites web, applications, e-commerce, solutions digitales. Portfolio Graphique & Motion — Dakar, Sénégal."
       />
 
       {/* Hero */}
@@ -92,12 +92,12 @@ export default function Projects() {
 
         <div className="container mx-auto px-4">
           <motion.div variants={fadeUp} initial="hidden" animate="visible" className="max-w-3xl">
-            <p className="text-brand-teal text-sm font-semibold uppercase tracking-[0.2em] mb-4">Portfolio</p>
+            <p className="text-brand-teal text-sm font-semibold uppercase tracking-[0.2em] mb-4">Réalisations</p>
             <h1 className="font-syne text-4xl sm:text-5xl md:text-6xl font-black text-white leading-[0.95] tracking-tight mb-6">
-              Selected <span className="text-brand-teal">Work</span>
+              Nos <span className="text-brand-teal">projets</span>
             </h1>
             <p className="text-[#A0A0A0] text-lg leading-relaxed max-w-xl">
-              A selection of brands, digital products and experiences designed and built by Graphique & Motion.
+              Une sélection de marques, produits digitaux et expériences conçus et réalisés par Graphique & Motion.
             </p>
           </motion.div>
         </div>
@@ -145,9 +145,9 @@ export default function Projects() {
             <ProjectSkeleton />
           ) : filtered.length === 0 ? (
             <div className="text-center py-24">
-              <p className="text-white/30 text-lg font-semibold mb-2">No projects in this category.</p>
+              <p className="text-white/30 text-lg font-semibold mb-2">Aucun projet dans cette catégorie.</p>
               <button onClick={() => setActive('all')} className="text-brand-teal text-sm hover:underline">
-                View all projects
+                Voir tous les projets
               </button>
             </div>
           ) : (
@@ -178,9 +178,9 @@ export default function Projects() {
       </section>
 
       <CTASection
-        headline="Have a project in mind?"
-        description="Let's turn your idea into a digital experience."
-        primaryLabel="Start a Project"
+        headline="Un projet en tête ?"
+        description="Transformons votre idée en une expérience digitale."
+        primaryLabel="Démarrer un projet"
       />
     </>
   );

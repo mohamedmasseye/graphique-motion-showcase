@@ -204,15 +204,15 @@ function SelectedWork() {
       <div className="container mx-auto px-4">
         <div className="flex items-end justify-between mb-12">
           <SectionHeading
-            eyebrow="Work"
-            title="Selected "
-            highlight="Work"
+            eyebrow="Réalisations"
+            title="Quelques projets dont nous "
+            highlight="sommes fiers"
           />
           <Link
             to="/portfolio"
             className="hidden sm:inline-flex items-center gap-2 text-brand-teal text-sm font-semibold hover:underline"
           >
-            View All <ArrowRight size={14} />
+            Tout voir <ArrowRight size={14} />
           </Link>
         </div>
 
@@ -250,7 +250,7 @@ function SelectedWork() {
             to="/portfolio"
             className="inline-flex items-center gap-2 text-brand-teal text-sm font-semibold hover:underline"
           >
-            View all projects <ArrowRight size={14} />
+            Voir toutes les réalisations <ArrowRight size={14} />
           </Link>
         </div>
       </div>

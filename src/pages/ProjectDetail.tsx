@@ -59,7 +59,7 @@ function SocialShare({ url, title }: { url: string; title: string }) {
 
   return (
     <div className="flex items-center gap-2">
-      <span className="text-white/30 text-xs mr-1">Share</span>
+      <span className="text-white/30 text-xs mr-1">Partager</span>
       <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`}
         target="_blank" rel="noopener noreferrer"
         className="w-9 h-9 rounded-lg border border-white/10 flex items-center justify-center text-white/40 hover:bg-[#0A66C2] hover:border-[#0A66C2] hover:text-white transition-all" aria-label="LinkedIn">
@@ -74,7 +74,7 @@ function SocialShare({ url, title }: { url: string; title: string }) {
         className="w-9 h-9 rounded-lg border border-white/10 flex items-center justify-center text-white/40 hover:bg-white/10 hover:text-white transition-all" aria-label="Copy link">
         <Copy size={14} />
       </button>
-      {copied && <span className="text-brand-teal text-xs font-medium">Copied!</span>}
+      {copied && <span className="text-brand-teal text-xs font-medium">Copié !</span>}
     </div>
   );
 }
@@ -134,9 +134,9 @@ export default function ProjectDetail() {
       <div className="min-h-[60vh] flex flex-col items-center justify-center text-center px-4">
         <p className="font-syne text-6xl font-black text-white/10 mb-4">404</p>
         <h1 className="font-syne text-2xl font-black text-white mb-3">Project not found.</h1>
-        <p className="text-[#A0A0A0] text-sm mb-6">This project may have been removed or doesn't exist.</p>
+        <p className="text-[#A0A0A0] text-sm mb-6">Ce projet a peut-être été supprimé ou n'existe pas.</p>
         <Link to="/portfolio" className="inline-flex items-center gap-2 bg-brand-teal text-white font-bold py-3 px-6 rounded-full text-sm hover:bg-brand-teal/85 transition-all">
-          <ArrowLeft size={14} /> Back to Portfolio
+          <ArrowLeft size={14} /> Retour au portfolio
         </Link>
       </div>
     );
@@ -150,11 +150,11 @@ export default function ProjectDetail() {
 
   // Case study sections — only render if content exists
   const caseStudySections = [
-    { key: 'challenge', label: '01 — Challenge', title: 'The Challenge', content: project.challenge },
-    { key: 'strategy', label: '02 — Strategy', title: 'Our Strategy', content: project.strategy },
-    { key: 'solution', label: '03 — Solution', title: 'The Solution', content: project.solution },
-    { key: 'development', label: '04 — Development', title: 'Development', content: project.development },
-    { key: 'outcome', label: '05 — Outcome', title: 'The Outcome', content: project.outcome },
+    { key: 'challenge', label: '01 — Défi', title: 'Le défi', content: project.challenge },
+    { key: 'strategy', label: '02 — Stratégie', title: 'Notre stratégie', content: project.strategy },
+    { key: 'solution', label: '03 — Solution', title: 'La solution', content: project.solution },
+    { key: 'development', label: '04 — Développement', title: 'Développement', content: project.development },
+    { key: 'outcome', label: '05 — Résultat', title: 'Le résultat', content: project.outcome },
   ].filter((s) => s.content);
 
   return (
@@ -192,7 +192,7 @@ export default function ProjectDetail() {
         <div className="container mx-auto px-4">
           <motion.div variants={fadeUp} initial="hidden" animate="visible">
             <Link to="/portfolio" className="inline-flex items-center gap-2 text-white/40 text-sm hover:text-brand-teal transition-colors mb-8">
-              <ArrowLeft size={14} /> Back to Portfolio
+              <ArrowLeft size={14} /> Retour au portfolio
             </Link>
           </motion.div>
 
@@ -203,7 +203,7 @@ export default function ProjectDetail() {
                   {typeLabel}
                 </span>
                 {project.case_study && (
-                  <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-brand-orange/20 text-brand-orange">Case Study</span>
+                  <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 rounded-full bg-brand-orange/20 text-brand-orange">Étude de cas</span>
                 )}
               </motion.div>
 
@@ -236,8 +236,8 @@ export default function ProjectDetail() {
               >
                 {[
                   project.client_name && { label: 'Client', value: project.client_name },
-                  project.industry && { label: 'Industry', value: project.industry },
-                  project.year && { label: 'Year', value: String(project.year) },
+                  project.industry && { label: 'Secteur', value: project.industry },
+                  project.year && { label: 'Année', value: String(project.year) },
                   project.technologies?.length > 0 && { label: 'Technologies', value: project.technologies.join(', ') },
                 ].filter(Boolean).map((item: any) => (
                   <div key={item.label}>
@@ -261,13 +261,13 @@ export default function ProjectDetail() {
                 {project.link && (
                   <a href={project.link} target="_blank" rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 bg-brand-teal text-white font-bold py-3 px-6 rounded-full text-sm hover:bg-brand-teal/85 transition-all">
-                    Visit Project <ExternalLink size={14} />
+                    Voir le projet <ExternalLink size={14} />
                   </a>
                 )}
-                <a href={getWhatsAppUrl(`Interested in a project similar to "${project.title}".`)}
+                <a href={getWhatsAppUrl(`Intéressé par un projet similaire à "${project.title}".`)}
                   target="_blank" rel="noopener noreferrer"
                   className="inline-flex items-center gap-2 bg-white/5 border border-white/15 text-white font-semibold py-3 px-6 rounded-full text-sm hover:bg-white/10 transition-all">
-                  Start a Project <ArrowRight size={14} />
+                  Démarrer un projet <ArrowRight size={14} />
                 </a>
               </motion.div>
 
@@ -296,7 +296,7 @@ export default function ProjectDetail() {
           <div className="container mx-auto px-4">
             <div className="max-w-3xl">
               <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={viewportOnce}>
-                <h2 className="font-syne text-2xl font-bold text-white mb-6">About this project</h2>
+                <h2 className="font-syne text-2xl font-bold text-white mb-6">À propos du projet</h2>
                 <div className="text-[#A0A0A0] text-sm leading-relaxed whitespace-pre-line">{project.long_description}</div>
               </motion.div>
             </div>
@@ -308,7 +308,7 @@ export default function ProjectDetail() {
       {project.images && project.images.length > 0 && (
         <section className="relative py-16" style={{ background: '#05060F' }}>
           <div className="container mx-auto px-4">
-            <h2 className="font-syne text-2xl font-bold text-white mb-8">Gallery</h2>
+            <h2 className="font-syne text-2xl font-bold text-white mb-8">Galerie</h2>
             <motion.div className="grid grid-cols-1 sm:grid-cols-2 gap-4" variants={staggerContainer} initial="hidden" whileInView="visible" viewport={viewportOnce}>
               {project.images.map((img, i) => (
                 <motion.div key={i} variants={staggerItem} className="rounded-xl overflow-hidden border border-white/10">
@@ -325,7 +325,7 @@ export default function ProjectDetail() {
         <section className="relative py-20" style={{ background: 'linear-gradient(180deg, #05060F 0%, #0A0C15 100%)' }}>
           <div className="container mx-auto px-4">
             <motion.div variants={fadeUp} initial="hidden" whileInView="visible" viewport={viewportOnce} className="mb-12">
-              <p className="text-brand-teal text-sm font-semibold uppercase tracking-[0.2em] mb-3">Case Study</p>
+              <p className="text-brand-teal text-sm font-semibold uppercase tracking-[0.2em] mb-3">Étude de cas</p>
               <h2 className="font-syne text-3xl sm:text-4xl font-black text-white leading-[0.95] tracking-tight">
                 {project.title}
               </h2>
@@ -343,7 +343,7 @@ export default function ProjectDetail() {
       {related.length > 0 && (
         <section className="relative py-20" style={{ background: '#0A0C15' }}>
           <div className="container mx-auto px-4">
-            <h2 className="font-syne text-2xl font-bold text-white mb-8">Related Projects</h2>
+            <h2 className="font-syne text-2xl font-bold text-white mb-8">Projets similaires</h2>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
               {related.map((r) => (
                 <ProjectCard key={r.id} project={r} />
@@ -355,10 +355,10 @@ export default function ProjectDetail() {
 
       {/* ── CTA ───────────────────────────────────────────────── */}
       <CTASection
-        headline="Have a project like this?"
-        description="Let's turn your idea into a digital experience."
-        primaryLabel="Start a Project"
-        secondaryLabel="Contact us"
+        headline="Vous avez un projet similaire ?"
+        description="Transformons votre idée en une expérience digitale."
+        primaryLabel="Démarrer un projet"
+        secondaryLabel="Nous contacter"
         secondaryHref="/contact"
       />
     </>

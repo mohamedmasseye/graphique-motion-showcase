@@ -7,9 +7,9 @@
 
 export const SITE = {
   name: 'Graphique & Motion',
-  tagline: 'Digital Creative & Technology Studio',
+  tagline: 'Studio Digital Créatif & Technologie',
   description:
-    "Studio créatif et technologique spécialisé en branding, design, développement web, applications, solutions digitales, IA et automatisation — basé à Dakar, Sénégal.",
+    "Studio digital basé à Dakar, spécialisé dans la création de marques, sites web, applications et solutions digitales qui combinent design, technologie et stratégie.",
   url: 'https://graphiquemotion.com',
   email: 'support@graphiquemotion.com',
   phone: '+221775644478',
@@ -20,11 +20,12 @@ export const SITE = {
 
 /* ── Navigation ────────────────────────────────────────────────── */
 export const NAV_LINKS = [
-  { name: 'Work', href: '/portfolio' },
+  { name: 'Réalisations', href: '/portfolio' },
   { name: 'Services', href: '/services' },
-  { name: 'About', href: '/a-propos' },
-  { name: 'Process', href: '/processus' },
-  { name: 'Insights', href: '/blog' },
+  { name: 'À propos', href: '/a-propos' },
+  { name: 'Processus', href: '/processus' },
+  { name: 'Boutique', href: '/boutique' },
+  { name: 'Contact', href: '/contact' },
 ] as const;
 
 /* ── Services ──────────────────────────────────────────────────── */

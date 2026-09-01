@@ -69,7 +69,7 @@ export default function NotFound() {
                 Retour à l'accueil
               </Link>
               <Link
-                to="/realisations"
+                to="/portfolio"
                 className="group inline-flex items-center gap-2 bg-white/5 border border-white/15 text-white font-semibold py-3.5 px-8 rounded-full text-sm hover:bg-white/10 hover:border-white/30 transition-all"
               >
                 Voir nos réalisations

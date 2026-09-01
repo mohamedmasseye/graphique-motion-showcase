@@ -107,7 +107,7 @@ export default function ProjectCard({ project, variant = 'default', className = 
           </span>
           {project.case_study && (
             <span className="text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-brand-orange/20 text-brand-orange">
-              Case Study
+              Étude de cas
             </span>
           )}
         </div>

@@ -29,8 +29,8 @@ export default function Founder() {
   return (
     <>
       <Head
-        title={`${SITE.founder} — Digital Builder · Technologie · IA`}
-        description="Fondateur de Graphique & Motion. Digital Builder, technologie, IA, entrepreneurship. Basé à Dakar, Sénégal."
+        title={`${SITE.founder} — Ingénieur Digital & Télécom · Technologie · IA`}
+        description="Fondateur de Graphique & Motion. Ingénieur digital & télécom, technologie, IA, entrepreneurship. Basé à Dakar, Sénégal."
       />
 
       {/* Hero */}
@@ -67,7 +67,7 @@ export default function Founder() {
                 {SITE.founder}
               </h1>
               <p className="text-[#A0A0A0] text-lg leading-relaxed mb-6 max-w-lg">
-                Digital Builder · Technologie · IA · Entrepreneurship
+                Ingénieur Digital & Télécom · Technologie · IA · Entrepreneurship
               </p>
               <p className="text-[#A0A0A0] text-base leading-relaxed mb-8 max-w-lg">
                 Fondateur de {SITE.name}, studio créatif et technologique basé à Dakar. Je conçois et développe des solutions digitales qui allient design, technologie et intelligence artificielle pour des entreprises ambitieuses.

@@ -53,7 +53,7 @@ export default function Process() {
 
                 <div className="pt-2">
                   <p className="text-xs font-bold uppercase tracking-[0.15em] mb-1" style={{ color: STEP_COLORS[i] }}>
-                    {step.titleEn}
+                    Étape {step.number}
                   </p>
                   <h3 className="font-syne text-2xl font-bold text-white mb-2">
                     {step.title}

@@ -5,10 +5,12 @@ import { SITE, NAV_LINKS, SOCIAL_LINKS, getWhatsAppUrl } from '@/data/content';
 const Logo = '/lovable-uploads/de699b4d-f281-49b8-b42d-18ceb13b6677.png';
 
 const FOOTER_NAV = [
+  { name: 'Réalisations', href: '/portfolio' },
   { name: 'Services', href: '/services' },
-  { name: 'Work', href: '/portfolio' },
-  { name: 'About', href: '/a-propos' },
-  { name: 'Process', href: '/processus' },
+  { name: 'À propos', href: '/a-propos' },
+  { name: 'Parcours', href: '/a-propos/mohamed-diop' },
+  { name: 'Processus', href: '/processus' },
+  { name: 'Boutique', href: '/boutique' },
   { name: 'Blog', href: '/blog' },
   { name: 'Contact', href: '/contact' },
 ];
