@@ -7,7 +7,7 @@ import SectionHeading from '@/components/SectionHeading';
 import CTASection from '@/components/CTASection';
 import Head from '@/components/Head';
 
-const ProfilePhoto = '/lovable-uploads/mohamed-masseye-diop.png';
+const ProfilePhoto = '/lovable-uploads/mohamed-masseye-diop.jpg';
 
 const VALUES = [
   { title: 'Excellence', desc: 'Chaque pixel compte. On ne livre jamais un projet dont on n\'est pas fiers.', color: '#00B2AA' },

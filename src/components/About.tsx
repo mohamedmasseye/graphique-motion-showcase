@@ -2,7 +2,7 @@ import { motion, useInView, useMotionValue, useTransform, animate } from 'framer
 import { useRef, useEffect } from 'react';
 import { Zap, Shield, Clock, TrendingUp, Palette, Globe, PenTool, Eye, Package, Type, Film, Image } from 'lucide-react';
 
-const ProfilePhoto = '/lovable-uploads/mohamed-masseye-diop.png';
+const ProfilePhoto = '/lovable-uploads/mohamed-masseye-diop.jpg';
 
 /* ── Animated counter ────────────────────────────────────────────── */
 function Counter({ to, suffix = '' }: { to: number; suffix?: string }) {

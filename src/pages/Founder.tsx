@@ -6,7 +6,7 @@ import { SITE, SOCIAL_LINKS, getWhatsAppUrl } from '@/data/content';
 import CTASection from '@/components/CTASection';
 import Head from '@/components/Head';
 
-const ProfilePhoto = '/lovable-uploads/mohamed-masseye-diop.png';
+const ProfilePhoto = '/lovable-uploads/mohamed-masseye-diop.jpg';
 
 const TIMELINE = [
   { period: 'Télécom', title: 'Ingénierie Télécom & Billing', desc: 'Expérience dans les systèmes BSS, Billing, CBS, VAS et support technique pour opérateurs télécom. Gestion des incidents techniques, conception de services, analyse de données et facturation.', color: '#F5821F' },
