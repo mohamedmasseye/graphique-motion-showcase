@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
-import { Save, Loader2, Settings, Phone, Mail, MapPin, MessageSquare } from 'lucide-react';
+import { Save, Loader2, Settings, Phone, Mail, MapPin, MessageSquare, Linkedin, Music2, User } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
+import ImageUploader from '@/components/admin/ImageUploader';
 import type { SiteSettings } from '@/types/database';
 
 export default function AdminSettings() {
@@ -90,20 +91,70 @@ export default function AdminSettings() {
           <input value={settings.facebook ?? ''} onChange={(e) => updateField('facebook', e.target.value)} className={inputClass} placeholder="https://www.facebook.com/..." />
         </div>
 
-        <button
-          onClick={handleSave}
-          disabled={saving}
-          className="w-full flex items-center justify-center gap-2 bg-brand-teal hover:bg-brand-teal/85 disabled:opacity-60 text-white font-bold py-3.5 rounded-xl text-sm transition-all"
-        >
-          {saving ? (
-            <><Loader2 size={16} className="animate-spin" /> Enregistrement…</>
-          ) : saved ? (
-            <><Settings size={16} /> Enregistré ✓</>
-          ) : (
-            <><Save size={16} /> Enregistrer</>
-          )}
-        </button>
+        <div>
+          <label className="flex items-center gap-2 text-white/50 text-xs font-semibold uppercase tracking-widest mb-1.5">
+            <Linkedin size={12} /> LinkedIn
+          </label>
+          <input value={settings.linkedin ?? ''} onChange={(e) => updateField('linkedin', e.target.value)} className={inputClass} placeholder="https://www.linkedin.com/in/..." />
+        </div>
+
+        <div>
+          <label className="flex items-center gap-2 text-white/50 text-xs font-semibold uppercase tracking-widest mb-1.5">
+            <Music2 size={12} /> TikTok
+          </label>
+          <input value={settings.tiktok ?? ''} onChange={(e) => updateField('tiktok', e.target.value)} className={inputClass} placeholder="https://www.tiktok.com/@..." />
+        </div>
       </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.05 }}
+        className="bg-white/[0.04] border border-white/[0.08] rounded-2xl p-6 space-y-5 mt-6"
+      >
+        <div className="flex items-center gap-2 text-white font-bold text-sm">
+          <User size={14} className="text-brand-teal" /> Page Fondateur
+        </div>
+
+        <div>
+          <label className="text-white/50 text-xs font-semibold uppercase tracking-widest mb-1.5 block">Photo</label>
+          <ImageUploader
+            images={settings.founder_photo ? [settings.founder_photo] : []}
+            onChange={(imgs) => updateField('founder_photo', imgs[imgs.length - 1] ?? '')}
+            folder="founder"
+            max={1}
+          />
+        </div>
+
+        <div>
+          <label className="text-white/50 text-xs font-semibold uppercase tracking-widest mb-1.5 block">Nom</label>
+          <input value={settings.founder_name ?? ''} onChange={(e) => updateField('founder_name', e.target.value)} className={inputClass} placeholder="Mohamed Masseye DIOP" />
+        </div>
+
+        <div>
+          <label className="text-white/50 text-xs font-semibold uppercase tracking-widest mb-1.5 block">Titre / rôle</label>
+          <input value={settings.founder_tagline ?? ''} onChange={(e) => updateField('founder_tagline', e.target.value)} className={inputClass} placeholder="Ingénieur Télécom & Digital · BSS/Billing · IA" />
+        </div>
+
+        <div>
+          <label className="text-white/50 text-xs font-semibold uppercase tracking-widest mb-1.5 block">Bio</label>
+          <textarea value={settings.founder_bio ?? ''} onChange={(e) => updateField('founder_bio', e.target.value)} rows={5} className={`${inputClass} resize-none`} placeholder="Fondateur de Graphique & Motion..." />
+        </div>
+      </motion.div>
+
+      <button
+        onClick={handleSave}
+        disabled={saving}
+        className="w-full flex items-center justify-center gap-2 bg-brand-teal hover:bg-brand-teal/85 disabled:opacity-60 text-white font-bold py-3.5 rounded-xl text-sm transition-all mt-6"
+      >
+        {saving ? (
+          <><Loader2 size={16} className="animate-spin" /> Enregistrement…</>
+        ) : saved ? (
+          <><Settings size={16} /> Enregistré ✓</>
+        ) : (
+          <><Save size={16} /> Enregistrer</>
+        )}
+      </button>
     </div>
   );
 }

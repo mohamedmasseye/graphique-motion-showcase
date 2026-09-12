@@ -1,12 +1,17 @@
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { ArrowLeft, ArrowRight, Linkedin, Instagram, Mail } from 'lucide-react';
 import { fadeUp, viewportOnce } from '@/lib/animations';
 import { SITE, SOCIAL_LINKS, getWhatsAppUrl } from '@/data/content';
+import { supabase } from '@/lib/supabase';
+import type { SiteSettings } from '@/types/database';
 import CTASection from '@/components/CTASection';
 import Head from '@/components/Head';
 
-const ProfilePhoto = '/lovable-uploads/mohamed-masseye-diop.jpg';
+const DEFAULT_PHOTO = '/lovable-uploads/mohamed-masseye-diop.jpg';
+const DEFAULT_TAGLINE = 'Ingénieur Télécom & Digital · BSS/Billing · IA · Entrepreneurship';
+const DEFAULT_BIO = `Fondateur de ${SITE.name}, studio créatif et technologique basé à Dakar. Mon parcours en ingénierie télécom (BSS, Billing, CBS, VAS) m'a donné une compréhension profonde des systèmes complexes, du traitement de données et des processus métier — une expertise que je mets aujourd'hui au service de la création de solutions digitales qui combinent design, technologie et stratégie.`;
 
 const TIMELINE = [
   { period: 'Télécom', title: 'Ingénierie Télécom & Billing', desc: 'Expérience dans les systèmes BSS, Billing, CBS, VAS et support technique pour opérateurs télécom. Gestion des incidents techniques, conception de services, analyse de données et facturation.', color: '#F5821F' },
@@ -39,13 +44,27 @@ const SKILLS_AI = [
 ];
 
 export default function Founder() {
-  const linkedin = SOCIAL_LINKS.find((s) => s.name === 'LinkedIn');
-  const instagram = SOCIAL_LINKS.find((s) => s.name === 'Instagram');
+  const [settings, setSettings] = useState<Partial<SiteSettings>>({});
+
+  useEffect(() => {
+    supabase.from('site_settings').select('*').single().then(({ data }) => {
+      if (data) setSettings(data as SiteSettings);
+    });
+  }, []);
+
+  const staticLinkedin = SOCIAL_LINKS.find((s) => s.name === 'LinkedIn');
+  const staticInstagram = SOCIAL_LINKS.find((s) => s.name === 'Instagram');
+  const linkedinUrl = settings.linkedin || staticLinkedin?.url;
+  const instagramUrl = settings.instagram || staticInstagram?.url;
+  const founderName = settings.founder_name || SITE.founder;
+  const founderPhoto = settings.founder_photo || DEFAULT_PHOTO;
+  const founderTagline = settings.founder_tagline || DEFAULT_TAGLINE;
+  const founderBio = settings.founder_bio || DEFAULT_BIO;
 
   return (
     <>
       <Head
-        title={`${SITE.founder} — Ingénieur Digital & Télécom · Technologie · IA`}
+        title={`${founderName} — Ingénieur Digital & Télécom · Technologie · IA`}
         description="Fondateur de Graphique & Motion. Ingénieur digital & télécom, technologie, IA, entrepreneurship. Basé à Dakar, Sénégal."
       />
 
@@ -68,7 +87,7 @@ export default function Founder() {
               <div className="relative">
                 <div className="absolute inset-0 bg-brand-teal/10 blur-[80px] rounded-full scale-[1.4]" />
                 <div className="relative w-[300px] h-[380px] sm:w-[360px] sm:h-[460px] rounded-3xl overflow-hidden border-2 border-white/10" style={{ boxShadow: '0 30px 60px rgba(0,0,0,0.5)' }}>
-                  <img src={ProfilePhoto} alt={SITE.founder} className="w-full h-full object-cover" />
+                  <img src={founderPhoto} alt={founderName} className="w-full h-full object-cover" />
                 </div>
               </div>
             </motion.div>
@@ -80,24 +99,24 @@ export default function Founder() {
             >
               <p className="text-brand-teal text-sm font-semibold uppercase tracking-[0.2em] mb-4">Fondateur</p>
               <h1 className="font-syne text-3xl sm:text-4xl md:text-5xl font-black text-white leading-[0.95] tracking-tight mb-4">
-                {SITE.founder}
+                {founderName}
               </h1>
               <p className="text-[#A0A0A0] text-lg leading-relaxed mb-6 max-w-lg">
-                Ingénieur Télécom & Digital · BSS/Billing · IA · Entrepreneurship
+                {founderTagline}
               </p>
-              <p className="text-[#A0A0A0] text-base leading-relaxed mb-8 max-w-lg">
-                Fondateur de {SITE.name}, studio créatif et technologique basé à Dakar. Mon parcours en ingénierie télécom (BSS, Billing, CBS, VAS) m'a donné une compréhension profonde des systèmes complexes, du traitement de données et des processus métier — une expertise que je mets aujourd'hui au service de la création de solutions digitales qui combinent design, technologie et stratégie.
+              <p className="text-[#A0A0A0] text-base leading-relaxed mb-8 max-w-lg whitespace-pre-line">
+                {founderBio}
               </p>
 
               <div className="flex flex-wrap gap-3">
-                {linkedin && (
-                  <a href={linkedin.url} target="_blank" rel="noopener noreferrer"
+                {linkedinUrl && (
+                  <a href={linkedinUrl} target="_blank" rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 bg-[#0A66C2] text-white font-bold py-3 px-6 rounded-full text-sm hover:bg-[#0A66C2]/85 transition-all">
                     <Linkedin size={16} /> LinkedIn
                   </a>
                 )}
-                {instagram && (
-                  <a href={instagram.url} target="_blank" rel="noopener noreferrer"
+                {instagramUrl && (
+                  <a href={instagramUrl} target="_blank" rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 bg-gradient-to-r from-[#E1306C] to-[#F77737] text-white font-bold py-3 px-6 rounded-full text-sm hover:opacity-90 transition-all">
                     <Instagram size={16} /> Instagram
                   </a>

@@ -202,6 +202,12 @@ export interface SiteSettings {
   whatsapp: string | null;
   instagram: string | null;
   facebook: string | null;
+  linkedin: string | null;
+  tiktok: string | null;
+  founder_photo: string | null;
+  founder_name: string | null;
+  founder_tagline: string | null;
+  founder_bio: string | null;
   updated_at: string;
 }
 

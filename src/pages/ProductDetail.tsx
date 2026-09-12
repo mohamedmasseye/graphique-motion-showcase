@@ -108,7 +108,6 @@ export default function ProductDetail() {
 
   return (
     <>
-      <div className="grain-overlay" aria-hidden="true" />
       <Navbar />
       <CartDrawer />
 

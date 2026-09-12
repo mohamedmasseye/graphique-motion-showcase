@@ -65,9 +65,6 @@ const Index = () => {
 
   return (
     <>
-      {/* Grain noise texture — fixe, plein écran */}
-      <div className="grain-overlay" aria-hidden="true" />
-
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

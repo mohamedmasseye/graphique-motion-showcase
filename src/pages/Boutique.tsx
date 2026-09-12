@@ -33,7 +33,6 @@ export default function Boutique() {
 
   return (
     <>
-      <div className="grain-overlay" aria-hidden="true" />
       <Navbar />
       <CartDrawer />
 
