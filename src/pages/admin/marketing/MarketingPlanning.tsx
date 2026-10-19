@@ -19,7 +19,7 @@ const KINDS: Record<MarketingKind, string> = {
 const STATUSES: Record<MarketingStatus, string> = { planned: 'À venir', done: 'Publié', skipped: 'Abandonné' };
 
 const GATE_KEY = 'gm-aimee-ok';
-const readGate = () => { try { return localStorage.getItem(GATE_KEY) === '1'; } catch { return false; } };
+const readGate = () => { try { return localStorage.getItem(GATE_KEY) !== '0'; } catch { return true; } };
 
 const dayKey = (iso: string) => iso.slice(0, 10);
 const dayLabel = (key: string) =>
