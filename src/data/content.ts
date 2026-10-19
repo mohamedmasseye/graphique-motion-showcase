@@ -22,6 +22,7 @@ export const SITE = {
 export const NAV_LINKS = [
   { name: 'Réalisations', href: '/portfolio' },
   { name: 'Services', href: '/services' },
+  { name: 'Tarifs', href: '/tarifs' },
   { name: 'À propos', href: '/a-propos' },
   { name: 'Processus', href: '/processus' },
   { name: 'Boutique', href: '/boutique' },
@@ -322,7 +323,7 @@ export const PROCESS_STEPS: ProcessStep[] = [
 export const SOCIAL_LINKS = [
   {
     name: 'LinkedIn',
-    url: 'https://www.linkedin.com/in/mohamed-masseye-diop/',
+    url: 'https://www.linkedin.com/in/mohamed-masseye-diop-715198116',
     label: 'Suivre sur LinkedIn',
   },
   {

@@ -54,8 +54,9 @@ export default function Founder() {
 
   const staticLinkedin = SOCIAL_LINKS.find((s) => s.name === 'LinkedIn');
   const staticInstagram = SOCIAL_LINKS.find((s) => s.name === 'Instagram');
-  const linkedinUrl = settings.linkedin || staticLinkedin?.url;
-  const instagramUrl = settings.instagram || staticInstagram?.url;
+  const withHttps = (u?: string | null) => (u && !/^https?:\/\//i.test(u) ? `https://${u}` : u);
+  const linkedinUrl = withHttps(settings.linkedin) || staticLinkedin?.url;
+  const instagramUrl = withHttps(settings.instagram) || staticInstagram?.url;
   const founderName = settings.founder_name || SITE.founder;
   const founderPhoto = settings.founder_photo || DEFAULT_PHOTO;
   const founderTagline = settings.founder_tagline || DEFAULT_TAGLINE;
