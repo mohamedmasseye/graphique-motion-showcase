@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  LayoutDashboard, Package, ShoppingCart, FolderKanban, Settings, LogOut,
+  LayoutDashboard, Package, ShoppingCart, FolderKanban, Settings, LogOut, Megaphone,
   Menu, X, ChevronLeft, Bell, Clock
 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
@@ -35,6 +35,7 @@ const navItems = [
   { to: '/admin/products', icon: Package, label: 'Produits' },
   { to: '/admin/orders', icon: ShoppingCart, label: 'Commandes' },
   { to: '/admin/portfolio', icon: FolderKanban, label: 'Portfolio' },
+  { to: '/admin/marketing', icon: Megaphone, label: 'Marketing' },
   { to: '/admin/settings', icon: Settings, label: 'Paramètres' },
 ];
 

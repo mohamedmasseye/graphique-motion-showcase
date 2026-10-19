@@ -35,6 +35,9 @@ const AdminProducts = lazy(() => import('./pages/admin/AdminProducts'));
 const AdminOrders = lazy(() => import('./pages/admin/AdminOrders'));
 const AdminPortfolio = lazy(() => import('./pages/admin/AdminPortfolio'));
 const AdminSettings = lazy(() => import('./pages/admin/AdminSettings'));
+const MarketingPlanning = lazy(() => import('./pages/admin/marketing/MarketingPlanning'));
+const MarketingAnalytics = lazy(() => import('./pages/admin/marketing/MarketingAnalytics'));
+const MarketingRoutine = lazy(() => import('./pages/admin/marketing/MarketingRoutine'));
 
 const queryClient = new QueryClient();
 
@@ -109,6 +112,9 @@ const App = () => (
               <Route path="products" element={<AdminProducts />} />
               <Route path="orders" element={<AdminOrders />} />
               <Route path="portfolio" element={<AdminPortfolio />} />
+              <Route path="marketing" element={<MarketingPlanning />} />
+              <Route path="marketing/analyses" element={<MarketingAnalytics />} />
+              <Route path="marketing/routine" element={<MarketingRoutine />} />
               <Route path="settings" element={<AdminSettings />} />
             </Route>
 
