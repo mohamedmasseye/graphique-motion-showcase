@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { CheckCircle, XCircle, Loader2, ShoppingBag } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 
-type Status = 'loading' | 'success' | 'failed';
+type Status = 'loading' | 'success' | 'failed' | 'pending';
 
 export default function PaymentReturn() {
   const [params] = useSearchParams();
@@ -36,15 +36,11 @@ export default function PaymentReturn() {
           return;
         }
 
-        // wave-status n'a pas pu confirmer via l'API Wave (IP whitelist etc.)
-        // Mais Wave nous a renvoyé sur success_url → paiement réussi.
-        // Confirmer directement via RPC sécurisé.
-        const { data: rpcData } = await supabase.rpc('confirm_wave_payment', { p_order_number: orderNumber });
-        if (rpcData?.wave_transaction_id) setTransactionId(rpcData.wave_transaction_id);
-        setStatus('success');
+        // Pas encore confirmé par Wave : on ne confirme JAMAIS depuis le navigateur.
+        // Le webhook Wave ou un nouveau contrôle serveur confirmera la commande.
+        setStatus('pending' as Status);
       } catch {
-        // Même en cas d'erreur technique, Wave a validé le paiement.
-        setStatus('success');
+        setStatus('pending');
       }
     };
 
@@ -63,6 +59,12 @@ export default function PaymentReturn() {
       bg: 'bg-brand-teal/15',
       title: 'Paiement réussi !',
       message: 'Votre commande est confirmée. Nous vous contacterons pour la livraison.',
+    },
+    pending: {
+      icon: <Loader2 size={40} className="text-brand-teal" />,
+      bg: 'bg-brand-teal/15',
+      title: 'Paiement en cours de vérification',
+      message: 'Nous vérifions votre paiement auprès de Wave. Votre commande sera confirmée dès réception ; vous pouvez nous contacter avec votre numéro de commande.',
     },
     failed: {
       icon: <XCircle size={40} className="text-red-400" />,

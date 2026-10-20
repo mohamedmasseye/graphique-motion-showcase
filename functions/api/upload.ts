@@ -1,4 +1,6 @@
-interface Env {
+import { requireAdmin, type SecEnv } from '../_shared';
+
+interface Env extends SecEnv {
   CLOUDINARY_CLOUD_NAME: string;
   CLOUDINARY_API_KEY: string;
   CLOUDINARY_API_SECRET: string;
@@ -12,30 +14,25 @@ const corsHeaders = {
 };
 
 async function sha1(message: string): Promise<string> {
-  const msgBuffer = new TextEncoder().encode(message);
-  const hashBuffer = await crypto.subtle.digest('SHA-1', msgBuffer);
-  return Array.from(new Uint8Array(hashBuffer)).map(b => b.toString(16).padStart(2, '0')).join('');
+  const buf = await crypto.subtle.digest('SHA-1', new TextEncoder().encode(message));
+  return Array.from(new Uint8Array(buf)).map((b) => b.toString(16).padStart(2, '0')).join('');
 }
 
 export const onRequestOptions: PagesFunction = () => new Response(null, { headers: corsHeaders });
 
 export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
-  const origin = request.headers.get('Origin') ?? '';
-  if (!origin.includes('graphiquemotion.com') && !origin.includes('localhost')) {
-    return new Response(JSON.stringify({ error: 'Forbidden' }), { status: 403, headers: corsHeaders });
-  }
+  // Seul un administrateur connecté peut obtenir une signature d'envoi Cloudinary.
+  const auth = await requireAdmin(request, env);
+  if (!auth.ok) return new Response(JSON.stringify({ error: 'Non autorisé' }), { status: auth.status, headers: corsHeaders });
 
-  const { folder = 'products' } = await request.json().catch(() => ({}));
+  const body: any = await request.json().catch(() => ({}));
+  // Le dossier est signé tel quel : on n'accepte qu'un nom simple (sinon on pourrait faire signer d'autres paramètres).
+  const folder = typeof body.folder === 'string' && /^[a-z0-9_-]{1,40}$/.test(body.folder) ? body.folder : 'products';
 
   const timestamp = Math.floor(Date.now() / 1000);
-  const paramsToSign = `folder=${folder}&timestamp=${timestamp}`;
-  const signature = await sha1(paramsToSign + env.CLOUDINARY_API_SECRET);
+  const signature = await sha1(`folder=${folder}&timestamp=${timestamp}${env.CLOUDINARY_API_SECRET}`);
 
   return new Response(JSON.stringify({
-    signature,
-    timestamp,
-    cloud_name: env.CLOUDINARY_CLOUD_NAME,
-    api_key: env.CLOUDINARY_API_KEY,
-    folder,
+    signature, timestamp, cloud_name: env.CLOUDINARY_CLOUD_NAME, api_key: env.CLOUDINARY_API_KEY, folder,
   }), { headers: corsHeaders });
 };

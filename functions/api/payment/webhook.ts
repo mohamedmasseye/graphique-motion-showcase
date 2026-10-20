@@ -23,8 +23,8 @@ async function verifyWaveSignature(body: string, header: string | null, secret: 
 
   if (!timestamp || signatures.length === 0) return false;
 
-  const age = Math.floor(Date.now() / 1000) - parseInt(timestamp);
-  if (age > 300) return false;
+  const age = Math.floor(Date.now() / 1000) - parseInt(timestamp, 10);
+  if (!Number.isFinite(age) || Math.abs(age) > 300) return false;
 
   const encoder = new TextEncoder();
   const key = await crypto.subtle.importKey(
@@ -44,14 +44,16 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   if (!body) return new Response('Empty body', { status: 400 });
 
   // 2. Signature verification (webhook secret, fallback to signing secret)
+  // Échec fermé : sans secret configuré, on refuse tout (sinon n'importe qui pourrait déclarer une commande payée).
   const webhookSecret = env.WAVE_WEBHOOK_SECRET || env.WAVE_SIGNING_SECRET;
-  if (webhookSecret) {
-    const sig = request.headers.get('wave-signature');
-    const valid = await verifyWaveSignature(body, sig, webhookSecret);
-    if (!valid) {
-      console.error('Wave webhook: invalid signature');
-      return new Response('Invalid signature', { status: 401 });
-    }
+  if (!webhookSecret) {
+    console.error('Wave webhook: aucun secret configuré, requête refusée');
+    return new Response('Webhook non configuré', { status: 503 });
+  }
+  const sig = request.headers.get('wave-signature');
+  if (!(await verifyWaveSignature(body, sig, webhookSecret))) {
+    console.error('Wave webhook: invalid signature');
+    return new Response('Invalid signature', { status: 401 });
   }
 
   // 3. Parse event
@@ -74,9 +76,23 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
       return new Response('OK', { status: 200 });
     }
 
+    if (!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(String(orderId))) {
+      return new Response('OK', { status: 200 });
+    }
+
+    // Le montant payé doit couvrir le total de la commande.
+    const chk = await fetch(`${env.SUPABASE_URL}/rest/v1/orders?id=eq.${orderId}&select=total`, {
+      headers: { apikey: svcKey(env), Authorization: `Bearer ${svcKey(env)}` },
+    });
+    const due: any = chk.ok ? (await chk.json())?.[0] : null;
+    if (!due || Number(data.amount) !== Number(due.total) || (data.currency && data.currency !== 'XOF')) {
+      console.error('Wave webhook: montant ou commande incohérent', orderId);
+      return new Response('OK', { status: 200 });
+    }
+
     // Update order → confirmed + store transaction ID
     const res = await fetch(
-      `${env.SUPABASE_URL}/rest/v1/orders?id=eq.${orderId}`,
+      `${env.SUPABASE_URL}/rest/v1/orders?id=eq.${orderId}&payment_status=neq.paid`,
       {
         method: 'PATCH',
         headers: {

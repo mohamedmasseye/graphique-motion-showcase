@@ -1,5 +1,6 @@
 import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { supabase } from '@/lib/supabase';
 import { Upload, X, Loader2, Image as ImageIcon, GripVertical } from 'lucide-react';
 
 interface Props {
@@ -18,29 +19,14 @@ export default function ImageUploader({ images, onChange, folder = 'products', m
 
   const uploadFile = async (file: File): Promise<string | null> => {
     try {
-      // Get signature from our secure worker
+      // Signature fournie par notre fonction serveur, réservée à l'administrateur connecté.
+      const { data: { session } } = await supabase.auth.getSession();
       const sigRes = await fetch('/api/upload', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${session?.access_token ?? ''}` },
         body: JSON.stringify({ folder }),
       });
-
-      if (!sigRes.ok) {
-        // Fallback: unsigned upload directly to Cloudinary
-        const formData = new FormData();
-        formData.append('file', file);
-        formData.append('upload_preset', 'ml_default');
-        formData.append('folder', folder);
-
-        const res = await fetch(`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`, {
-          method: 'POST',
-          body: formData,
-        });
-
-        if (!res.ok) throw new Error('Upload failed');
-        const data = await res.json();
-        return data.secure_url;
-      }
+      if (!sigRes.ok) throw new Error('Signature refusée');
 
       const { signature, timestamp, api_key } = await sigRes.json();
 

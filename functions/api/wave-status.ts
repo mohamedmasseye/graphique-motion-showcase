@@ -1,3 +1,5 @@
+import { isOrderNumber } from '../_shared';
+
 interface Env {
   WAVE_API_KEY: string;
   WAVE_SIGNING_SECRET?: string;
@@ -27,7 +29,7 @@ async function hmacSha256(secret: string, message: string): Promise<string> {
 
 async function fetchOrder(env: Env, orderNumber: string) {
   const res = await fetch(
-    `${env.SUPABASE_URL}/rest/v1/orders?order_number=eq.${orderNumber}&select=id,status,payment_ref,payment_status,wave_transaction_id`,
+    `${env.SUPABASE_URL}/rest/v1/orders?order_number=eq.${orderNumber}&select=id,status,payment_ref,payment_status,wave_transaction_id,total,payment_method`,
     {
       headers: {
         'apikey': svcKey(env),
@@ -43,9 +45,9 @@ export const onRequestOptions: PagesFunction = () => new Response(null, { header
 
 export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   try {
-    const { orderNumber } = await request.json();
-    if (!orderNumber) {
-      return new Response(JSON.stringify({ error: 'orderNumber requis' }), { status: 400, headers: corsHeaders });
+    const { orderNumber } = await request.json().catch(() => ({} as any));
+    if (!isOrderNumber(orderNumber)) {
+      return new Response(JSON.stringify({ error: 'orderNumber invalide' }), { status: 400, headers: corsHeaders });
     }
 
     const order = await fetchOrder(env, orderNumber);
@@ -96,9 +98,15 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
           return new Response(JSON.stringify({ payment_status: 'processing' }), { headers: corsHeaders });
         }
 
+        // La session doit appartenir à CETTE commande et couvrir le montant dû.
+        const matches = session.client_reference === order.id && String(session.currency ?? 'XOF') === 'XOF' && Number(session.amount) === Number(order.total);
+        if (!matches) {
+          return new Response(JSON.stringify({ payment_status: 'processing' }), { headers: corsHeaders });
+        }
+
         if (session.payment_status === 'succeeded' && session.checkout_status === 'complete') {
           // Update order in DB
-          await fetch(`${env.SUPABASE_URL}/rest/v1/orders?id=eq.${order.id}`, {
+          await fetch(`${env.SUPABASE_URL}/rest/v1/orders?id=eq.${order.id}&payment_status=neq.paid`, {
             method: 'PATCH',
             headers: {
               'apikey': svcKey(env),
@@ -153,6 +161,6 @@ export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
 
     return new Response(JSON.stringify({ payment_status: 'processing' }), { headers: corsHeaders });
   } catch (err: any) {
-    return new Response(JSON.stringify({ error: `Erreur: ${err?.message ?? 'unknown'}` }), { status: 500, headers: corsHeaders });
+    return new Response(JSON.stringify({ error: 'Erreur interne' }), { status: 500, headers: corsHeaders });
   }
 };

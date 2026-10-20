@@ -46,6 +46,7 @@ export default function Checkout() {
     setError('');
 
     try {
+      // Les prix, le stock et le total sont calculés côté serveur : on n'envoie que les identifiants et quantités.
       const { data: orderData, error: orderErr } = await supabase.rpc('create_order', {
         p_customer_name: info.name.trim(),
         p_customer_phone: info.phone.trim(),
@@ -53,31 +54,16 @@ export default function Checkout() {
         p_customer_address: info.address.trim(),
         p_city: info.city,
         p_payment_method: paymentMethod,
-        p_subtotal: sub,
-        p_shipping_fee: shipping,
-        p_total: total,
         p_notes: info.notes.trim() || null,
+        p_items: items.map((item) => ({
+          product_id: item.product.id,
+          variant_id: item.variant?.id ?? null,
+          quantity: item.quantity,
+        })),
       });
 
       if (orderErr) throw orderErr;
-      const order = orderData as { id: string; order_number: string };
-
-      const orderItems = items.map((item) => ({
-        order_id: order.id,
-        product_id: item.product.id,
-        product_name: item.product.name,
-        variant_id: item.variant?.id ?? null,
-        variant_name: item.variant?.name ?? null,
-        quantity: item.quantity,
-        unit_price: item.variant?.price ?? item.product.price,
-        total: (item.variant?.price ?? item.product.price) * item.quantity,
-      }));
-
-      const { error: itemsErr } = await supabase.from('order_items').insert(orderItems);
-      if (itemsErr) throw itemsErr;
-
-      // Décrémenter le stock (atomique, côté serveur)
-      supabase.rpc('decrement_stock_for_order', { p_order_id: order.id }).then(() => {});
+      const order = orderData as { id: string; order_number: string; total: number };
 
       // Notify admin (email)
       fetch('/api/notify', {
@@ -94,7 +80,6 @@ export default function Checkout() {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              amount: total,
               orderId: order.id,
               orderNumber: order.order_number,
               customerPhone: info.phone.trim(),
@@ -104,10 +89,6 @@ export default function Checkout() {
           const waveData = await waveRes.json();
 
           if (waveData.wave_launch_url) {
-            // Backup: store payment_ref via client if Worker PATCH failed
-            if (waveData.checkout_id) {
-              supabase.from('orders').update({ payment_ref: waveData.checkout_id }).eq('id', order.id).then(() => {});
-            }
             clearCart();
             window.location.href = waveData.wave_launch_url;
             return;

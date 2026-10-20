@@ -1,12 +1,9 @@
-interface Env {
+import { isUuid, svcKey, type SecEnv } from '../_shared';
+
+interface Env extends SecEnv {
   WAVE_API_KEY: string;
   WAVE_SIGNING_SECRET?: string;
-  SUPABASE_URL: string;
-  SUPABASE_SERVICE_KEY?: string;
-  SUPABASE_SERVICE_ROLE_KEY?: string;
 }
-
-const svcKey = (env: Env) => env.SUPABASE_SERVICE_KEY || env.SUPABASE_SERVICE_ROLE_KEY || '';
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': 'https://graphiquemotion.com',
@@ -15,123 +12,72 @@ const corsHeaders = {
   'Content-Type': 'application/json',
 };
 
+const json = (body: unknown, status = 200) => new Response(JSON.stringify(body), { status, headers: corsHeaders });
+
 async function hmacSha256(secret: string, message: string): Promise<string> {
-  const encoder = new TextEncoder();
-  const key = await crypto.subtle.importKey(
-    'raw', encoder.encode(secret),
-    { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']
-  );
-  const sig = await crypto.subtle.sign('HMAC', key, encoder.encode(message));
-  return Array.from(new Uint8Array(sig)).map(b => b.toString(16).padStart(2, '0')).join('');
+  const key = await crypto.subtle.importKey('raw', new TextEncoder().encode(secret), { name: 'HMAC', hash: 'SHA-256' }, false, ['sign']);
+  const sig = await crypto.subtle.sign('HMAC', key, new TextEncoder().encode(message));
+  return Array.from(new Uint8Array(sig)).map((b) => b.toString(16).padStart(2, '0')).join('');
 }
 
 export const onRequestOptions: PagesFunction = () => new Response(null, { headers: corsHeaders });
 
 export const onRequestPost: PagesFunction<Env> = async ({ request, env }) => {
   try {
-    if (!env.WAVE_API_KEY) {
-      return new Response(
-        JSON.stringify({ error: 'WAVE_API_KEY non configurée' }),
-        { status: 500, headers: corsHeaders }
-      );
+    if (!env.WAVE_API_KEY) return json({ error: 'Paiement indisponible' }, 500);
+
+    const { orderId } = await request.json().catch(() => ({} as any));
+    if (!isUuid(orderId)) return json({ error: 'orderId invalide' }, 400);
+
+    // Le montant, le numéro et le téléphone viennent de la base, jamais du navigateur.
+    const orderRes = await fetch(
+      `${env.SUPABASE_URL}/rest/v1/orders?id=eq.${orderId}&select=id,order_number,total,customer_phone,payment_method,status,payment_status`,
+      { headers: { apikey: svcKey(env), Authorization: `Bearer ${svcKey(env)}` } },
+    );
+    const order: any = orderRes.ok ? (await orderRes.json())?.[0] : null;
+    if (!order) return json({ error: 'Commande introuvable' }, 404);
+    if (order.payment_method !== 'wave' || order.status !== 'pending' || order.payment_status === 'paid') {
+      return json({ error: 'Commande non payable' }, 409);
     }
+    if (!Number.isInteger(order.total) || order.total <= 0) return json({ error: 'Montant invalide' }, 409);
 
-    const { amount, orderId, orderNumber, customerPhone } = await request.json();
+    let phone = String(order.customer_phone ?? '').replace(/[^\d+]/g, '');
+    if (phone && !phone.startsWith('+')) phone = phone.startsWith('221') ? `+${phone}` : `+221${phone}`;
 
-    if (!amount || !orderId) {
-      return new Response(
-        JSON.stringify({ error: 'amount et orderId requis' }),
-        { status: 400, headers: corsHeaders }
-      );
-    }
-
-    // Wave exige amount en STRING, sans décimales pour XOF
-    const amountStr = String(Math.round(Number(amount)));
-
-    let formattedPhone = customerPhone ?? '';
-    if (formattedPhone && !formattedPhone.startsWith('+')) {
-      formattedPhone = formattedPhone.startsWith('221')
-        ? `+${formattedPhone}`
-        : `+221${formattedPhone}`;
-    }
-
+    const num = encodeURIComponent(order.order_number);
     const wavePayload: Record<string, string> = {
-      amount: amountStr,
+      amount: String(order.total),
       currency: 'XOF',
-      client_reference: String(orderId),
-      success_url: `https://graphiquemotion.com/paiement?order=${orderNumber}`,
-      error_url: `https://graphiquemotion.com/paiement?order=${orderNumber}&error=1`,
+      client_reference: order.id,
+      success_url: `https://graphiquemotion.com/paiement?order=${num}`,
+      error_url: `https://graphiquemotion.com/paiement?order=${num}&error=1`,
     };
-
-    if (formattedPhone) {
-      wavePayload.restrict_payer_mobile = formattedPhone;
-    }
+    if (/^\+\d{8,15}$/.test(phone)) wavePayload.restrict_payer_mobile = phone;
 
     const body = JSON.stringify(wavePayload);
-
-    // Build headers
-    const headers: Record<string, string> = {
-      'Authorization': `Bearer ${env.WAVE_API_KEY}`,
-      'Content-Type': 'application/json',
-    };
-
-    // Request signing if WAVE_SIGNING_SECRET is configured
+    const headers: Record<string, string> = { Authorization: `Bearer ${env.WAVE_API_KEY}`, 'Content-Type': 'application/json' };
     if (env.WAVE_SIGNING_SECRET) {
       const timestamp = Math.floor(Date.now() / 1000);
-      const signature = await hmacSha256(env.WAVE_SIGNING_SECRET, `${timestamp}${body}`);
-      headers['Wave-Signature'] = `t=${timestamp},v1=${signature}`;
+      headers['Wave-Signature'] = `t=${timestamp},v1=${await hmacSha256(env.WAVE_SIGNING_SECRET, `${timestamp}${body}`)}`;
     }
 
-    const waveRes = await fetch('https://api.wave.com/v1/checkout/sessions', {
-      method: 'POST',
-      headers,
-      body,
-    });
-
+    const waveRes = await fetch('https://api.wave.com/v1/checkout/sessions', { method: 'POST', headers, body });
     if (!waveRes.ok) {
-      const err = await waveRes.text();
-      console.error('Wave API error:', waveRes.status, err);
-      return new Response(
-        JSON.stringify({ error: `Wave ${waveRes.status}: ${err.substring(0, 300)}` }),
-        { status: 500, headers: corsHeaders }
-      );
+      console.error('Wave API error:', waveRes.status, await waveRes.text());
+      return json({ error: `Wave indisponible (${waveRes.status})` }, 502);
     }
+    const session: any = await waveRes.json();
 
-    const session = await waveRes.json();
+    const patchRes = await fetch(`${env.SUPABASE_URL}/rest/v1/orders?id=eq.${order.id}`, {
+      method: 'PATCH',
+      headers: { apikey: svcKey(env), Authorization: `Bearer ${svcKey(env)}`, 'Content-Type': 'application/json', Prefer: 'return=minimal' },
+      body: JSON.stringify({ payment_ref: session.id }),
+    });
+    if (!patchRes.ok) console.error('Failed to store payment_ref:', patchRes.status);
 
-    // Stocker l'ID de session Wave dans la commande
-    const patchRes = await fetch(
-      `${env.SUPABASE_URL}/rest/v1/orders?id=eq.${orderId}`,
-      {
-        method: 'PATCH',
-        headers: {
-          'apikey': svcKey(env),
-          'Authorization': `Bearer ${svcKey(env)}`,
-          'Content-Type': 'application/json',
-          'Prefer': 'return=minimal',
-        },
-        body: JSON.stringify({ payment_ref: session.id }),
-      }
-    );
-
-    if (!patchRes.ok) {
-      console.error('Failed to store payment_ref:', patchRes.status, await patchRes.text());
-    }
-
-    return new Response(
-      JSON.stringify({
-        success: true,
-        wave_launch_url: session.wave_launch_url,
-        checkout_id: session.id,
-        order_number: orderNumber,
-      }),
-      { headers: corsHeaders }
-    );
+    return json({ success: true, wave_launch_url: session.wave_launch_url, checkout_id: session.id, order_number: order.order_number });
   } catch (err: any) {
     console.error('Wave checkout error:', err);
-    return new Response(
-      JSON.stringify({ error: `Erreur interne: ${err?.message ?? 'unknown'}` }),
-      { status: 500, headers: corsHeaders }
-    );
+    return json({ error: 'Erreur interne' }, 500);
   }
 };

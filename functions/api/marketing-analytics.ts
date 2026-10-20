@@ -1,4 +1,6 @@
 // Proxy lecture seule vers l'API AdaptlyPost. La clé reste côté serveur (variable Cloudflare).
+import { requireAdmin } from '../_shared';
+
 interface Env {
   ADAPTLYPOST_API_KEY?: string;
   ADAPTLYPOST_API_BASE?: string;
@@ -15,11 +17,8 @@ const iso = (d: Date) => d.toISOString().slice(0, 10);
 
 export const onRequestGet: PagesFunction<Env> = async ({ request, env }) => {
   // L'appelant doit être un utilisateur connecté (même règle que la sécurité de la base).
-  const token = (request.headers.get('Authorization') ?? '').replace(/^Bearer\s+/i, '');
-  const apikey = env.SUPABASE_SERVICE_KEY || env.SUPABASE_SERVICE_ROLE_KEY || '';
-  if (!token) return json({ error: 'Non autorisé' }, 401);
-  const who = await fetch(`${env.SUPABASE_URL}/auth/v1/user`, { headers: { apikey, Authorization: `Bearer ${token}` } });
-  if (!who.ok) return json({ error: 'Non autorisé' }, 401);
+  const auth = await requireAdmin(request, env);
+  if (!auth.ok) return json({ error: 'Non autorisé' }, auth.status);
 
   const key = env.ADAPTLYPOST_API_KEY;
   if (!key) return json({ configured: false });
