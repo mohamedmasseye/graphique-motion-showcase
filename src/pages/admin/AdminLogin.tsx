@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Lock, Mail, Loader2, AlertCircle, Eye, EyeOff } from 'lucide-react';
+import { Lock, Mail, Loader2, AlertCircle, Eye, EyeOff, ShieldCheck } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '@/hooks/useAuth';
+import { supabase } from '@/lib/supabase';
 
 export default function AdminLogin() {
   const { user, loading: authLoading, signIn } = useAuth();
@@ -12,10 +13,33 @@ export default function AdminLogin() {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [step, setStep] = useState<'password' | 'mfa'>('password');
+  const [factorId, setFactorId] = useState('');
+  const [code, setCode] = useState('');
 
+  // Une fois connecté : si la double authentification est activée, il faut encore saisir le code.
   useEffect(() => {
-    if (user) navigate('/admin', { replace: true });
+    if (!user) return;
+    (async () => {
+      const { data } = await supabase.auth.mfa.getAuthenticatorAssuranceLevel();
+      if (data && data.nextLevel === 'aal2' && data.currentLevel !== 'aal2') {
+        const { data: f } = await supabase.auth.mfa.listFactors();
+        const totp = f?.totp?.[0];
+        if (totp) { setFactorId(totp.id); setStep('mfa'); return; }
+      }
+      navigate('/admin', { replace: true });
+    })();
   }, [user, navigate]);
+
+  const handleMfa = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError('');
+    const { error: err } = await supabase.auth.mfa.challengeAndVerify({ factorId, code: code.trim() });
+    setLoading(false);
+    if (err) { setError('Code incorrect ou expiré'); setCode(''); return; }
+    navigate('/admin', { replace: true });
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,9 +47,11 @@ export default function AdminLogin() {
     setError('');
     try {
       await signIn(email, password);
-      navigate('/admin', { replace: true });
+      // la redirection (ou l'étape code) est gérée par l'effet ci-dessus
     } catch (err: any) {
-      setError('Email ou mot de passe incorrect');
+      setError(err?.code === 'locked'
+        ? 'Trop de tentatives. Réessayez dans 15 minutes.'
+        : 'Email ou mot de passe incorrect');
     } finally {
       setLoading(false);
     }
@@ -57,6 +83,24 @@ export default function AdminLogin() {
           <p className="text-white/30 text-sm mt-1">Graphique & Motion</p>
         </div>
 
+        {step === 'mfa' ? (
+        <form
+          onSubmit={handleMfa}
+          className="bg-white/[0.04] border border-white/[0.08] rounded-2xl p-6 space-y-4"
+          style={{ boxShadow: '0 20px 60px rgba(0,0,0,0.4)' }}
+        >
+          <div className="flex items-center gap-2 text-white/70 text-sm"><ShieldCheck size={16} className="text-brand-teal" /> Code de votre application d'authentification</div>
+          <input
+            inputMode="numeric" autoComplete="one-time-code" maxLength={6} autoFocus required placeholder="000000"
+            value={code} onChange={(e) => setCode(e.target.value.replace(/D/g, ''))}
+            className="w-full text-center tracking-[0.5em] text-xl py-3 bg-white/[0.05] border border-white/10 rounded-xl text-white placeholder:text-white/20 focus:outline-none focus:ring-2 focus:ring-brand-teal/40"
+          />
+          {error && (<div className="flex items-center gap-2 text-red-400 text-sm bg-red-400/10 border border-red-400/20 rounded-xl px-3 py-2.5"><AlertCircle size={14} />{error}</div>)}
+          <button type="submit" disabled={loading || code.length !== 6} className="w-full flex items-center justify-center gap-2 bg-brand-teal hover:bg-brand-teal/85 disabled:opacity-60 text-white font-bold py-3.5 rounded-xl transition-all text-sm">
+            {loading ? <><Loader2 size={16} className="animate-spin" /> Vérification…</> : 'Valider'}
+          </button>
+        </form>
+        ) : (
         <form
           onSubmit={handleSubmit}
           className="bg-white/[0.04] border border-white/[0.08] rounded-2xl p-6 space-y-4"
@@ -109,6 +153,7 @@ export default function AdminLogin() {
             {loading ? <><Loader2 size={16} className="animate-spin" /> Connexion…</> : 'Se connecter'}
           </button>
         </form>
+        )}
       </motion.div>
     </div>
   );

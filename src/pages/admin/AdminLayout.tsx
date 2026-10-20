@@ -2,13 +2,14 @@ import { useState } from 'react';
 import { NavLink, Outlet, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
-  LayoutDashboard, Package, ShoppingCart, FolderKanban, Settings, LogOut, Megaphone,
+  LayoutDashboard, Package, ShoppingCart, FolderKanban, Settings, LogOut, Megaphone, ShieldCheck,
   Menu, X, ChevronLeft, Bell, Clock
 } from 'lucide-react';
 import { useAuth } from '@/hooks/useAuth';
 import { supabase } from '@/lib/supabase';
 import { useEffect, useState as useS, useRef } from 'react';
 import { toast } from 'sonner';
+import { IDLE_TIMEOUT_MS, IDLE_WARNING_MS, sessionExpired } from '@/lib/adminSession';
 
 // Petit son de notification (bip court encodé en base64 WAV)
 function playNotificationSound() {
@@ -37,6 +38,7 @@ const navItems = [
   { to: '/admin/portfolio', icon: FolderKanban, label: 'Portfolio' },
   { to: '/admin/marketing', icon: Megaphone, label: 'Marketing' },
   { to: '/admin/settings', icon: Settings, label: 'Paramètres' },
+  { to: '/admin/security', icon: ShieldCheck, label: 'Sécurité' },
 ];
 
 export default function AdminLayout() {
@@ -136,6 +138,36 @@ export default function AdminLayout() {
     await signOut();
     navigate('/admin/login');
   };
+
+  // ── Durée de session : inactivité (30 min) et durée maximale (12 h) ──
+  useEffect(() => {
+    let last = Date.now();
+    let warned = false;
+    const bump = () => { last = Date.now(); warned = false; };
+    const events = ['mousemove', 'keydown', 'click', 'touchstart', 'scroll'];
+    events.forEach((e) => window.addEventListener(e, bump, { passive: true }));
+
+    const expire = async (msg: string) => {
+      toast.error(msg);
+      await signOut();
+      navigate('/admin/login', { replace: true });
+    };
+    const tick = () => {
+      if (sessionExpired()) return expire('Session expirée, reconnectez-vous.');
+      const idle = Date.now() - last;
+      if (idle >= IDLE_TIMEOUT_MS) return expire('Déconnecté après 30 minutes d’inactivité.');
+      if (!warned && idle >= IDLE_TIMEOUT_MS - IDLE_WARNING_MS) { warned = true; toast.warning('Déconnexion dans 2 minutes sans activité.'); }
+    };
+    const timer = setInterval(tick, 15000);
+    const onVisible = () => { if (document.visibilityState === 'visible') tick(); };
+    document.addEventListener('visibilitychange', onVisible);
+    tick();
+    return () => {
+      events.forEach((e) => window.removeEventListener(e, bump));
+      document.removeEventListener('visibilitychange', onVisible);
+      clearInterval(timer);
+    };
+  }, []);
 
   const sidebarWidth = collapsed ? 'w-[72px]' : 'w-[240px]';
 

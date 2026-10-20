@@ -25,10 +25,12 @@ export async function requireAdmin(request: Request, env: SecEnv): Promise<{ ok:
   if (!who.ok) return { ok: false, status: 401 };
   const user: any = await who.json();
   if (!isUuid(user?.id)) return { ok: false, status: 401 };
-  const adm = await fetch(`${env.SUPABASE_URL}/rest/v1/admins?user_id=eq.${user.id}&select=user_id`, {
-    headers: { apikey: key, Authorization: `Bearer ${key}` },
+  // is_admin() est évaluée avec le jeton de l'appelant : liste des admins + niveau aal2 si la double authentification est activée.
+  const adm = await fetch(`${env.SUPABASE_URL}/rest/v1/rpc/is_admin`, {
+    method: 'POST',
+    headers: { apikey: key, Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' },
+    body: '{}',
   });
-  const rows: any = adm.ok ? await adm.json() : [];
-  if (!Array.isArray(rows) || rows.length === 0) return { ok: false, status: 403 };
+  if (!adm.ok || (await adm.json()) !== true) return { ok: false, status: 403 };
   return { ok: true, userId: user.id };
 }

@@ -1,4 +1,5 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useEffect, useState } from 'react';
+import { supabase } from '@/lib/supabase';
 import { Toaster } from '@/components/ui/toaster';
 import { Toaster as Sonner } from '@/components/ui/sonner';
 import { TooltipProvider } from '@/components/ui/tooltip';
@@ -35,6 +36,7 @@ const AdminProducts = lazy(() => import('./pages/admin/AdminProducts'));
 const AdminOrders = lazy(() => import('./pages/admin/AdminOrders'));
 const AdminPortfolio = lazy(() => import('./pages/admin/AdminPortfolio'));
 const AdminSettings = lazy(() => import('./pages/admin/AdminSettings'));
+const AdminSecurity = lazy(() => import('./pages/admin/AdminSecurity'));
 const MarketingPlanning = lazy(() => import('./pages/admin/marketing/MarketingPlanning'));
 const MarketingAnalytics = lazy(() => import('./pages/admin/marketing/MarketingAnalytics'));
 const MarketingRoutine = lazy(() => import('./pages/admin/marketing/MarketingRoutine'));
@@ -61,8 +63,17 @@ function AdminLoader() {
 /* ── Auth guard for admin routes ───────────────────────────────── */
 function RequireAuth({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
-  if (loading) return <AdminLoader />;
-  if (!user) return <Navigate to="/admin/login" replace />;
+  const [needsCode, setNeedsCode] = useState<boolean | null>(null);
+
+  // Si la double authentification est activée, la session doit être de niveau aal2.
+  useEffect(() => {
+    if (!user) { setNeedsCode(null); return; }
+    supabase.auth.mfa.getAuthenticatorAssuranceLevel().then(({ data }) =>
+      setNeedsCode(!!data && data.nextLevel === 'aal2' && data.currentLevel !== 'aal2'));
+  }, [user?.id]);
+
+  if (loading || (user && needsCode === null)) return <AdminLoader />;
+  if (!user || needsCode) return <Navigate to="/admin/login" replace />;
   return <>{children}</>;
 }
 
@@ -116,6 +127,7 @@ const App = () => (
               <Route path="marketing/analyses" element={<MarketingAnalytics />} />
               <Route path="marketing/routine" element={<MarketingRoutine />} />
               <Route path="settings" element={<AdminSettings />} />
+              <Route path="security" element={<AdminSecurity />} />
             </Route>
 
             {/* 404 */}
