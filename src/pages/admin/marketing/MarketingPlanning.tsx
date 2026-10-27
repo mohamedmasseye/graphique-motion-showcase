@@ -74,7 +74,17 @@ export default function MarketingPlanning() {
   }, [load]);
 
   useEffect(() => {
-    load().then((data) => { if (data.length === 0) syncPlan(data); });
+    load().then(async (data) => {
+      if (data.length === 0) { syncPlan(data); return; }
+      // Publié automatiquement : une publication « Programmé (Adaptly) » dont l'heure est passée depuis plus de 10 min
+      // est partie toute seule. Seules les tâches « À la main » restent à cocher par vous.
+      const cutoff = Date.now() - 10 * 60 * 1000;
+      const ids = data.filter((r) => r.status === 'planned' && r.kind === 'scheduled' && new Date(r.scheduled_at).getTime() < cutoff).map((r) => r.id);
+      if (ids.length) {
+        const { error } = await supabase.from('marketing_posts').update({ status: 'done', updated_at: new Date().toISOString() }).in('id', ids);
+        if (!error) await load();
+      }
+    });
   }, [load, syncPlan]);
 
   const patch = async (id: string, fields: Partial<MarketingPost>) => {
