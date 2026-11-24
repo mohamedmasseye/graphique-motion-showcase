@@ -1,13 +1,15 @@
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import { useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowRight, Palette, Globe, Code, Smartphone, Brain, ShoppingBag } from 'lucide-react';
+import { ArrowRight, Palette, Globe, Code, Smartphone, Brain, ShoppingBag, Gift } from 'lucide-react';
+import { isConcoursVisible } from '@/data/concours';
 import { fadeUp, staggerContainer, staggerItem, viewportOnce } from '@/lib/animations';
 import { SITE, SERVICES, PROCESS_STEPS, getWhatsAppUrl } from '@/data/content';
 import SectionHeading from '@/components/SectionHeading';
 import CTASection from '@/components/CTASection';
 import Head from '@/components/Head';
 import ProjectCard from '@/components/ProjectCard';
+import ConcoursSpotlight from '@/components/concours/ConcoursSpotlight';
 import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
 import type { PortfolioProject } from '@/types/database';
@@ -55,6 +57,27 @@ function Hero() {
 
       <div className="container mx-auto px-4 relative z-10 pt-20 pb-24">
         <div className="max-w-4xl mx-auto text-center">
+          {/* Annonce jeu concours */}
+          {isConcoursVisible() && (
+            <motion.div
+              initial={{ opacity: 0, y: -12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+              className="mb-5 flex justify-center"
+            >
+              <Link
+                to="/concours"
+                className="group inline-flex items-center gap-2.5 pl-1.5 pr-4 py-1.5 rounded-full border border-brand-orange/30 bg-brand-orange/[0.07] hover:bg-brand-orange/[0.12] hover:border-brand-orange/50 transition-colors"
+              >
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-brand-orange text-black text-[10px] font-bold uppercase tracking-[0.12em]">
+                  <Gift size={11} /> Jeu concours
+                </span>
+                <span className="text-white text-xs sm:text-sm font-semibold">Gagnez votre site web</span>
+                <ArrowRight size={14} className="text-brand-orange group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </motion.div>
+          )}
+
           {/* Eyebrow */}
           <motion.div
             variants={fadeUp}
@@ -522,6 +545,7 @@ export default function Home() {
         ]}
       />
       <Hero />
+      <ConcoursSpotlight />
       <SelectedWork />
       <ServicesPreview />
       <WhyUs />

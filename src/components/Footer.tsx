@@ -13,6 +13,7 @@ const FOOTER_NAV = [
   { name: 'Boutique', href: '/boutique' },
   { name: 'Blog', href: '/blog' },
   { name: 'Contact', href: '/contact' },
+  { name: 'Jeu concours', href: '/concours' },
 ];
 
 const SERVICE_LINKS = [

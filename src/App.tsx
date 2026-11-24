@@ -21,6 +21,8 @@ const PricingPage = lazy(() => import('./pages/PricingPage'));
 const Blog = lazy(() => import('./pages/Blog'));
 const Contact = lazy(() => import('./pages/Contact'));
 const NotFound = lazy(() => import('./pages/NotFound'));
+const Concours = lazy(() => import('./pages/Concours'));
+const Reglement = lazy(() => import('./pages/Reglement'));
 
 // Boutique (preserve existing)
 const Boutique = lazy(() => import('./pages/Boutique'));
@@ -101,6 +103,9 @@ const App = () => (
               <Route path="/blog" element={<Blog />} />
               <Route path="/blog/:slug" element={<Blog />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="/concours" element={<Concours />} />
+              <Route path="/concours/reglement" element={<Reglement />} />
+              <Route path="/reglement" element={<Navigate to="/concours/reglement" replace />} />
             </Route>
 
             {/* ═══ Boutique (standalone layout) ═══ */}

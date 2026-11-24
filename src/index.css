@@ -173,3 +173,11 @@
   border: 1px solid rgba(0,178,170,0.5);
   box-shadow: 0 0 12px rgba(0,178,170,0.6);
 }
+
+/* ── Impression du règlement du concours ───────────────────────── */
+@media print {
+  header, footer, .print:hidden, a[href*="wa.me"] { display: none !important; }
+  html, body, main, section { background: #fff !important; }
+  main * { color: #111 !important; box-shadow: none !important; }
+  main .bg-brand-teal { background: #007F7A !important; }
+}

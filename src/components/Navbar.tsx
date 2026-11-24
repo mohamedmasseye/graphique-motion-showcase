@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, ArrowRight } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 import { NAV_LINKS, getWhatsAppUrl } from '@/data/content';
+import ConcoursRibbon, { useRibbonVisible } from '@/components/concours/ConcoursRibbon';
 
 const Logo = '/lovable-uploads/71d36db5-bb9d-4336-8965-1ace529d6ed6.png';
 
@@ -10,6 +11,7 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const showRibbon = useRibbonVisible();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -32,6 +34,8 @@ export default function Navbar() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
       >
+        {showRibbon && <ConcoursRibbon />}
+
         {/* Nav bar */}
         <div
           className={`mx-3 sm:mx-4 mt-3 transition-all duration-500 ${
@@ -183,7 +187,7 @@ export default function Navbar() {
       </motion.header>
 
       {/* Spacer */}
-      <div className="h-[88px]" />
+      <div className={showRibbon ? 'h-[124px]' : 'h-[88px]'} />
     </>
   );
 }
