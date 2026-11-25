@@ -54,7 +54,7 @@ for (const r of SEO_ROUTES) {
   html = meta(html, 'name', 'twitter:image', img);
   html = html.replace('<div id="root"></div>', `<div id="root">${body(r)}</div>`);
   if (!html.includes('id="seo-static"')) throw new Error('injection impossible pour ' + r.path);
-  const out = r.path === '/' ? path.join(dist, 'index.html') : path.join(dist, r.path, 'index.html');
+  const out = r.path === '/' ? path.join(dist, 'index.html') : path.join(dist, r.path + '.html'); // /concours -> concours.html (pas de redirection vers /concours/)
   fs.mkdirSync(path.dirname(out), { recursive: true });
   fs.writeFileSync(out, html);
   count++;
