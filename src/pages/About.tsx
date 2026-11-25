@@ -20,8 +20,8 @@ export default function About() {
   return (
     <>
       <Head
-        title={undefined}
-        description={undefined}
+        title="À propos de Graphique & Motion — Studio digital à Dakar"
+        description="Graphique & Motion est un studio créatif et technologique basé à Dakar, fondé par Mohamed Masseye DIOP : branding, sites web, applications, IA et automatisation."
       />
 
       {/* Hero */}

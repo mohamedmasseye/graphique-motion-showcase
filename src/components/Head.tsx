@@ -43,7 +43,7 @@ export default function Head({
   const location = useLocation();
 
   useEffect(() => {
-    const fullTitle = title ? `${title} | ${SITE.name}` : `${SITE.name} — ${SITE.tagline}`;
+    const fullTitle = title ? (title.includes(SITE.name) ? title : `${title} | ${SITE.name}`) : `${SITE.name} — ${SITE.tagline}`;
     const desc = description || SITE.description;
     const url = canonical || `${SITE.url}${location.pathname}`;
     const img = image || `${SITE.url}/og-image.png`;

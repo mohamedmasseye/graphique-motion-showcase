@@ -519,8 +519,8 @@ export default function Home() {
   return (
     <>
       <Head
-        title={undefined}
-        description={undefined}
+        title="Création Site Web & Application Mobile Dakar"
+        description="Agence digitale au Sénégal : site web, application mobile, identité visuelle. Tarifs affichés, devis gratuit. +221 77 564 44 78"
         jsonLd={[
           {
             '@context': 'https://schema.org',
