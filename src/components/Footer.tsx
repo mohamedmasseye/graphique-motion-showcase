@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { SITE, NAV_LINKS, SOCIAL_LINKS, getWhatsAppUrl } from '@/data/content';
 
-const Logo = '/lovable-uploads/de699b4d-f281-49b8-b42d-18ceb13b6677.png';
+const Logo = '/lovable-uploads/de699b4d-f281-49b8-b42d-18ceb13b6677-320.png';
 
 const FOOTER_NAV = [
   { name: 'Réalisations', href: '/portfolio' },
@@ -39,7 +39,7 @@ export default function Footer() {
           {/* Brand column */}
           <div className="lg:col-span-4">
             <Link to="/" className="inline-block mb-5">
-              <img src={Logo} alt={SITE.name} className="h-20 w-auto object-contain" />
+              <img src={Logo} alt={SITE.name} width={80} height={80} className="h-20 w-auto object-contain" />
             </Link>
             <p className="text-[#A0A0A0] text-sm leading-relaxed max-w-xs mb-6">
               {SITE.description}

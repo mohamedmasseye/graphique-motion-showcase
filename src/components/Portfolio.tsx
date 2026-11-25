@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { optimizeImage } from '@/lib/img';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ExternalLink, X, ZoomIn } from 'lucide-react';
 import { ProjectCategory } from '@/types/project';
@@ -180,7 +181,7 @@ export default function Portfolio() {
                   {/* Image — aspect carré sur mobile, vidéo sur sm+ */}
                   <div className="aspect-square sm:aspect-video overflow-hidden">
                     <img
-                      src={project.image}
+                      src={optimizeImage(project.image, 800)}
                       alt={project.title}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       loading="lazy"
@@ -272,7 +273,7 @@ export default function Portfolio() {
               </button>
 
               <img
-                src={selectedImage.image}
+                src={optimizeImage(selectedImage.image, 1400)}
                 alt={selectedImage.title}
                 className="w-full h-auto max-h-[65vh] object-contain bg-black"
               />

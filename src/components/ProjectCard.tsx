@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { optimizeImage } from '@/lib/img';
 import { motion } from 'framer-motion';
 import { ArrowUpRight } from 'lucide-react';
 import { mapCategoryToGroup, PORTFOLIO_CATEGORY_COLORS, PROJECT_TYPE_LABELS } from '@/types/database';
@@ -25,7 +26,7 @@ export default function ProjectCard({ project, variant = 'default', className = 
       >
         <div className="aspect-[16/10] overflow-hidden">
           <img
-            src={project.image}
+            src={optimizeImage(project.image, 800)}
             alt={`${project.title} — ${typeLabel}`}
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
             loading="lazy"
@@ -73,7 +74,7 @@ export default function ProjectCard({ project, variant = 'default', className = 
         className={`group flex items-center gap-4 bg-white/[0.03] border border-white/[0.06] rounded-xl p-3 hover:border-white/15 transition-all ${className}`}
       >
         <div className="w-16 h-16 rounded-lg overflow-hidden shrink-0">
-          <img src={project.image} alt={project.title} className="w-full h-full object-cover" loading="lazy" />
+          <img src={optimizeImage(project.image, 800)} alt={project.title} className="w-full h-full object-cover" loading="lazy" />
         </div>
         <div className="min-w-0 flex-1">
           <p className="text-white text-sm font-bold truncate group-hover:text-brand-teal transition-colors">{project.title}</p>
@@ -92,7 +93,7 @@ export default function ProjectCard({ project, variant = 'default', className = 
     >
       <div className="aspect-video overflow-hidden relative">
         <img
-          src={project.image}
+          src={optimizeImage(project.image, 800)}
           alt={`${project.title} — ${typeLabel}`}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           loading="lazy"

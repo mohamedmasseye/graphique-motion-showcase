@@ -5,7 +5,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { NAV_LINKS, getWhatsAppUrl } from '@/data/content';
 import ConcoursRibbon, { useRibbonVisible } from '@/components/concours/ConcoursRibbon';
 
-const Logo = '/lovable-uploads/71d36db5-bb9d-4336-8965-1ace529d6ed6.png';
+const Logo = '/lovable-uploads/71d36db5-bb9d-4336-8965-1ace529d6ed6-320.png';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -49,7 +49,7 @@ export default function Navbar() {
             <Link to="/" className="flex items-center shrink-0">
               <motion.img
                 src={Logo}
-                alt="Graphique & Motion"
+                alt="Graphique & Motion" width={80} height={80}
                 className="h-20 w-auto object-contain"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}

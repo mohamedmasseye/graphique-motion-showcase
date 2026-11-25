@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { optimizeImage } from '@/lib/img';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, ExternalLink, ArrowLeft, Share2, Copy, Linkedin, MessageCircle } from 'lucide-react';
@@ -284,7 +285,7 @@ export default function ProjectDetail() {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="rounded-2xl overflow-hidden border border-white/10"
             >
-              <img src={project.image} alt={`${project.title} — ${typeLabel}`} className="w-full h-auto object-cover" />
+              <img src={optimizeImage(project.image, 1400)} alt={`${project.title} — ${typeLabel}`} className="w-full h-auto object-cover" />
             </motion.div>
           </div>
         </div>
@@ -312,7 +313,7 @@ export default function ProjectDetail() {
             <motion.div className="grid grid-cols-1 sm:grid-cols-2 gap-4" variants={staggerContainer} initial="hidden" whileInView="visible" viewport={viewportOnce}>
               {project.images.map((img, i) => (
                 <motion.div key={i} variants={staggerItem} className="rounded-xl overflow-hidden border border-white/10">
-                  <img src={img} alt={`${project.title} — Gallery ${i + 1}`} className="w-full h-auto object-cover" loading="lazy" />
+                  <img src={optimizeImage(img, 900)} alt={`${project.title} — Gallery ${i + 1}`} className="w-full h-auto object-cover" loading="lazy" />
                 </motion.div>
               ))}
             </motion.div>
