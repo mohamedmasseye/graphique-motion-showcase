@@ -101,11 +101,11 @@ export default function PaymentReturn() {
           </div>
         )}
 
-        <p className="text-white/40 text-sm max-w-xs mx-auto mb-4">{config.message}</p>
+        <p className="text-white/60 text-sm max-w-xs mx-auto mb-4">{config.message}</p>
 
         {transactionId && status === 'success' && (
           <div className="bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-3 mb-6 inline-block">
-            <p className="text-white/30 text-[10px] font-semibold uppercase tracking-widest mb-1">Transaction Wave</p>
+            <p className="text-white/55 text-[10px] font-semibold uppercase tracking-widest mb-1">Transaction Wave</p>
             <span className="text-white/70 font-mono text-sm select-all">{transactionId}</span>
           </div>
         )}
@@ -114,11 +114,11 @@ export default function PaymentReturn() {
           <div className="flex flex-col gap-3">
             <Link
               to="/boutique"
-              className="inline-flex items-center justify-center gap-2 bg-brand-teal hover:bg-brand-teal/85 text-white font-bold py-3.5 px-6 rounded-xl transition-all text-sm"
+              className="inline-flex items-center justify-center gap-2 bg-brand-teal hover:bg-brand-teal/85 text-[#0A0A0F] font-bold py-3.5 px-6 rounded-xl transition-all text-sm"
             >
               <ShoppingBag size={16} /> Continuer vos achats
             </Link>
-            <Link to="/" className="text-white/40 text-sm hover:text-white/60 transition-colors py-2">
+            <Link to="/" className="text-white/60 text-sm hover:text-white/60 transition-colors py-2">
               Retour à l'accueil
             </Link>
           </div>

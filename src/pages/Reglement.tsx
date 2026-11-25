@@ -89,7 +89,7 @@ export default function Reglement() {
             {/* Sommaire */}
             <nav className="hidden lg:block print:hidden">
               <div className="sticky top-36">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/35 mb-4">Sommaire</p>
+                <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-white/60 mb-4">Sommaire</p>
                 <ol className="space-y-1 border-l border-white/10">
                   {REGLEMENT.map((a) => (
                     <li key={a.slug}>
@@ -99,7 +99,7 @@ export default function Reglement() {
                           actif === a.slug ? 'border-brand-teal text-white font-semibold' : 'border-transparent text-white/45 hover:text-white/80'
                         }`}
                       >
-                        <span className="tabular-nums text-white/30 mr-2">{String(a.n).padStart(2, '0')}</span>
+                        <span className="tabular-nums text-white/55 mr-2">{String(a.n).padStart(2, '0')}</span>
                         {a.titre}
                       </a>
                     </li>
@@ -123,7 +123,7 @@ export default function Reglement() {
                 </article>
               ))}
 
-              <p className="pt-6 border-t border-white/10 text-white/40 text-sm">Fait à Dakar, le {CONCOURS.reglementVersion}.</p>
+              <p className="pt-6 border-t border-white/10 text-white/60 text-sm">Fait à Dakar, le {CONCOURS.reglementVersion}.</p>
 
               <div className="rounded-2xl border border-white/10 bg-white/[0.02] p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 print:hidden">
                 <div>

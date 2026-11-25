@@ -132,7 +132,7 @@ export default function Projects() {
                 )}
                 <span className="relative z-10">{f.name}</span>
                 {f.id !== 'all' && (
-                  <span className="relative z-10 ml-1.5 text-white/30 text-xs">
+                  <span className="relative z-10 ml-1.5 text-white/55 text-xs">
                     {projects.filter((p) => matchesFilter(p, f.id)).length}
                   </span>
                 )}
@@ -145,7 +145,7 @@ export default function Projects() {
             <ProjectSkeleton />
           ) : filtered.length === 0 ? (
             <div className="text-center py-24">
-              <p className="text-white/30 text-lg font-semibold mb-2">Aucun projet dans cette catégorie.</p>
+              <p className="text-white/55 text-lg font-semibold mb-2">Aucun projet dans cette catégorie.</p>
               <button onClick={() => setActive('all')} className="text-brand-teal text-sm hover:underline">
                 Voir tous les projets
               </button>

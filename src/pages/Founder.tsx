@@ -74,7 +74,7 @@ export default function Founder() {
         <div className="pointer-events-none absolute -top-40 left-1/3 w-[500px] h-[500px] rounded-full bg-brand-teal/5 blur-[120px]" />
 
         <div className="container mx-auto px-4">
-          <Link to="/a-propos" className="inline-flex items-center gap-2 text-white/40 text-sm hover:text-brand-teal transition-colors mb-12">
+          <Link to="/a-propos" className="inline-flex items-center gap-2 text-white/60 text-sm hover:text-brand-teal transition-colors mb-12">
             <ArrowLeft size={14} /> Retour à À propos
           </Link>
 

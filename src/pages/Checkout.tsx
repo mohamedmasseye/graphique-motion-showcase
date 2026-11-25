@@ -126,10 +126,10 @@ export default function Checkout() {
         >
           <ShoppingBag size={48} className="text-white/10 mx-auto mb-4" />
           <p className="text-white font-bold text-lg mb-2">Panier vide</p>
-          <p className="text-white/40 text-sm mb-6">Ajoutez des produits avant de commander</p>
+          <p className="text-white/60 text-sm mb-6">Ajoutez des produits avant de commander</p>
           <Link
             to="/boutique"
-            className="inline-flex items-center gap-2 bg-brand-teal text-white font-bold py-3 px-6 rounded-xl text-sm"
+            className="inline-flex items-center gap-2 bg-brand-teal text-[#0A0A0F] font-bold py-3 px-6 rounded-xl text-sm"
           >
             <ArrowLeft size={16} /> Voir la boutique
           </Link>
@@ -162,7 +162,7 @@ export default function Checkout() {
           {step !== 'confirm' && (
             <Link
               to="/boutique"
-              className="absolute top-4 right-4 z-10 w-8 h-8 rounded-full bg-white/[0.06] flex items-center justify-center text-white/40 hover:text-white hover:bg-white/[0.1] transition-all"
+              className="absolute top-4 right-4 z-10 w-8 h-8 rounded-full bg-white/[0.06] flex items-center justify-center text-white/60 hover:text-white hover:bg-white/[0.1] transition-all"
             >
               <X size={16} />
             </Link>
@@ -202,50 +202,50 @@ export default function Checkout() {
                   transition={{ duration: 0.25 }}
                 >
                   <h2 className="text-white font-black text-xl mt-4 mb-1">Informations de livraison</h2>
-                  <p className="text-white/40 text-sm mb-6">Où devons-nous livrer votre commande ?</p>
+                  <p className="text-white/60 text-sm mb-6">Où devons-nous livrer votre commande ?</p>
 
                   <div className="space-y-4">
                     <div className="relative">
-                      <User size={16} className="absolute left-3.5 top-3.5 text-white/25" />
+                      <User size={16} className="absolute left-3.5 top-3.5 text-white/55" />
                       <input
                         type="text"
                         placeholder="Nom complet *"
                         value={info.name}
                         onChange={(e) => setInfo({ ...info, name: e.target.value })}
-                        className="w-full pl-10 pr-4 py-3 bg-white/[0.05] border border-white/10 rounded-xl text-white text-sm placeholder:text-white/25 focus:outline-none focus:ring-2 focus:ring-brand-teal/40 focus:border-brand-teal/30 transition-all"
+                        className="w-full pl-10 pr-4 py-3 bg-white/[0.05] border border-white/10 rounded-xl text-white text-sm placeholder:text-white/55 focus:outline-none focus:ring-2 focus:ring-brand-teal/40 focus:border-brand-teal/30 transition-all"
                       />
                     </div>
 
                     <div className="relative">
-                      <Phone size={16} className="absolute left-3.5 top-3.5 text-white/25" />
+                      <Phone size={16} className="absolute left-3.5 top-3.5 text-white/55" />
                       <input
                         type="tel"
                         placeholder="Téléphone * (ex: 77 564 44 78)"
                         value={info.phone}
                         onChange={(e) => setInfo({ ...info, phone: e.target.value })}
-                        className="w-full pl-10 pr-4 py-3 bg-white/[0.05] border border-white/10 rounded-xl text-white text-sm placeholder:text-white/25 focus:outline-none focus:ring-2 focus:ring-brand-teal/40 focus:border-brand-teal/30 transition-all"
+                        className="w-full pl-10 pr-4 py-3 bg-white/[0.05] border border-white/10 rounded-xl text-white text-sm placeholder:text-white/55 focus:outline-none focus:ring-2 focus:ring-brand-teal/40 focus:border-brand-teal/30 transition-all"
                       />
                     </div>
 
                     <div className="relative">
-                      <Mail size={16} className="absolute left-3.5 top-3.5 text-white/25" />
+                      <Mail size={16} className="absolute left-3.5 top-3.5 text-white/55" />
                       <input
                         type="email"
                         placeholder="Email (optionnel)"
                         value={info.email}
                         onChange={(e) => setInfo({ ...info, email: e.target.value })}
-                        className="w-full pl-10 pr-4 py-3 bg-white/[0.05] border border-white/10 rounded-xl text-white text-sm placeholder:text-white/25 focus:outline-none focus:ring-2 focus:ring-brand-teal/40 focus:border-brand-teal/30 transition-all"
+                        className="w-full pl-10 pr-4 py-3 bg-white/[0.05] border border-white/10 rounded-xl text-white text-sm placeholder:text-white/55 focus:outline-none focus:ring-2 focus:ring-brand-teal/40 focus:border-brand-teal/30 transition-all"
                       />
                     </div>
 
                     <div className="relative">
-                      <MapPin size={16} className="absolute left-3.5 top-3.5 text-white/25" />
+                      <MapPin size={16} className="absolute left-3.5 top-3.5 text-white/55" />
                       <input
                         type="text"
                         placeholder="Adresse de livraison * (quartier, rue...)"
                         value={info.address}
                         onChange={(e) => setInfo({ ...info, address: e.target.value })}
-                        className="w-full pl-10 pr-4 py-3 bg-white/[0.05] border border-white/10 rounded-xl text-white text-sm placeholder:text-white/25 focus:outline-none focus:ring-2 focus:ring-brand-teal/40 focus:border-brand-teal/30 transition-all"
+                        className="w-full pl-10 pr-4 py-3 bg-white/[0.05] border border-white/10 rounded-xl text-white text-sm placeholder:text-white/55 focus:outline-none focus:ring-2 focus:ring-brand-teal/40 focus:border-brand-teal/30 transition-all"
                       />
                     </div>
 
@@ -263,13 +263,13 @@ export default function Checkout() {
                     </select>
 
                     <div className="relative">
-                      <MessageSquare size={16} className="absolute left-3.5 top-3.5 text-white/25" />
+                      <MessageSquare size={16} className="absolute left-3.5 top-3.5 text-white/55" />
                       <textarea
                         placeholder="Instructions de livraison (optionnel)"
                         value={info.notes}
                         onChange={(e) => setInfo({ ...info, notes: e.target.value })}
                         rows={2}
-                        className="w-full pl-10 pr-4 py-3 bg-white/[0.05] border border-white/10 rounded-xl text-white text-sm placeholder:text-white/25 focus:outline-none focus:ring-2 focus:ring-brand-teal/40 focus:border-brand-teal/30 transition-all resize-none"
+                        className="w-full pl-10 pr-4 py-3 bg-white/[0.05] border border-white/10 rounded-xl text-white text-sm placeholder:text-white/55 focus:outline-none focus:ring-2 focus:ring-brand-teal/40 focus:border-brand-teal/30 transition-all resize-none"
                       />
                     </div>
                   </div>
@@ -277,7 +277,7 @@ export default function Checkout() {
                   <button
                     onClick={() => setStep('payment')}
                     disabled={!isInfoValid}
-                    className="w-full mt-6 bg-brand-teal hover:bg-brand-teal/85 disabled:bg-white/10 disabled:text-white/30 disabled:cursor-not-allowed text-white font-bold py-3.5 rounded-xl transition-all text-sm"
+                    className="w-full mt-6 bg-brand-teal hover:bg-brand-teal/85 disabled:bg-white/10 disabled:text-white/55 disabled:cursor-not-allowed text-[#0A0A0F] font-bold py-3.5 rounded-xl transition-all text-sm"
                   >
                     Continuer vers le paiement
                   </button>
@@ -295,13 +295,13 @@ export default function Checkout() {
                 >
                   <button
                     onClick={() => setStep('info')}
-                    className="flex items-center gap-1.5 text-white/40 text-sm hover:text-white/60 transition-colors mt-4 mb-4"
+                    className="flex items-center gap-1.5 text-white/60 text-sm hover:text-white/60 transition-colors mt-4 mb-4"
                   >
                     <ArrowLeft size={14} /> Retour
                   </button>
 
                   <h2 className="text-white font-black text-xl mb-1">Mode de paiement</h2>
-                  <p className="text-white/40 text-sm mb-6">Comment souhaitez-vous payer ?</p>
+                  <p className="text-white/60 text-sm mb-6">Comment souhaitez-vous payer ?</p>
 
                   {/* Payment options */}
                   <div className="space-y-3 mb-6">
@@ -316,13 +316,13 @@ export default function Checkout() {
                       <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 ${
                         paymentMethod === 'cash_on_delivery' ? 'bg-brand-teal/20' : 'bg-white/[0.06]'
                       }`}>
-                        <Truck size={18} className={paymentMethod === 'cash_on_delivery' ? 'text-brand-teal' : 'text-white/40'} />
+                        <Truck size={18} className={paymentMethod === 'cash_on_delivery' ? 'text-brand-teal' : 'text-white/60'} />
                       </div>
                       <div className="text-left flex-1">
                         <p className={`font-bold text-sm ${paymentMethod === 'cash_on_delivery' ? 'text-white' : 'text-white/70'}`}>
                           Paiement à la livraison
                         </p>
-                        <p className="text-white/30 text-xs">Payez en espèces à la réception</p>
+                        <p className="text-white/55 text-xs">Payez en espèces à la réception</p>
                       </div>
                       <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${
                         paymentMethod === 'cash_on_delivery' ? 'border-brand-teal' : 'border-white/20'
@@ -347,7 +347,7 @@ export default function Checkout() {
                       }`}
                     >
                       <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 font-black text-sm ${
-                        paymentMethod === 'wave' ? 'bg-[#1DC3FF]/20 text-[#1DC3FF]' : 'bg-white/[0.06] text-white/40'
+                        paymentMethod === 'wave' ? 'bg-[#1DC3FF]/20 text-[#1DC3FF]' : 'bg-white/[0.06] text-white/60'
                       }`}>
                         W
                       </div>
@@ -355,7 +355,7 @@ export default function Checkout() {
                         <p className={`font-bold text-sm ${paymentMethod === 'wave' ? 'text-white' : 'text-white/70'}`}>
                           Wave
                         </p>
-                        <p className="text-white/30 text-xs">Paiement mobile instantané</p>
+                        <p className="text-white/55 text-xs">Paiement mobile instantané</p>
                       </div>
                       <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center shrink-0 ${
                         paymentMethod === 'wave' ? 'border-[#1DC3FF]' : 'border-white/20'
@@ -383,8 +383,8 @@ export default function Checkout() {
                           <div key={`${item.product.id}:${item.variant?.id}`} className="flex items-center justify-between text-sm">
                             <span className="text-white/60 truncate flex-1 mr-2">
                               {item.product.name}
-                              {item.variant && <span className="text-white/30"> · {item.variant.name}</span>}
-                              <span className="text-white/25"> × {item.quantity}</span>
+                              {item.variant && <span className="text-white/55"> · {item.variant.name}</span>}
+                              <span className="text-white/55"> × {item.quantity}</span>
                             </span>
                             <span className="text-white font-semibold shrink-0">{formatPrice(price * item.quantity)}</span>
                           </div>
@@ -394,11 +394,11 @@ export default function Checkout() {
 
                     <div className="border-t border-white/[0.08] pt-3 space-y-1.5">
                       <div className="flex justify-between text-sm">
-                        <span className="text-white/40">Sous-total</span>
+                        <span className="text-white/60">Sous-total</span>
                         <span className="text-white/60">{formatPrice(sub)}</span>
                       </div>
                       <div className="flex justify-between text-sm">
-                        <span className="text-white/40">Livraison</span>
+                        <span className="text-white/60">Livraison</span>
                         <span className="text-brand-teal font-semibold">Gratuite</span>
                       </div>
                       <div className="flex justify-between text-base pt-2 border-t border-white/[0.06]">
@@ -413,7 +413,7 @@ export default function Checkout() {
                     <p className="text-white/50 text-xs">
                       <span className="font-semibold text-white/70">{info.name}</span> · {info.phone}
                     </p>
-                    <p className="text-white/30 text-xs">{info.address}, {info.city}</p>
+                    <p className="text-white/55 text-xs">{info.address}, {info.city}</p>
                   </div>
 
                   {error && (
@@ -425,7 +425,7 @@ export default function Checkout() {
                   <button
                     onClick={handleSubmit}
                     disabled={isSubmitting}
-                    className="w-full flex items-center justify-center gap-2 bg-brand-teal hover:bg-brand-teal/85 disabled:opacity-60 text-white font-bold py-4 rounded-xl transition-all text-sm"
+                    className="w-full flex items-center justify-center gap-2 bg-brand-teal hover:bg-brand-teal/85 disabled:opacity-60 text-[#0A0A0F] font-bold py-4 rounded-xl transition-all text-sm"
                   >
                     {isSubmitting ? (
                       <><Loader2 size={16} className="animate-spin" /> Traitement en cours…</>
@@ -458,31 +458,31 @@ export default function Checkout() {
                   </motion.div>
 
                   <h2 className="text-white font-black text-2xl mb-2">Commande confirmée !</h2>
-                  <p className="text-white/40 text-sm mb-2">Votre numéro de commande</p>
+                  <p className="text-white/60 text-sm mb-2">Votre numéro de commande</p>
 
                   <div className="inline-block bg-white/[0.06] border border-white/10 rounded-xl px-6 py-3 mb-6">
                     <span className="text-brand-teal font-mono font-black text-xl tracking-wider">{orderNumber}</span>
                   </div>
 
-                  <p className="text-white/40 text-sm max-w-xs mx-auto mb-2">
+                  <p className="text-white/60 text-sm max-w-xs mx-auto mb-2">
                     {paymentMethod === 'wave'
                       ? 'Vous recevrez un lien de paiement Wave par SMS sous quelques minutes.'
                       : 'Nous vous contacterons pour confirmer la livraison et le paiement.'}
                   </p>
-                  <p className="text-white/30 text-xs mb-8">
+                  <p className="text-white/55 text-xs mb-8">
                     Un récapitulatif sera envoyé sur WhatsApp au {info.phone}
                   </p>
 
                   <div className="flex flex-col gap-3">
                     <Link
                       to="/boutique"
-                      className="inline-flex items-center justify-center gap-2 bg-brand-teal hover:bg-brand-teal/85 text-white font-bold py-3.5 px-6 rounded-xl transition-all text-sm"
+                      className="inline-flex items-center justify-center gap-2 bg-brand-teal hover:bg-brand-teal/85 text-[#0A0A0F] font-bold py-3.5 px-6 rounded-xl transition-all text-sm"
                     >
                       <ShoppingBag size={16} /> Continuer vos achats
                     </Link>
                     <Link
                       to="/"
-                      className="text-white/40 text-sm hover:text-white/60 transition-colors py-2"
+                      className="text-white/60 text-sm hover:text-white/60 transition-colors py-2"
                     >
                       Retour à l'accueil
                     </Link>

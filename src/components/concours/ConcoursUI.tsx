@@ -32,7 +32,7 @@ export function Countdown({ compact = false }: { compact?: boolean }) {
             <div className={`font-syne font-black tabular-nums text-white leading-none ${compact ? 'text-xl' : 'text-2xl sm:text-3xl'}`}>
               {String(v).padStart(2, '0')}
             </div>
-            <div className="mt-1 text-[10px] uppercase tracking-[0.15em] text-white/40">{l}</div>
+            <div className="mt-1 text-[10px] uppercase tracking-[0.15em] text-white/60">{l}</div>
           </div>
         ))}
       </div>
@@ -48,7 +48,7 @@ export function BrowserFrame({ src, alt, label, className = '' }: { src: string;
         <span className="w-2 h-2 rounded-full bg-[#FF5F57]/80" />
         <span className="w-2 h-2 rounded-full bg-[#FEBC2E]/80" />
         <span className="w-2 h-2 rounded-full bg-[#28C840]/80" />
-        {label && <span className="ml-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-white/35">{label}</span>}
+        {label && <span className="ml-3 text-[10px] font-semibold uppercase tracking-[0.18em] text-white/60">{label}</span>}
       </div>
       <img src={src} alt={alt} loading="lazy" className="block w-full h-auto" />
     </figure>

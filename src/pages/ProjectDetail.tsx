@@ -60,19 +60,19 @@ function SocialShare({ url, title }: { url: string; title: string }) {
 
   return (
     <div className="flex items-center gap-2">
-      <span className="text-white/30 text-xs mr-1">Partager</span>
+      <span className="text-white/55 text-xs mr-1">Partager</span>
       <a href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`}
         target="_blank" rel="noopener noreferrer"
-        className="w-9 h-9 rounded-lg border border-white/10 flex items-center justify-center text-white/40 hover:bg-[#0A66C2] hover:border-[#0A66C2] hover:text-white transition-all" aria-label="LinkedIn">
+        className="w-9 h-9 rounded-lg border border-white/10 flex items-center justify-center text-white/60 hover:bg-[#0A66C2] hover:border-[#0A66C2] hover:text-white transition-all" aria-label="LinkedIn">
         <Linkedin size={14} />
       </a>
       <a href={getWhatsAppUrl(`Regarde ce projet : ${title} — ${url}`)}
         target="_blank" rel="noopener noreferrer"
-        className="w-9 h-9 rounded-lg border border-white/10 flex items-center justify-center text-white/40 hover:bg-[#25D366] hover:border-[#25D366] hover:text-white transition-all" aria-label="WhatsApp">
+        className="w-9 h-9 rounded-lg border border-white/10 flex items-center justify-center text-white/60 hover:bg-[#25D366] hover:border-[#25D366] hover:text-white transition-all" aria-label="WhatsApp">
         <MessageCircle size={14} />
       </a>
       <button onClick={copyLink}
-        className="w-9 h-9 rounded-lg border border-white/10 flex items-center justify-center text-white/40 hover:bg-white/10 hover:text-white transition-all" aria-label="Copy link">
+        className="w-9 h-9 rounded-lg border border-white/10 flex items-center justify-center text-white/60 hover:bg-white/10 hover:text-white transition-all" aria-label="Copy link">
         <Copy size={14} />
       </button>
       {copied && <span className="text-brand-teal text-xs font-medium">Copié !</span>}
@@ -136,7 +136,7 @@ export default function ProjectDetail() {
         <p className="font-syne text-6xl font-black text-white/10 mb-4">404</p>
         <h1 className="font-syne text-2xl font-black text-white mb-3">Project not found.</h1>
         <p className="text-[#A0A0A0] text-sm mb-6">Ce projet a peut-être été supprimé ou n'existe pas.</p>
-        <Link to="/portfolio" className="inline-flex items-center gap-2 bg-brand-teal text-white font-bold py-3 px-6 rounded-full text-sm hover:bg-brand-teal/85 transition-all">
+        <Link to="/portfolio" className="inline-flex items-center gap-2 bg-brand-teal text-[#0A0A0F] font-bold py-3 px-6 rounded-full text-sm hover:bg-brand-teal/85 transition-all">
           <ArrowLeft size={14} /> Retour au portfolio
         </Link>
       </div>
@@ -192,7 +192,7 @@ export default function ProjectDetail() {
       <section className="relative pt-8 pb-16 overflow-hidden" style={{ background: 'linear-gradient(180deg, #000000 0%, #05060F 100%)' }}>
         <div className="container mx-auto px-4">
           <motion.div variants={fadeUp} initial="hidden" animate="visible">
-            <Link to="/portfolio" className="inline-flex items-center gap-2 text-white/40 text-sm hover:text-brand-teal transition-colors mb-8">
+            <Link to="/portfolio" className="inline-flex items-center gap-2 text-white/60 text-sm hover:text-brand-teal transition-colors mb-8">
               <ArrowLeft size={14} /> Retour au portfolio
             </Link>
           </motion.div>
@@ -242,7 +242,7 @@ export default function ProjectDetail() {
                   project.technologies?.length > 0 && { label: 'Technologies', value: project.technologies.join(', ') },
                 ].filter(Boolean).map((item: any) => (
                   <div key={item.label}>
-                    <p className="text-white/30 text-[10px] font-bold uppercase tracking-[0.15em] mb-1">{item.label}</p>
+                    <p className="text-white/55 text-[10px] font-bold uppercase tracking-[0.15em] mb-1">{item.label}</p>
                     <p className="text-white text-sm">{item.value}</p>
                   </div>
                 ))}
@@ -261,7 +261,7 @@ export default function ProjectDetail() {
               <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.4 }} className="flex flex-wrap items-center gap-3 mt-8">
                 {project.link && (
                   <a href={project.link} target="_blank" rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 bg-brand-teal text-white font-bold py-3 px-6 rounded-full text-sm hover:bg-brand-teal/85 transition-all">
+                    className="inline-flex items-center gap-2 bg-brand-teal text-[#0A0A0F] font-bold py-3 px-6 rounded-full text-sm hover:bg-brand-teal/85 transition-all">
                     Voir le projet <ExternalLink size={14} />
                   </a>
                 )}

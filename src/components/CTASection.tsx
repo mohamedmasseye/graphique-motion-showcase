@@ -56,7 +56,7 @@ export default function CTASection({
               href={primaryHref || getWhatsAppUrl()}
               target={primaryHref?.startsWith('http') ? '_blank' : undefined}
               rel={primaryHref?.startsWith('http') ? 'noopener noreferrer' : undefined}
-              className="group inline-flex items-center gap-2 bg-brand-teal text-white font-bold py-4 px-8 rounded-full text-sm"
+              className="group inline-flex items-center gap-2 bg-brand-teal text-[#0A0A0F] font-bold py-4 px-8 rounded-full text-sm"
               whileHover={{ scale: 1.04, backgroundColor: 'rgba(0,178,170,0.85)' }}
               whileTap={{ scale: 0.97 }}
               transition={{ type: 'spring', stiffness: 400, damping: 20 }}

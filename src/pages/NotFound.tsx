@@ -63,7 +63,7 @@ export default function NotFound() {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
                 to="/"
-                className="group inline-flex items-center gap-2 bg-brand-teal text-white font-bold py-3.5 px-8 rounded-full text-sm hover:bg-brand-teal/85 transition-all"
+                className="group inline-flex items-center gap-2 bg-brand-teal text-[#0A0A0F] font-bold py-3.5 px-8 rounded-full text-sm hover:bg-brand-teal/85 transition-all"
               >
                 <Home size={15} />
                 Retour à l'accueil

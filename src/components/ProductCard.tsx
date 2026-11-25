@@ -54,7 +54,7 @@ export default function ProductCard({ product, index = 0 }: Props) {
             </span>
           )}
           {product.featured && (
-            <span className="bg-brand-teal text-white text-[10px] font-bold px-2.5 py-1 rounded-full">
+            <span className="bg-brand-teal text-[#0A0A0F] text-[10px] font-bold px-2.5 py-1 rounded-full">
               Populaire
             </span>
           )}
@@ -80,7 +80,7 @@ export default function ProductCard({ product, index = 0 }: Props) {
                 e.stopPropagation();
                 addItem(product);
               }}
-              className="w-10 h-10 rounded-full bg-brand-teal/80 backdrop-blur-sm border border-brand-teal flex items-center justify-center text-white hover:bg-brand-teal transition-colors"
+              className="w-10 h-10 rounded-full bg-brand-teal/80 backdrop-blur-sm border border-brand-teal flex items-center justify-center text-[#0A0A0F] hover:bg-brand-teal transition-colors"
               aria-label="Ajouter au panier"
             >
               <ShoppingCart size={16} />
@@ -92,7 +92,7 @@ export default function ProductCard({ product, index = 0 }: Props) {
       {/* Info */}
       <div className="p-4">
         {product.brand && (
-          <p className="text-white/30 text-[10px] font-semibold uppercase tracking-widest mb-1">{product.brand}</p>
+          <p className="text-white/55 text-[10px] font-semibold uppercase tracking-widest mb-1">{product.brand}</p>
         )}
         <Link to={`/boutique/${product.slug}`}>
           <h3 className="text-white text-sm font-bold leading-snug hover:text-brand-teal transition-colors line-clamp-2">
@@ -101,7 +101,7 @@ export default function ProductCard({ product, index = 0 }: Props) {
         </Link>
 
         {product.short_description && (
-          <p className="text-white/40 text-xs mt-1 line-clamp-1">{product.short_description}</p>
+          <p className="text-white/60 text-xs mt-1 line-clamp-1">{product.short_description}</p>
         )}
 
         {/* Rating */}
@@ -114,7 +114,7 @@ export default function ProductCard({ product, index = 0 }: Props) {
                 className={i <= Math.round(avgRating) ? 'text-brand-orange fill-brand-orange' : 'text-white/15'}
               />
             ))}
-            <span className="text-white/30 text-[10px] ml-1">({product.reviews!.length})</span>
+            <span className="text-white/55 text-[10px] ml-1">({product.reviews!.length})</span>
           </div>
         )}
 
@@ -122,7 +122,7 @@ export default function ProductCard({ product, index = 0 }: Props) {
         <div className="flex items-baseline gap-2 mt-3">
           <span className="text-brand-teal font-bold text-base">{formatPrice(product.price)}</span>
           {hasDiscount && (
-            <span className="text-white/30 text-xs line-through">{formatPrice(product.compare_price!)}</span>
+            <span className="text-white/55 text-xs line-through">{formatPrice(product.compare_price!)}</span>
           )}
         </div>
 
@@ -131,7 +131,7 @@ export default function ProductCard({ product, index = 0 }: Props) {
           <p className="text-red-400 text-[10px] font-semibold mt-2">Rupture de stock</p>
         )}
         {product.has_variants && product.stock > 0 && (
-          <p className="text-white/30 text-[10px] mt-2">{product.variants?.length ?? 0} variantes disponibles</p>
+          <p className="text-white/55 text-[10px] mt-2">{product.variants?.length ?? 0} variantes disponibles</p>
         )}
       </div>
     </motion.div>

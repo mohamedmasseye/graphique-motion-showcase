@@ -75,7 +75,7 @@ export default function Contact() {
   }, []);
 
   const inputClass =
-    'w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-teal/50 focus:border-brand-teal/50 text-white placeholder:text-white/30 transition-all duration-200 text-sm';
+    'w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-teal/50 focus:border-brand-teal/50 text-white placeholder:text-white/55 transition-all duration-200 text-sm';
 
   return (
     <>
@@ -142,7 +142,7 @@ export default function Contact() {
                 <MessageCircle size={20} className="text-[#25D366]" />
                 <div>
                   <p className="text-white text-sm font-semibold">Discuter sur WhatsApp</p>
-                  <p className="text-white/40 text-xs">Réponse immédiate</p>
+                  <p className="text-white/60 text-xs">Réponse immédiate</p>
                 </div>
               </a>
 
@@ -156,7 +156,7 @@ export default function Contact() {
                       href={s.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="px-3 py-1.5 rounded-lg border border-white/10 text-white/50 text-xs font-medium hover:bg-brand-teal hover:border-brand-teal hover:text-white transition-all"
+                      className="px-3 py-1.5 rounded-lg border border-white/10 text-white/50 text-xs font-medium hover:bg-brand-teal hover:border-brand-teal hover:text-[#0A0A0F] transition-all"
                     >
                       {s.name}
                     </a>
@@ -245,7 +245,7 @@ export default function Contact() {
                       <button
                         type="submit"
                         disabled={status === 'loading'}
-                        className="inline-flex items-center justify-center gap-2 bg-brand-teal hover:bg-brand-teal/85 disabled:opacity-60 disabled:cursor-not-allowed text-white font-bold py-3.5 px-8 rounded-xl transition-all text-sm cursor-pointer"
+                        className="inline-flex items-center justify-center gap-2 bg-brand-teal hover:bg-brand-teal/85 disabled:opacity-60 disabled:cursor-not-allowed text-[#0A0A0F] font-bold py-3.5 px-8 rounded-xl transition-all text-sm cursor-pointer"
                       >
                         {status === 'loading' ? (
                           <><Loader2 size={16} className="animate-spin" /> Envoi...</>

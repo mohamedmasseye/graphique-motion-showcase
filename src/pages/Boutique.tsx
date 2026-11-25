@@ -67,13 +67,13 @@ export default function Boutique() {
           >
             {/* Search */}
             <div className="relative flex-1 max-w-sm">
-              <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30" />
+              <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-white/55" />
               <input
                 type="text"
                 placeholder="Rechercher un produit..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full pl-10 pr-4 py-2.5 bg-white/[0.06] border border-white/10 rounded-xl text-white text-sm placeholder:text-white/25 focus:outline-none focus:ring-2 focus:ring-brand-teal/40 focus:border-brand-teal/40 transition-all"
+                className="w-full pl-10 pr-4 py-2.5 bg-white/[0.06] border border-white/10 rounded-xl text-white text-sm placeholder:text-white/55 focus:outline-none focus:ring-2 focus:ring-brand-teal/40 focus:border-brand-teal/40 transition-all"
               />
             </div>
 
@@ -84,7 +84,7 @@ export default function Boutique() {
                   onClick={() => setSelectedCategory(undefined)}
                   className={`shrink-0 px-4 py-2 rounded-full text-xs font-semibold transition-all ${
                     !selectedCategory
-                      ? 'bg-brand-teal text-white'
+                      ? 'bg-brand-teal text-[#0A0A0F]'
                       : 'bg-white/[0.06] text-white/50 hover:bg-white/[0.1] hover:text-white/70'
                   }`}
                 >
@@ -96,7 +96,7 @@ export default function Boutique() {
                     onClick={() => setSelectedCategory(cat.slug === selectedCategory ? undefined : cat.slug)}
                     className={`shrink-0 px-4 py-2 rounded-full text-xs font-semibold transition-all ${
                       selectedCategory === cat.slug
-                        ? 'bg-brand-teal text-white'
+                        ? 'bg-brand-teal text-[#0A0A0F]'
                         : 'bg-white/[0.06] text-white/50 hover:bg-white/[0.1] hover:text-white/70'
                     }`}
                   >
@@ -117,7 +117,7 @@ export default function Boutique() {
                   <option value="price_desc">Prix décroissant</option>
                   <option value="name">Nom A-Z</option>
                 </select>
-                <ChevronDown size={14} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-white/30 pointer-events-none" />
+                <ChevronDown size={14} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-white/55 pointer-events-none" />
               </div>
 
               {/* Cart button */}
@@ -127,7 +127,7 @@ export default function Boutique() {
               >
                 <ShoppingBag size={18} className="text-white/60" />
                 {cartItemCount > 0 && (
-                  <span className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-brand-teal rounded-full flex items-center justify-center text-white text-[10px] font-bold">
+                  <span className="absolute -top-1.5 -right-1.5 w-5 h-5 bg-brand-teal rounded-full flex items-center justify-center text-[#0A0A0F] text-[10px] font-bold">
                     {cartItemCount}
                   </span>
                 )}
@@ -156,8 +156,8 @@ export default function Boutique() {
               animate={{ opacity: 1 }}
             >
               <SlidersHorizontal size={48} className="text-white/10 mx-auto mb-4" />
-              <p className="text-white/40 text-lg font-semibold">Aucun produit trouvé</p>
-              <p className="text-white/25 text-sm mt-1">Essayez de modifier vos filtres</p>
+              <p className="text-white/60 text-lg font-semibold">Aucun produit trouvé</p>
+              <p className="text-white/55 text-sm mt-1">Essayez de modifier vos filtres</p>
               {selectedCategory && (
                 <button
                   onClick={() => setSelectedCategory(undefined)}
@@ -169,7 +169,7 @@ export default function Boutique() {
             </motion.div>
           ) : (
             <>
-              <p className="text-white/30 text-sm mb-4">{sorted.length} produit{sorted.length > 1 ? 's' : ''}</p>
+              <p className="text-white/55 text-sm mb-4">{sorted.length} produit{sorted.length > 1 ? 's' : ''}</p>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {sorted.map((product, i) => (
                   <ProductCard key={product.id} product={product} index={i} />

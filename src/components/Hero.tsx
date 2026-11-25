@@ -70,7 +70,7 @@ function HeroMockup() {
           <div className="w-2.5 h-2.5 rounded-full bg-[#28C840]" />
           <div className="ml-3 flex-1 bg-white/[0.06] rounded-full h-5 flex items-center px-3 gap-1.5">
             <div className="w-1.5 h-1.5 rounded-full bg-brand-teal/60" />
-            <span className="text-white/30 text-[9px] font-mono tracking-wide">graphiquemotion.com</span>
+            <span className="text-white/55 text-[9px] font-mono tracking-wide">graphiquemotion.com</span>
           </div>
         </div>
 
@@ -128,7 +128,7 @@ function HeroMockup() {
                 style={{ background: color + '12', border: `1px solid ${color}25` }}
               >
                 <span className="text-xs font-black font-montserrat" style={{ color }}>{val}</span>
-                <span className="text-[9px] text-white/30 mt-0.5">{label}</span>
+                <span className="text-[9px] text-white/55 mt-0.5">{label}</span>
               </div>
             ))}
           </div>
@@ -155,9 +155,9 @@ function HeroMockup() {
         <div className="px-5 py-2.5 bg-[#13181F] border-t border-white/[0.05] flex items-center justify-between">
           <div className="flex items-center gap-1.5">
             <div className="w-1.5 h-1.5 rounded-full bg-[#28C840]" />
-            <span className="text-[9px] text-white/30">En ligne</span>
+            <span className="text-[9px] text-white/55">En ligne</span>
           </div>
-          <span className="text-[9px] text-white/20">PageSpeed 98/100</span>
+          <span className="text-[9px] text-white/55">PageSpeed 98/100</span>
         </div>
       </motion.div>
 
@@ -232,7 +232,7 @@ function HeroMockup() {
         </div>
         <div>
           <div className="text-white text-xs font-bold">50+ projets</div>
-          <div className="text-white/40 text-[10px]">Clients satisfaits</div>
+          <div className="text-white/60 text-[10px]">Clients satisfaits</div>
         </div>
       </motion.div>
 
@@ -386,7 +386,7 @@ export default function Hero() {
             >
               <motion.a
                 href="#pricing"
-                className="group inline-flex items-center justify-center gap-2 bg-brand-teal text-white font-bold py-4 px-8 rounded-full text-sm cursor-pointer"
+                className="group inline-flex items-center justify-center gap-2 bg-brand-teal text-[#0A0A0F] font-bold py-4 px-8 rounded-full text-sm cursor-pointer"
                 whileHover={{ scale: 1.04, backgroundColor: 'rgba(0,178,170,0.85)' }}
                 whileTap={{ scale: 0.97 }}
                 transition={{ type: 'spring', stiffness: 400, damping: 20 }}

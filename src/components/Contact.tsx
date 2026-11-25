@@ -64,7 +64,7 @@ export default function Contact() {
   }, []);
 
   const inputClass =
-    'w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-teal/50 focus:border-brand-teal/50 text-white placeholder:text-white/30 transition-all duration-200 text-sm';
+    'w-full px-4 py-3 bg-white/5 border border-white/10 rounded-xl focus:outline-none focus:ring-2 focus:ring-brand-teal/50 focus:border-brand-teal/50 text-white placeholder:text-white/55 transition-all duration-200 text-sm';
 
   return (
     <section id="contact" ref={sectionRef} className="relative py-24 md:py-32 overflow-hidden" style={{ background: 'linear-gradient(140deg, #080508 0%, #0D0810 50%, #0A0608 100%)' }}>
@@ -129,11 +129,11 @@ export default function Contact() {
               <p className="text-xs text-[#A0A0A0] font-medium uppercase tracking-widest mb-4">Suivez-nous</p>
               <div className="flex gap-3">
                 <a href="https://www.facebook.com/share/18ZbMPjH39/?mibextid=wwXIfr" target="_blank" rel="noopener noreferrer" aria-label="Facebook"
-                  className="w-10 h-10 rounded-xl border border-white/10 flex items-center justify-center text-white/60 hover:bg-brand-teal hover:border-brand-teal hover:text-white transition-all duration-200 cursor-pointer">
+                  className="w-10 h-10 rounded-xl border border-white/10 flex items-center justify-center text-white/60 hover:bg-brand-teal hover:border-brand-teal hover:text-[#0A0A0F] transition-all duration-200 cursor-pointer">
                   <Facebook size={16} />
                 </a>
                 <a href="https://www.instagram.com/graphiquemotion" target="_blank" rel="noopener noreferrer" aria-label="Instagram"
-                  className="w-10 h-10 rounded-xl border border-white/10 flex items-center justify-center text-white/60 hover:bg-brand-teal hover:border-brand-teal hover:text-white transition-all duration-200 cursor-pointer">
+                  className="w-10 h-10 rounded-xl border border-white/10 flex items-center justify-center text-white/60 hover:bg-brand-teal hover:border-brand-teal hover:text-[#0A0A0F] transition-all duration-200 cursor-pointer">
                   <Instagram size={16} />
                 </a>
               </div>
@@ -194,7 +194,7 @@ export default function Contact() {
                   )}
 
                   <button type="submit" disabled={status === 'loading'}
-                    className="inline-flex items-center gap-2 bg-brand-teal hover:bg-brand-teal/85 disabled:opacity-60 disabled:cursor-not-allowed text-white font-bold py-3.5 px-8 rounded-xl transition-all duration-200 text-sm cursor-pointer">
+                    className="inline-flex items-center gap-2 bg-brand-teal hover:bg-brand-teal/85 disabled:opacity-60 disabled:cursor-not-allowed text-[#0A0A0F] font-bold py-3.5 px-8 rounded-xl transition-all duration-200 text-sm cursor-pointer">
                     {status === 'loading' ? (
                       <><Loader2 size={16} className="animate-spin" />Envoi en cours…</>
                     ) : (

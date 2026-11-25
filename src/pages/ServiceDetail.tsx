@@ -41,7 +41,7 @@ export default function ServiceDetail() {
 
         <div className="container mx-auto px-4">
           <motion.div variants={fadeUp} initial="hidden" animate="visible">
-            <Link to="/services" className="inline-flex items-center gap-2 text-white/40 text-sm hover:text-brand-teal transition-colors mb-8">
+            <Link to="/services" className="inline-flex items-center gap-2 text-white/60 text-sm hover:text-brand-teal transition-colors mb-8">
               <ArrowLeft size={14} /> Tous les services
             </Link>
           </motion.div>
@@ -165,7 +165,7 @@ export default function ServiceDetail() {
                 <div className="flex items-start gap-3">
                   <HelpCircle size={18} className="text-brand-teal mt-0.5 shrink-0" />
                   <div>
-                    <h4 className="font-syne text-sm font-bold text-white mb-2">{faq.q}</h4>
+                    <h3 className="font-syne text-sm font-bold text-white mb-2">{faq.q}</h3>
                     <p className="text-[#A0A0A0] text-sm leading-relaxed">{faq.a}</p>
                   </div>
                 </div>

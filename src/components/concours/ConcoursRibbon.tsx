@@ -22,9 +22,9 @@ export default function ConcoursRibbon() {
       <div className="relative max-w-7xl mx-auto px-4 h-9 flex items-center justify-center gap-2.5 text-[11.5px] sm:text-xs">
         <Gift size={13} className="text-brand-orange shrink-0" />
         <span className="font-syne font-bold uppercase tracking-[0.14em] text-white">Jeu concours</span>
-        <span className="hidden sm:inline text-white/25">·</span>
+        <span className="hidden sm:inline text-white/55">·</span>
         <span className="hidden sm:inline font-semibold text-white">Gagnez votre site web</span>
-        <span className="hidden md:inline text-white/25">·</span>
+        <span className="hidden md:inline text-white/55">·</span>
         <span className="hidden md:inline text-white/60">{court}</span>
         <span className="inline-flex items-center gap-1 font-semibold text-brand-teal">
           Découvrir

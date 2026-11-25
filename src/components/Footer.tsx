@@ -44,14 +44,14 @@ export default function Footer() {
             <p className="text-[#A0A0A0] text-sm leading-relaxed max-w-xs mb-6">
               {SITE.description}
             </p>
-            <p className="text-white/30 text-xs">{SITE.address}</p>
+            <p className="text-white/55 text-xs">{SITE.address}</p>
           </div>
 
           {/* Navigation */}
           <div className="lg:col-span-2">
-            <h4 className="font-syne text-xs font-bold uppercase tracking-[0.15em] text-white/40 mb-5">
+            <h2 className="font-syne text-xs font-bold uppercase tracking-[0.15em] text-white/60 mb-5">
               Navigation
-            </h4>
+            </h2>
             <ul className="space-y-3">
               {FOOTER_NAV.map((link) => (
                 <li key={link.name}>
@@ -68,9 +68,9 @@ export default function Footer() {
 
           {/* Services */}
           <div className="lg:col-span-3">
-            <h4 className="font-syne text-xs font-bold uppercase tracking-[0.15em] text-white/40 mb-5">
+            <h2 className="font-syne text-xs font-bold uppercase tracking-[0.15em] text-white/60 mb-5">
               Services
-            </h4>
+            </h2>
             <ul className="space-y-3">
               {SERVICE_LINKS.map((link) => (
                 <li key={link.name}>
@@ -87,9 +87,9 @@ export default function Footer() {
 
           {/* Contact + Social */}
           <div className="lg:col-span-3">
-            <h4 className="font-syne text-xs font-bold uppercase tracking-[0.15em] text-white/40 mb-5">
+            <h2 className="font-syne text-xs font-bold uppercase tracking-[0.15em] text-white/60 mb-5">
               Contact
-            </h4>
+            </h2>
             <ul className="space-y-3 mb-8">
               <li>
                 <a
@@ -109,9 +109,9 @@ export default function Footer() {
               </li>
             </ul>
 
-            <h4 className="font-syne text-xs font-bold uppercase tracking-[0.15em] text-white/40 mb-4">
+            <h2 className="font-syne text-xs font-bold uppercase tracking-[0.15em] text-white/60 mb-4">
               Suivez-nous
-            </h4>
+            </h2>
             <div className="flex flex-wrap gap-2">
               {SOCIAL_LINKS.map((social) => (
                 <a
@@ -120,7 +120,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={social.label}
-                  className="px-3 py-1.5 rounded-lg border border-white/10 text-[#A0A0A0] text-xs font-medium hover:bg-brand-teal hover:border-brand-teal hover:text-white transition-all duration-200"
+                  className="px-3 py-1.5 rounded-lg border border-white/10 text-[#A0A0A0] text-xs font-medium hover:bg-brand-teal hover:border-brand-teal hover:text-[#0A0A0F] transition-all duration-200"
                 >
                   {social.name}
                 </a>
@@ -132,14 +132,14 @@ export default function Footer() {
         {/* Bottom CTA */}
         <div className="border-t border-white/8 pt-8 mb-8">
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
-            <p className="text-white/30 text-xs">
+            <p className="text-white/55 text-xs">
               © {year} {SITE.name}. Tous droits réservés.
             </p>
             <a
               href={getWhatsAppUrl("J'ai une idée, construisons-la ensemble.")}
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex items-center gap-2 text-white/40 text-xs hover:text-brand-teal transition-colors"
+              className="group inline-flex items-center gap-2 text-white/60 text-xs hover:text-brand-teal transition-colors"
             >
               Une idée ? Construisons-la.
               <ArrowRight size={12} className="group-hover:translate-x-1 transition-transform" />

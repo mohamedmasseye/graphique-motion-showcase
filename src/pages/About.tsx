@@ -74,7 +74,7 @@ export default function About() {
               <div className="flex flex-wrap gap-3">
                 <Link
                   to="/a-propos/mohamed-diop"
-                  className="group inline-flex items-center gap-2 bg-brand-teal text-white font-bold py-3 px-6 rounded-full text-sm hover:bg-brand-teal/85 transition-all"
+                  className="group inline-flex items-center gap-2 bg-brand-teal text-[#0A0A0F] font-bold py-3 px-6 rounded-full text-sm hover:bg-brand-teal/85 transition-all"
                 >
                   Découvrir le fondateur <ArrowRight size={14} className="group-hover:translate-x-1 transition-transform" />
                 </Link>

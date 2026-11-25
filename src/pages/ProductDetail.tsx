@@ -115,7 +115,7 @@ export default function ProductDetail() {
         <div className="container mx-auto px-4">
           {/* Breadcrumb */}
           <motion.div
-            className="flex items-center gap-2 text-sm text-white/40 mb-8"
+            className="flex items-center gap-2 text-sm text-white/60 mb-8"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
           >
@@ -200,7 +200,7 @@ export default function ProductDetail() {
                       />
                     ))}
                   </div>
-                  <span className="text-white/40 text-sm">{avgRating.toFixed(1)} ({product.reviews!.length} avis)</span>
+                  <span className="text-white/60 text-sm">{avgRating.toFixed(1)} ({product.reviews!.length} avis)</span>
                 </div>
               )}
 
@@ -208,7 +208,7 @@ export default function ProductDetail() {
               <div className="flex items-baseline gap-3 mt-5">
                 <span className="text-brand-teal font-black text-3xl">{formatPrice(currentPrice)}</span>
                 {hasDiscount && (
-                  <span className="text-white/30 text-lg line-through">{formatPrice(currentComparePrice!)}</span>
+                  <span className="text-white/55 text-lg line-through">{formatPrice(currentComparePrice!)}</span>
                 )}
               </div>
 
@@ -235,14 +235,14 @@ export default function ProductDetail() {
                             selectedVariant?.id === v.id
                               ? 'bg-brand-teal/15 border-brand-teal text-brand-teal border'
                               : v.stock === 0
-                                ? 'bg-white/[0.03] border border-white/[0.06] text-white/20 cursor-not-allowed'
+                                ? 'bg-white/[0.03] border border-white/[0.06] text-white/55 cursor-not-allowed'
                                 : 'bg-white/[0.06] border border-white/10 text-white/70 hover:border-white/20'
                           }`}
                         >
                           {selectedVariant?.id === v.id && <Check size={12} className="inline mr-1.5" />}
                           {v.name}
                           {v.price !== product.price && (
-                            <span className="text-white/30 text-xs ml-1.5">{formatPrice(v.price)}</span>
+                            <span className="text-white/55 text-xs ml-1.5">{formatPrice(v.price)}</span>
                           )}
                           {v.stock === 0 && <span className="text-[10px] block text-red-400/60">Épuisé</span>}
                         </button>
@@ -272,7 +272,7 @@ export default function ProductDetail() {
                 <button
                   onClick={handleAddToCart}
                   disabled={currentStock === 0}
-                  className="flex-1 flex items-center justify-center gap-2 bg-brand-teal hover:bg-brand-teal/85 disabled:bg-white/10 disabled:text-white/30 disabled:cursor-not-allowed text-white font-bold py-3.5 px-6 rounded-xl transition-all text-sm"
+                  className="flex-1 flex items-center justify-center gap-2 bg-brand-teal hover:bg-brand-teal/85 disabled:bg-white/10 disabled:text-white/55 disabled:cursor-not-allowed text-[#0A0A0F] font-bold py-3.5 px-6 rounded-xl transition-all text-sm"
                 >
                   <ShoppingCart size={16} />
                   {currentStock === 0 ? 'Rupture de stock' : 'Ajouter au panier'}

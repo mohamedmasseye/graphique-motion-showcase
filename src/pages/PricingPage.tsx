@@ -146,7 +146,7 @@ export default function PricingPage() {
       <section className="relative pb-20" style={{ background: '#020610' }}>
         <div className="container mx-auto px-4">
           <div className="bg-white/[0.04] border border-white/[0.08] rounded-2xl p-8 max-w-2xl">
-            <h4 className="font-syne text-lg font-bold text-white mb-2">Projet sur mesure ?</h4>
+            <h3 className="font-syne text-lg font-bold text-white mb-2">Projet sur mesure ?</h3>
             <p className="text-[#A0A0A0] text-sm leading-relaxed mb-4">
               Applications, plateformes, IA, automatisation — chaque projet complexe est unique. Discutons de vos besoins pour un devis personnalisé.
             </p>

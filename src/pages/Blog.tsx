@@ -61,21 +61,21 @@ export default function Blog() {
               mainEntityOfPage: `${SITE.url}/blog/${article.slug}`,
             }}
           />
-          <Link to="/blog" className="text-white/40 hover:text-white text-sm inline-flex items-center gap-2 mb-8 transition-colors">
+          <Link to="/blog" className="text-white/60 hover:text-white text-sm inline-flex items-center gap-2 mb-8 transition-colors">
             <ArrowLeft size={14} /> Retour au blog
           </Link>
           <div className="flex items-center gap-3 mb-4">
             <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full" style={{ background: color + '18', color }}>
               {article.category}
             </span>
-            <span className="flex items-center gap-1 text-white/30 text-[10px]">
+            <span className="flex items-center gap-1 text-white/55 text-[10px]">
               <Calendar size={10} /> {article.date}
             </span>
-            <span className="text-white/30 text-[10px]">{article.readTime}</span>
+            <span className="text-white/55 text-[10px]">{article.readTime}</span>
           </div>
           <h1 className="font-syne text-3xl md:text-4xl font-bold text-white mb-6 leading-tight">{article.title}</h1>
           <p className="text-[#A0A0A0] text-lg leading-relaxed mb-8">{article.excerpt}</p>
-          <p className="text-white/35 text-xs mb-10 pb-8 border-b border-white/10">Par {SITE.founder} · {SITE.name} · Dakar</p>
+          <p className="text-white/60 text-xs mb-10 pb-8 border-b border-white/10">Par {SITE.founder} · {SITE.name} · Dakar</p>
 
           <article>
             <ArticleBody blocks={article.body} />
@@ -90,7 +90,7 @@ export default function Blog() {
           </div>
 
           <div className="mt-14">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/40 mb-4">À lire aussi</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/60 mb-4">À lire aussi</p>
             <ul className="space-y-3">
               {ARTICLES.filter((a) => a.slug !== article.slug).slice(0, 3).map((a) => (
                 <li key={a.slug}>
@@ -157,10 +157,10 @@ export default function Blog() {
                       >
                         {article.category}
                       </span>
-                      <span className="flex items-center gap-1 text-white/30 text-[10px]">
+                      <span className="flex items-center gap-1 text-white/55 text-[10px]">
                         <Calendar size={10} /> {article.date}
                       </span>
-                      <span className="text-white/30 text-[10px]">{article.readTime}</span>
+                      <span className="text-white/55 text-[10px]">{article.readTime}</span>
                     </div>
 
                     <h3 className="font-syne text-base font-bold text-white mb-2 group-hover:text-brand-teal transition-colors leading-tight">
@@ -170,7 +170,7 @@ export default function Blog() {
                       {article.excerpt}
                     </p>
 
-                    <div className="flex items-center gap-2 mt-4 text-white/30 text-xs group-hover:text-brand-teal transition-colors">
+                    <div className="flex items-center gap-2 mt-4 text-white/55 text-xs group-hover:text-brand-teal transition-colors">
                       Lire l'article <ArrowRight size={12} />
                     </div>
                   </div>

@@ -271,7 +271,7 @@ function Calendrier() {
               </motion.li>
             ))}
           </motion.ol>
-          <p className="mt-10 text-center text-white/35 text-xs">Heure de Dakar (GMT).</p>
+          <p className="mt-10 text-center text-white/60 text-xs">Heure de Dakar (GMT).</p>
         </div>
       </div>
     </section>
@@ -329,7 +329,7 @@ function Final() {
                 Suivre le tirage sur TikTok
               </a>
             </div>
-            <p className="relative mt-10 text-white/35 text-xs leading-relaxed max-w-2xl mx-auto">
+            <p className="relative mt-10 text-white/60 text-xs leading-relaxed max-w-2xl mx-auto">
               Participation gratuite, sans obligation d’achat. Une participation par personne. {MENTION_META}{' '}
               <Link to={CONCOURS.reglementPath} className="underline underline-offset-2 hover:text-white/70">Règlement complet</Link>.
             </p>

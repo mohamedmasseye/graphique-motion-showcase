@@ -195,7 +195,7 @@ export default function Portfolio() {
 
                   {/* Hover overlay — desktop uniquement */}
                   <div className="hidden sm:flex absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex-col justify-end p-5">
-                    <h4 className="text-white font-bold text-lg leading-tight mb-2">{project.title}</h4>
+                    <h3 className="text-white font-bold text-lg leading-tight mb-2">{project.title}</h3>
                     {project.tags && (
                       <div className="flex flex-wrap gap-1.5 mb-3">
                         {project.tags.slice(0, 3).map((tag) => (
@@ -237,7 +237,7 @@ export default function Portfolio() {
             <p className="text-[#A0A0A0] mb-4 text-sm">Vous aimez ce que vous voyez ?</p>
             <a
               href="#contact"
-              className="inline-block bg-brand-teal hover:bg-brand-teal/85 text-white font-bold py-3 px-8 rounded-full transition-all duration-200 text-sm cursor-pointer"
+              className="inline-block bg-brand-teal hover:bg-brand-teal/85 text-[#0A0A0F] font-bold py-3 px-8 rounded-full transition-all duration-200 text-sm cursor-pointer"
             >
               Démarrer un projet
             </a>
@@ -304,7 +304,7 @@ export default function Portfolio() {
                     href={selectedImage.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 bg-brand-teal hover:bg-brand-teal/85 text-white text-sm font-bold px-5 py-2.5 rounded-lg transition-colors cursor-pointer"
+                    className="inline-flex items-center gap-2 bg-brand-teal hover:bg-brand-teal/85 text-[#0A0A0F] text-sm font-bold px-5 py-2.5 rounded-lg transition-colors cursor-pointer"
                   >
                     Visiter le projet <ExternalLink size={14} />
                   </a>

@@ -138,7 +138,7 @@ function Hero() {
               href={getWhatsAppUrl()}
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex items-center gap-2 bg-brand-teal text-white font-bold py-4 px-8 rounded-full text-sm"
+              className="group inline-flex items-center gap-2 bg-brand-teal text-[#0A0A0F] font-bold py-4 px-8 rounded-full text-sm"
               whileHover={{ scale: 1.04, backgroundColor: 'rgba(0,178,170,0.85)' }}
               whileTap={{ scale: 0.97 }}
               transition={{ type: 'spring', stiffness: 400, damping: 20 }}
@@ -485,9 +485,9 @@ function ProcessPreview() {
               <span className="font-syne text-3xl font-black text-brand-teal/30 group-hover:text-brand-teal/60 transition-colors">
                 {step.number}
               </span>
-              <h4 className="font-syne text-base font-bold text-white mt-2 mb-1">
+              <h3 className="font-syne text-base font-bold text-white mt-2 mb-1">
                 {step.title}
-              </h4>
+              </h3>
               <p className="text-[#A0A0A0] text-xs leading-relaxed hidden sm:block">
                 {step.description}
               </p>

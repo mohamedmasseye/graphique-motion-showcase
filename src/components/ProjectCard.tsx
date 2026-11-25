@@ -39,7 +39,7 @@ export default function ProjectCard({ project, variant = 'default', className = 
               {typeLabel}
             </span>
             {project.client_name && (
-              <span className="text-white/40 text-[10px] font-medium">{project.client_name}</span>
+              <span className="text-white/60 text-[10px] font-medium">{project.client_name}</span>
             )}
           </div>
           <h3 className="font-syne text-xl sm:text-2xl font-black text-white mb-2 leading-tight">
@@ -59,7 +59,7 @@ export default function ProjectCard({ project, variant = 'default', className = 
               ))}
             </div>
           )}
-          <div className="flex items-center gap-2 mt-4 text-white/30 text-xs group-hover:text-brand-teal transition-colors">
+          <div className="flex items-center gap-2 mt-4 text-white/55 text-xs group-hover:text-brand-teal transition-colors">
             Voir le projet <ArrowUpRight size={12} className="group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
           </div>
         </div>
@@ -78,9 +78,9 @@ export default function ProjectCard({ project, variant = 'default', className = 
         </div>
         <div className="min-w-0 flex-1">
           <p className="text-white text-sm font-bold truncate group-hover:text-brand-teal transition-colors">{project.title}</p>
-          <p className="text-white/40 text-xs truncate">{typeLabel}</p>
+          <p className="text-white/60 text-xs truncate">{typeLabel}</p>
         </div>
-        <ArrowUpRight size={14} className="text-white/20 group-hover:text-brand-teal shrink-0 transition-colors" />
+        <ArrowUpRight size={14} className="text-white/55 group-hover:text-brand-teal shrink-0 transition-colors" />
       </Link>
     );
   }
@@ -119,7 +119,7 @@ export default function ProjectCard({ project, variant = 'default', className = 
             {project.title}
           </h3>
           {project.year && (
-            <span className="text-white/25 text-xs shrink-0">{project.year}</span>
+            <span className="text-white/55 text-xs shrink-0">{project.year}</span>
           )}
         </div>
         {(project.short_description || project.description) && (
@@ -130,7 +130,7 @@ export default function ProjectCard({ project, variant = 'default', className = 
         {project.tags && project.tags.length > 0 && (
           <div className="flex flex-wrap gap-1.5 mt-3">
             {project.tags.slice(0, 3).map((tag) => (
-              <span key={tag} className="text-[10px] bg-white/[0.06] text-white/40 px-2 py-0.5 rounded-full">
+              <span key={tag} className="text-[10px] bg-white/[0.06] text-white/60 px-2 py-0.5 rounded-full">
                 {tag}
               </span>
             ))}

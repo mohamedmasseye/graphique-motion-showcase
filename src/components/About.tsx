@@ -394,7 +394,7 @@ export default function About() {
           <p className="text-[#A0A0A0] mb-4 text-sm">Prêt à donner vie à votre projet ?</p>
           <a
             href="#contact"
-            className="inline-block bg-brand-teal hover:bg-brand-teal/85 text-white font-bold py-3 px-6 sm:px-8 rounded-full transition-all duration-200 text-sm cursor-pointer"
+            className="inline-block bg-brand-teal hover:bg-brand-teal/85 text-[#0A0A0F] font-bold py-3 px-6 sm:px-8 rounded-full transition-all duration-200 text-sm cursor-pointer"
           >
             Discutons de votre projet
           </a>

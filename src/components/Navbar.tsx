@@ -87,7 +87,7 @@ export default function Navbar() {
                 href={getWhatsAppUrl()}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-syne text-sm font-bold text-white px-5 py-2.5 rounded-xl inline-flex items-center gap-2"
+                className="font-syne text-sm font-bold text-[#0A0A0F] px-5 py-2.5 rounded-xl inline-flex items-center gap-2"
                 style={{ backgroundColor: '#00B2AA' }}
                 whileHover={{
                   scale: 1.05,
@@ -173,7 +173,7 @@ export default function Navbar() {
                     href={getWhatsAppUrl()}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="font-syne font-bold text-sm bg-brand-teal text-white py-3.5 px-5 rounded-xl flex items-center justify-center gap-2 w-full"
+                    className="font-syne font-bold text-sm bg-brand-teal text-[#0A0A0F] py-3.5 px-5 rounded-xl flex items-center justify-center gap-2 w-full"
                     whileTap={{ scale: 0.97 }}
                   >
                     Démarrer un projet
