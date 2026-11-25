@@ -10,6 +10,8 @@ const MotionLink = motion(Link);
 
 /* ── Blog placeholder — architecture prête pour contenu réel ──── */
 import { ARTICLES } from '@/data/blog';
+import ArticleBody from '@/components/blog/ArticleBody';
+import { SITE, getWhatsAppUrl } from '@/data/content';
 
 const categoryColors: Record<string, string> = {
   Web: '#378ADD',
@@ -42,7 +44,23 @@ export default function Blog() {
     return (
       <section className="relative py-24 overflow-hidden" style={{ background: '#070D1A' }}>
         <div className="container mx-auto px-4 max-w-2xl">
-          <Head title={article.title} description={article.excerpt} />
+          <Head
+            title={article.title}
+            description={article.excerpt}
+            type="article"
+            jsonLd={{
+              '@context': 'https://schema.org',
+              '@type': 'Article',
+              headline: article.title,
+              description: article.excerpt,
+              datePublished: article.published,
+              dateModified: article.published,
+              inLanguage: 'fr',
+              author: { '@type': 'Person', name: SITE.founder },
+              publisher: { '@type': 'Organization', name: SITE.name, url: SITE.url, logo: { '@type': 'ImageObject', url: `${SITE.url}/logo.png` } },
+              mainEntityOfPage: `${SITE.url}/blog/${article.slug}`,
+            }}
+          />
           <Link to="/blog" className="text-white/40 hover:text-white text-sm inline-flex items-center gap-2 mb-8 transition-colors">
             <ArrowLeft size={14} /> Retour au blog
           </Link>
@@ -56,9 +74,33 @@ export default function Blog() {
             <span className="text-white/30 text-[10px]">{article.readTime}</span>
           </div>
           <h1 className="font-syne text-3xl md:text-4xl font-bold text-white mb-6 leading-tight">{article.title}</h1>
-          <p className="text-[#A0A0A0] text-lg leading-relaxed mb-10">{article.excerpt}</p>
-          <div className="bg-white/[0.04] border border-white/[0.08] rounded-2xl p-8 text-center">
-            <p className="text-white/50 text-sm">Article complet en cours de rédaction — revenez bientôt.</p>
+          <p className="text-[#A0A0A0] text-lg leading-relaxed mb-8">{article.excerpt}</p>
+          <p className="text-white/35 text-xs mb-10 pb-8 border-b border-white/10">Par {SITE.founder} · {SITE.name} · Dakar</p>
+
+          <article>
+            <ArticleBody blocks={article.body} />
+          </article>
+
+          <div className="mt-14 rounded-2xl border border-brand-teal/25 bg-brand-teal/[0.05] p-7 text-center">
+            <p className="font-syne text-xl font-bold text-white">Un projet en tête ?</p>
+            <p className="mt-2 text-[#A0A0A0] text-sm">Parlez-nous de votre activité, nous vous répondons sous 24 h avec un prix clair.</p>
+            <a href={getWhatsAppUrl()} target="_blank" rel="noopener noreferrer" className="mt-5 inline-flex items-center gap-2 bg-brand-teal text-black font-bold py-3 px-7 rounded-full text-sm">
+              Écrire sur WhatsApp <ArrowRight size={14} />
+            </a>
+          </div>
+
+          <div className="mt-14">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/40 mb-4">À lire aussi</p>
+            <ul className="space-y-3">
+              {ARTICLES.filter((a) => a.slug !== article.slug).slice(0, 3).map((a) => (
+                <li key={a.slug}>
+                  <Link to={`/blog/${a.slug}`} className="group flex items-start gap-3 text-white/80 hover:text-brand-teal transition-colors">
+                    <ArrowRight size={16} className="mt-1 shrink-0 text-brand-teal" />
+                    <span className="font-semibold">{a.title}</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </section>

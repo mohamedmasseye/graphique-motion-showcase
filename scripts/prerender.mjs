@@ -25,13 +25,23 @@ const meta = (html, attr, key, content) =>
 
 const NAV = [['/', 'Accueil'], ['/services', 'Services'], ['/portfolio', 'Réalisations'], ['/tarifs', 'Tarifs'], ['/concours', 'Jeu concours'], ['/blog', 'Blog'], ['/contact', 'Contact']];
 
+const md = (t) =>
+  esc(t)
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" style="color:#00B2AA">$1</a>')
+    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+function blocksHtml(blocks) {
+  return '<article style="text-align:left;max-width:720px;margin:32px auto;line-height:1.75">' + blocks.map((b) =>
+    b.h2 ? `<h2 style="font-size:24px;margin:32px 0 8px">${esc(b.h2)}</h2>` :
+    b.ul ? `<ul>${b.ul.map((l) => `<li>${md(l)}</li>`).join('')}</ul>` :
+    `<p style="color:#B4B4B4">${md(b.p)}</p>`).join('') + '</article>';
+}
 function body(r) {
   const nav = NAV.map(([h, t]) => `<a href="${h}" style="color:#00B2AA;margin:0 10px">${t}</a>`).join('');
   const pts = r.points?.length ? `<ul style="text-align:left;max-width:640px;margin:20px auto;line-height:1.7">${r.points.map((p) => `<li>${esc(p)}</li>`).join('')}</ul>` : '';
   return `<div id="seo-static" style="min-height:100vh;background:#0A0A0F;color:#fff;font-family:Montserrat,system-ui,sans-serif;text-align:center;padding:96px 20px">` +
     `<nav aria-label="Navigation principale" style="margin-bottom:48px">${nav}</nav>` +
     `<main><h1 style="font-size:34px;line-height:1.15;margin:0 auto 16px;max-width:760px">${esc(r.h1)}</h1>` +
-    (r.intro ? `<p style="color:#A0A0A0;max-width:680px;margin:0 auto;line-height:1.7">${esc(r.intro)}</p>` : '') + pts +
+    (r.intro ? `<p style="color:#A0A0A0;max-width:680px;margin:0 auto;line-height:1.7">${esc(r.intro)}</p>` : '') + pts + (r.blocks ? blocksHtml(r.blocks) : '') +
     `<p style="margin-top:32px;color:#A0A0A0">Graphique &amp; Motion · Dakar, Sénégal · <a href="tel:+221775644478" style="color:#00B2AA">+221 77 564 44 78</a></p></main></div>`;
 }
 
@@ -52,6 +62,8 @@ for (const r of SEO_ROUTES) {
   html = meta(html, 'name', 'twitter:title', r.title);
   html = meta(html, 'name', 'twitter:description', r.description);
   html = meta(html, 'name', 'twitter:image', img);
+  if (r.published) html = html.replace('</head>', `<meta property="article:published_time" content="${r.published}" />
+</head>`);
   html = html.replace('<div id="root"></div>', `<div id="root">${body(r)}</div>`);
   if (!html.includes('id="seo-static"')) throw new Error('injection impossible pour ' + r.path);
   const out = r.path === '/' ? path.join(dist, 'index.html') : path.join(dist, r.path + '.html'); // /concours -> concours.html (pas de redirection vers /concours/)

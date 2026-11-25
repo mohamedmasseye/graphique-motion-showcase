@@ -3,7 +3,7 @@
    - functions/sitemap.xml.ts : sitemap complet
    Les titres suivent la même règle que le composant <Head> (nom du site ajouté s'il manque). */
 import { SITE, SERVICES } from './content';
-import { ARTICLES } from './blog';
+import { ARTICLES, type Block } from './blog';
 
 export interface SeoRoute {
   path: string;
@@ -16,6 +16,8 @@ export interface SeoRoute {
   priority: number;
   changefreq: 'daily' | 'weekly' | 'monthly';
   type?: 'website' | 'article';
+  blocks?: Block[];
+  published?: string;
 }
 
 const full = (t: string) => (t.includes(SITE.name) ? t : `${t} | ${SITE.name}`);
@@ -123,7 +125,7 @@ const SERVICE_ROUTES: SeoRoute[] = SERVICES.map((s) => ({
 
 const BLOG_ROUTES: SeoRoute[] = ARTICLES.map((a) => ({
   path: `/blog/${a.slug}`, priority: 0.6, changefreq: 'monthly', type: 'article',
-  title: full(a.title), description: a.excerpt, h1: a.title, intro: a.excerpt,
+  title: full(a.title), description: a.excerpt, h1: a.title, intro: a.excerpt, blocks: a.body, published: a.published,
 }));
 
 export const SEO_ROUTES: SeoRoute[] = [...STATIC, ...SERVICE_ROUTES, ...BLOG_ROUTES];
