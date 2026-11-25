@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { SITE, NAV_LINKS, SOCIAL_LINKS, getWhatsAppUrl } from '@/data/content';
 
-const Logo = '/lovable-uploads/de699b4d-f281-49b8-b42d-18ceb13b6677-320.png';
+const Logo = '/lovable-uploads/de699b4d-f281-49b8-b42d-18ceb13b6677-v2.png';
 
 const FOOTER_NAV = [
   { name: 'Réalisations', href: '/portfolio' },

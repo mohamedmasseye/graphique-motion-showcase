@@ -5,7 +5,7 @@ import { Link, useLocation } from 'react-router-dom';
 import { NAV_LINKS, getWhatsAppUrl } from '@/data/content';
 import ConcoursRibbon, { useRibbonVisible } from '@/components/concours/ConcoursRibbon';
 
-const Logo = '/lovable-uploads/71d36db5-bb9d-4336-8965-1ace529d6ed6-320.png';
+const Logo = '/lovable-uploads/71d36db5-bb9d-4336-8965-1ace529d6ed6-v2.png';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
