@@ -92,10 +92,10 @@ export const onRequest: PagesFunction<Env> = async ({ request, next, env }) => {
 
     const p = url.pathname.replace(/\/+$/, '') || '/';
 
-    // Fichiers compilés : si le serveur répond par une page HTML (fichier pas encore propagé après un déploiement,
-    // ou ancien nom disparu), on renvoie une vraie 404 non mise en cache. Sans ça le navigateur garderait
-    // cette page HTML pendant un an à la place du fichier JavaScript.
-    if (p.startsWith('/assets/')) {
+    // Fichiers (JS, CSS, images, polices…) : si le serveur répond par une page HTML (fichier pas encore propagé après
+    // un déploiement, ou ancien nom disparu), on renvoie une vraie 404 non mise en cache. Sans ça le navigateur
+    // et le cache Cloudflare garderaient cette page HTML un an à la place du fichier (Cache-Control immutable).
+    if (!PASS_THROUGH.test(p) && !p.startsWith('/api/') && /\.[a-z0-9]{1,8}$/i.test(p) && !/\.html?$/i.test(p)) {
       const res = await next();
       if ((res.headers.get('content-type') || '').includes('text/html')) {
         return new Response('Not found', { status: 404, headers: { 'Cache-Control': 'no-store', 'Content-Type': 'text/plain; charset=utf-8' } });

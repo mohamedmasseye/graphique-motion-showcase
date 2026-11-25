@@ -63,8 +63,15 @@ for (const [p, exp] of tests) {
   check('asset HTML -> 404 no-store', r.status === 404 && r.headers.get('cache-control') === 'no-store');
   r = await onRequest({ request: new Request('https://graphiquemotion.com/assets/x.js'), env, next: async () => new Response('export{}', { headers: { 'content-type': 'application/javascript' } }) });
   check('asset JS intact', r.status === 200 && (await r.text()) === 'export{}'); }
+// image absente (HTML renvoyé à la place) -> 404 no-store ; image normale intacte ; .html et CMS non touchés
+{ let r = await onRequest({ request: new Request('https://graphiquemotion.com/lovable-uploads/x.png'), env, next: async () => new Response('<html></html>', { headers: { 'content-type': 'text/html' } }) });
+  check('image HTML -> 404 no-store', r.status === 404 && r.headers.get('cache-control') === 'no-store');
+  r = await onRequest({ request: new Request('https://graphiquemotion.com/lovable-uploads/x.png'), env, next: async () => new Response('PNG', { headers: { 'content-type': 'image/png' } }) });
+  check('image intacte', r.status === 200 && (await r.text()) === 'PNG');
+  r = await onRequest({ request: new Request('https://graphiquemotion.com/og-image.html'), env, next: async () => new Response('<html></html>', { headers: { 'content-type': 'text/html' } }) });
+  check('.html intact', r.status === 200); }
 // POST jamais touché
 { let passed = false; await onRequest({ request: new Request('https://graphiquemotion.com/api/x', { method: 'POST' }), env, next: async () => { passed = true; return new Response('NEXT'); } }); check('POST passe', passed); }
 
-console.log(`middleware : ${tests.length + 12} contrôles, ${bad} écart(s)`);
+console.log(`middleware : ${tests.length + 15} contrôles, ${bad} écart(s)`);
 process.exit(bad ? 1 : 0);
