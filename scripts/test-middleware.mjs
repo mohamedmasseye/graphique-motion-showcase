@@ -58,8 +58,13 @@ for (const [p, exp] of tests) {
 { supabase = 'panne'; const { r } = await run('/portfolio/x'); check('Supabase en panne -> 200', r.status === 200); }
 // boutique : canonical propre
 { const { r } = await run('/boutique/produit-x'); const h = await r.text(); check('boutique canonical', h.includes('href="https://graphiquemotion.com/boutique/produit-x"')); }
+// fichier compilé absent (le serveur renvoie du HTML) -> 404 non mise en cache ; fichier JS normal -> intact
+{ let r = await onRequest({ request: new Request('https://graphiquemotion.com/assets/x.js'), env, next: async () => new Response('<html></html>', { headers: { 'content-type': 'text/html' } }) });
+  check('asset HTML -> 404 no-store', r.status === 404 && r.headers.get('cache-control') === 'no-store');
+  r = await onRequest({ request: new Request('https://graphiquemotion.com/assets/x.js'), env, next: async () => new Response('export{}', { headers: { 'content-type': 'application/javascript' } }) });
+  check('asset JS intact', r.status === 200 && (await r.text()) === 'export{}'); }
 // POST jamais touché
 { let passed = false; await onRequest({ request: new Request('https://graphiquemotion.com/api/x', { method: 'POST' }), env, next: async () => { passed = true; return new Response('NEXT'); } }); check('POST passe', passed); }
 
-console.log(`middleware : ${tests.length + 10} contrôles, ${bad} écart(s)`);
+console.log(`middleware : ${tests.length + 12} contrôles, ${bad} écart(s)`);
 process.exit(bad ? 1 : 0);
